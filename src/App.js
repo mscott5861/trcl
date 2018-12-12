@@ -12,8 +12,10 @@ class App extends Component {
           <p>
             Edit <code>src/App.js</code> and save to reload.
           </p>
-          <Copy>
-            Something got in my way 
+          <Copy
+            centered
+            optimizedLength>
+            Lorem ipsum dolor sit amet nuncum helibot Bellicose regimen milkshake typescript
           </Copy>
           <a
             className="App-link"
