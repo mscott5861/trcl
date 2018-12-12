@@ -2,6 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
+/*---------------------------------------------------------------
+ *  A component for copy text that incorporates best practices,
+ *  such as optimal length (66 characters for desktop, according 
+ *  to Bringhurst, and roughly half that for mobile), responsive
+ *  line-height, etc.
+ * -------------------------------------------------------------- */
+
 const StyledCopy = styled.p`
   font-size: 1rem;
   line-height: 1.375rem;
