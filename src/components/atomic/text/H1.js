@@ -5,6 +5,7 @@ import styled from 'styled-components'
 const StyledH1 = styled.h1`
   font-size: 3em;
   line-height: 1.05rem;
+  text-align: ${props => props.rightAligned ? 'right' : 'left'};
 
   //-------------------------------------------------------------
   // Medium devices: tablets
@@ -26,7 +27,8 @@ const StyledH1 = styled.h1`
 export default class H1 extends React.Component {
   render() {
     return (
-      <StyledH1>
+      <StyledH1
+        rightAligned={this.props.rightAligned}>
         { this.props.children }
       </StyledH1>
     );

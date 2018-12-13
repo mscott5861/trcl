@@ -12,6 +12,7 @@ const StyledSingleColumnWithSidebar = styled.div`
 
   .sidebar {
     grid-column: 1 / span 1;
+    height: 100vh;
   }
 
   @media(max-width: 1024px) {

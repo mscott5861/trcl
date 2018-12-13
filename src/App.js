@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Copy, Leaflet, MainContent, Navbar, Sidebar, SingleColumnWithSidebarAndNavbar } from './components'
+import { Copy, H1, Leaflet, MainContent, Navbar, Sidebar, SingleColumnWithSidebar } from './components'
 import { ThemeProvider } from 'styled-components'
 
 const colors = {
@@ -27,10 +27,13 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <SingleColumnWithSidebarAndNavbar>
-          <Navbar/>
+        <SingleColumnWithSidebar>
           <Sidebar/>
           <MainContent>
+            <H1
+              rightAligned>
+              Truth
+            </H1>
             <Leaflet
               dismissable
               title='Lorem Ipsum'
@@ -44,7 +47,7 @@ class App extends Component {
               </Copy>
             </Leaflet>
           </MainContent>
-        </SingleColumnWithSidebarAndNavbar>
+        </SingleColumnWithSidebar>
       </ThemeProvider>
     );
   }
