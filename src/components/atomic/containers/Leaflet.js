@@ -132,7 +132,7 @@ export default class Leaflet extends React.Component {
   }
 }
 
-Leaflet.PropTypes = {
+Leaflet.propTypes = {
   dismissable: PropTypes.bool,
   fitContent: PropTypes.bool,
   title: PropTypes.string,

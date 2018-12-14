@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ThemeProvider } from 'styled-components'
 import { MainContent, Sidebar, SingleColumnWithSidebar } from './components'
-import { ViewLeaflet } from './views'
+import { ViewCopy, ViewLeaflet } from './views'
 
 
 
@@ -33,6 +33,7 @@ class App extends Component {
         <SingleColumnWithSidebar>
           <Sidebar/>
           <MainContent>
+            <ViewCopy/>
             <ViewLeaflet/>
           </MainContent>
         </SingleColumnWithSidebar>

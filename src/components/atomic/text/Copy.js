@@ -9,24 +9,34 @@ import styled from 'styled-components'
  *  such as optimal length (66 characters for desktop, according 
  *  to Bringhurst, and roughly half that for mobile), responsive
  *  line-height, etc.
+ *
+ *  Strings passed to Copy in curly braces and single quotes
+ *  (e.g., <Copy> {'Example \n break'} </Copy>) will break on
+ *  newline characters ('\n'), technically generating additional
+ *  <p> elements to contain text following them.
  * -------------------------------------------------------------- */
 
 const StyledCopy = styled.p`
   font-size: 1rem;
-  font-weight: ${props => props.extraLight ? '200' :
-                          props.light ? '300' :
-                          props.medium ? '500' :
-                          props.semiBold ? '600' : 
-                          props.bold ? '800' : 
-                          props.ultraBold ? '900' : '400' };
+  font-weight: ${props => props.weight === 'extraLight' ? '200' :
+                          props.weight === 'light' ? '300' :
+                          props.weight === 'regular' ? '400' :
+                          props.weight === 'medium' ? '500' :
+                          props.weight === 'semiBold' ? '600' : 
+                          props.weight === 'bold' ? '800' : 
+                          props.weight === 'ultraBold' ? '900' : '400' };
+  
+  display: ${props => props.centeredVertically ? 'flex' : 'block'};
+  align-items: ${props => props.centeredVertically ? 'center' : 'initial'};
+  margin-bottom: ${props => props.centeredVertically ? '0' : '2rem'};
 
   line-height: 1.375rem;
   letter-spacing: ${props => props.tracking ? props.tracking : 'initial'};
   text-align:  ${props => props.justified ? 'justify' :
                           props.rightAligned ? 'right' :
-                          props.centered ? 'center' : 'left'};
+                          props.centeredHorizontally ? 'center' : 'left'};
   max-width: ${props => props.optimizeLength ? '66ch' : 'initial'};
-  margin-bottom: 2rem;
+  color: ${props => props.color ? props.color : '#333'};
   
   @media(max-width: 768px) {
     line-height: 1.25rem;
@@ -37,32 +47,33 @@ const StyledCopy = styled.p`
 export default class Copy extends React.Component {
   render() {
     return (
-      <StyledCopy
-        extraLight={this.props.extraLight}
-        light={this.props.light}
-        medium={this.props.medium}
-        semiBold={this.props.semiBold}
-        bold={this.props.bold}
-        ultraBold={this.props.ultraBold}
-        centered={this.props.centered}
-        rightAligned={this.props.rightAligned}
-        justified={this.props.justified}
-        tracking={this.props.tracking}
-        optimizeLength={this.props.optimizeLength}>
-        { this.props.children }
-      </StyledCopy>
+      <React.Fragment>
+      { this.props.children && this.props.children.split('\n').map((paragraph, idx) => {
+        return (
+        <React.Fragment>
+          <StyledCopy
+            key={'lorem-' + idx}
+            weight={this.props.weight}
+            centeredHorizontally={this.props.centeredHorizontally}
+            centeredVertically={this.props.centeredVertically}
+            rightAligned={this.props.rightAligned}
+            justified={this.props.justified}
+            tracking={this.props.tracking}
+            optimizeLength={this.props.optimizeLength}>
+            { paragraph }
+          </StyledCopy>
+        </React.Fragment>
+        );
+      })}
+      </React.Fragment>
     );
   }
 }
 
 Copy.propTypes = {
-  extraLight: PropTypes.bool,
-  light: PropTypes.bool,
-  medium: PropTypes.bool,
-  semiBold: PropTypes.bool,
-  bold: PropTypes.bool,
-  ultraBold: PropTypes.bool,
-  centered: PropTypes.bool,
+  weight: PropTypes.oneOf(['extraLight', 'light', 'medium', 'regular', 'semiBold', 'bold', 'ultraBold']),
+  centeredHorizontally: PropTypes.bool,
+  centeredVertically: PropTypes.bool,
   rightAligned: PropTypes.bool,
   justified: PropTypes.bool,
   tracking: PropTypes.string,
