@@ -11,17 +11,21 @@ const StyledLeaflet = styled.div`
   color: ${props => props.theme.copyFontColor};
   border-radius: 3px;
   box-shadow: 0 0 1.0125rem rgba(0, 0, 0, 0.25);
-  padding: 2rem;
+  
   column-count: ${props => props.columnCount ? props.columnCount : 'initial'};
   column-gap: ${props => props.columnGap ? props.columnGap : 'initial'};
   column-rule: ${props => props.columnRule ? props.columnRule : 'initial'};
+ 
   width: ${props => props.fitContent ? 'fit-content' : 'initial'};
   transition: all .2s linear;
   font-family: ${props => props.theme.copyFont};
   font-size: 1rem;
 
+  padding: 2rem;
   padding-top: ${props => props.title && props.titlebarPosition !== 'bottom' ? '5rem' : '2rem'};
   padding-bottom: ${props => props.title && props.titlebarPosition === 'bottom' ? '5rem' : '2rem'};
+
+  margin-bottom: 2rem;
 
   &:before {
     box-sizing: border-box;

@@ -19,6 +19,7 @@ const StyledSingleColumnWithSidebarAndNavbar = styled.div`
   .sidebar {
     grid-row: 2 / span 1;
     grid-column: 1 / span 1;
+    min-height: calc(100vh - 5rem); 
   }
 
   @media(max-width: 1024px) {
@@ -29,7 +30,6 @@ const StyledSingleColumnWithSidebarAndNavbar = styled.div`
       top: 0;
       left: -17rem;
       width: 17rem;
-      height: 100vh;
       z-index: 1000;
     }
   }

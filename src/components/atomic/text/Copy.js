@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
+
+
 /*---------------------------------------------------------------
  *  A component for copy text that incorporates best practices,
  *  such as optimal length (66 characters for desktop, according 
@@ -24,6 +26,7 @@ const StyledCopy = styled.p`
                           props.rightAligned ? 'right' :
                           props.centered ? 'center' : 'left'};
   max-width: ${props => props.optimizeLength ? '66ch' : 'initial'};
+  margin-bottom: 2rem;
   
   @media(max-width: 768px) {
     line-height: 1.25rem;

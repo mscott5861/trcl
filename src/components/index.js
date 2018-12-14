@@ -1,3 +1,4 @@
+import CodeBlock from './atomic/containers/CodeBlock'
 import Copy from './atomic/text/Copy'
 import H1 from './atomic/text/H1'
 import H2 from './atomic/text/H2'
@@ -10,6 +11,7 @@ import SingleColumnWithSidebar from './atomic/layouts/SingleColumnWithSidebar'
 import SingleColumnWithSidebarAndNavbar from './atomic/layouts/SingleColumnWithSidebarAndNavbar'
 
 export {
+  CodeBlock,
   Copy,
   H1,
   H2,

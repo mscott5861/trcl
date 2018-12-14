@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 const StyledSidebar = styled.div`
   background-color: #555;
-  min-height: calc(100vh - 5rem); 
 `
 
 export default class Sidebar extends React.Component {
