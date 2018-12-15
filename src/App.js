@@ -1,30 +1,43 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import { Copy } from './components'
-import './App.css';
+import { ThemeProvider } from 'styled-components'
+import { MainContent, Sidebar, SingleColumnWithSidebar } from './components'
+import { ViewCopy, ViewLeaflet } from './views'
+
+
+
+const colors = {
+  primary: 'grey',
+  secondary: 'red',
+  tertiary: 'blue',
+  copy: '#111',
+  headers: '#fff'
+}
+
+const typography = {
+  copy: 'Arial',
+  headers: 'Times New Roman',
+}
+
+const theme = {
+  cardTitlebarColor: colors.primary,
+  copyFont: typography.copy,
+  copyFontColor: colors.copy,
+  titlebarFont: typography.headers,
+  titlebarFontColor: colors.headers
+}
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <Copy>
-            Something got in my way 
-          </Copy>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <ThemeProvider theme={theme}>
+        <SingleColumnWithSidebar>
+          <Sidebar/>
+          <MainContent>
+            <ViewCopy/>
+            <ViewLeaflet/>
+          </MainContent>
+        </SingleColumnWithSidebar>
+      </ThemeProvider>
     );
   }
 }
