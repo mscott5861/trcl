@@ -18,7 +18,6 @@ const StyledH2 = styled.h1`
   //-------------------------------------------------------------
   @media only screen and (max-width: 600px) {
     font-size: 1.625rem;
-    line-height: 1.15384615rem;
   }
 `
 

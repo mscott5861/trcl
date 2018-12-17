@@ -18,7 +18,6 @@ const StyledH3 = styled.h1`
   //-------------------------------------------------------------
   @media only screen and (max-width: 600px) {
     font-size: 1.375rem;
-    line-height: 1.13636364rem;
   }
 `
 

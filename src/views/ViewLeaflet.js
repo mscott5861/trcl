@@ -12,7 +12,7 @@ export default function ViewLeaflet(props) {
         Leaflet
       </H1>
       <Copy>
-        An [optionally] dismissible container for self-contained content. Available with or without titlebars.
+        An [optionally] dismissible container for self-contained content. Available with or without titlebars, which can be positioned on the top or bottom of the leaflet.
       </Copy>
       <H3>
         Props
@@ -31,12 +31,14 @@ export default function ViewLeaflet(props) {
         <CodeBlock>
           {
 `<Leaflet
-dismissable
-title='Lorem Ipsum'
-columnCount={3}
-columnGap='1rem'>`
+  dismissable
+  title='Lorem Ipsum'
+  columnCount={3}
+  columnGap='1rem'>
+    { generateLoremIpsum() }
+</Leaflet>`
           }
-        </CodeBlock>
-      </TwoColumnLayout>
+      </CodeBlock>
+    </TwoColumnLayout>
   </React.Fragment> );
 }

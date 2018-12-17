@@ -14,7 +14,7 @@ const StyledH1 = styled.h1`
   //-------------------------------------------------------------
   @media only screen and (min-width: 768px) and (max-width: 992px) {
     font-size: 2.5rem;
-    line-height: 1.125rem;
+    line-height: 1.25rem;
   }
 
   //-------------------------------------------------------------
@@ -22,7 +22,6 @@ const StyledH1 = styled.h1`
   //-------------------------------------------------------------
   @media only screen and (max-width: 600px) {
     font-size: 2rem;
-    line-height: 1.25rem;
   }
 `
 
