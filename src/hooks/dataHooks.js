@@ -6,27 +6,23 @@ import { useState, useEffect } from 'react'
 // Experimenting with using React Hooks in lieu of HOCs
 //----------------------------------------------------------------------------------
 
-function useWebsocketDataProvider(props) {
+function useWebsocketDataProvider(src) {
   const [data, setData] = useState(null);
+  let ws = new WebSocket(src);
 
   useEffect(() => {
-    let ws = new WebSocket(this.state.src);
-
     ws.onmessage = (e) => {
       if (e.data) {
-        this.setState({
-          data: e.data
-        });
+        setData(e.data);
       }
     }
 
     ws.onerror = (e) => {
-      console.log("Error on Websocket connection with " + this.state.src + " -> " + e.message);
+      console.log("Error on Websocket connection with " + src + " -> " + e.message);
     }
 
-  return() => {
-    we.close(); 
-  }
-  
+    return() => {
+      we.close(); 
+    }
   });
 }
