@@ -38,14 +38,12 @@ const StyledSingleColumnWithSidebarAndNavbar = styled.div`
   }
 `
 
-export default class SingleColumnWithSidebarAndNavbar extends React.Component {
-  render() {
-    return (
-      <StyledSingleColumnWithSidebarAndNavbar>
-        { this.props.children }
-      </StyledSingleColumnWithSidebarAndNavbar>
-    );
-  }
+export default function SingleColumnWithSidebarAndNavbar(props) {
+  return (
+    <StyledSingleColumnWithSidebarAndNavbar>
+      { props.children }
+    </StyledSingleColumnWithSidebarAndNavbar>
+  );
 }
 
 SingleColumnWithSidebarAndNavbar.propTypes = {

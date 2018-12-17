@@ -30,7 +30,7 @@ const StyledCopy = styled.p`
   align-items: ${props => props.centeredVertically ? 'center' : 'initial'};
   margin-bottom: ${props => props.centeredVertically ? '0' : '2rem'};
 
-  line-height: 1.375rem;
+  line-height: 1.5rem;
   letter-spacing: ${props => props.tracking ? props.tracking : 'initial'};
   text-align:  ${props => props.justified ? 'justify' :
                           props.rightAligned ? 'right' :
@@ -44,22 +44,21 @@ const StyledCopy = styled.p`
   }
 `
 
-export default class Copy extends React.Component {
-  render() {
+export default function Copy(props) {
     return (
       <React.Fragment>
-      { this.props.children && this.props.children.split('\n').map((paragraph, idx) => {
+      { props.children && props.children.split('\n').map((paragraph, idx) => {
         return (
         <React.Fragment>
           <StyledCopy
             key={'lorem-' + idx}
-            weight={this.props.weight}
-            centeredHorizontally={this.props.centeredHorizontally}
-            centeredVertically={this.props.centeredVertically}
-            rightAligned={this.props.rightAligned}
-            justified={this.props.justified}
-            tracking={this.props.tracking}
-            optimizeLength={this.props.optimizeLength}>
+            weight={props.weight}
+            centeredHorizontally={props.centeredHorizontally}
+            centeredVertically={props.centeredVertically}
+            rightAligned={props.rightAligned}
+            justified={props.justified}
+            tracking={props.tracking}
+            optimizeLength={props.optimizeLength}>
             { paragraph }
           </StyledCopy>
         </React.Fragment>
@@ -67,7 +66,6 @@ export default class Copy extends React.Component {
       })}
       </React.Fragment>
     );
-  }
 }
 
 Copy.propTypes = {

@@ -22,14 +22,12 @@ const StyledH2 = styled.h1`
   }
 `
 
-export default class H2 extends React.Component {
-  render() {
-    return (
-      <StyledH2>
-        { this.props.children }
-      </StyledH2>
-    );
-  }
+export default function H2(props) {
+  return (
+    <StyledH2>
+      { props.children }
+    </StyledH2>
+  );
 }
 
 H2.propTypes = {

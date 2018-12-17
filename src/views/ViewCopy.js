@@ -4,7 +4,7 @@ import { generateLoremIpsum } from '../utilities'
 
 
 
-const props = [{
+const copyProps = [{
   property: 'weight',
   required: 'no',
   type: "enum: 'extraLight' | 'light' | 'medium' | 'regular' | 'semiBold' | 'ultraBold'",
@@ -48,38 +48,35 @@ const props = [{
   default: 'false'
 }];
 
-export default class CopyLeaflet extends React.Component {
-  render() {
-    return (
-      <React.Fragment>
-        <H1
-          rightAligned>
-          Copy
-        </H1>
-        <br/>
-        <Copy>
-          A component for copy text that incorporates best practices, such as optimal character length (66 characters for desktop, according to Bringhurst, and roughly half that for mobile), responsive line-height, etc. 
-        </Copy>
-        <TwoColumnLayout
-          columns='.3fr 1fr'>
-          <CodeBlock>
-          {
+export default function CopyLeaflet(props) {
+  return (
+    <React.Fragment>
+      <H1
+        rightAligned>
+        Copy
+      </H1>
+      <Copy>
+        A component for copy text that incorporates best practices, such as optimal character length (66 characters for desktop, according to Bringhurst, and roughly half that for mobile), responsive line-height, etc. 
+      </Copy>
+      <TwoColumnLayout
+        columns='.3fr 1fr'>
+        <CodeBlock>
+        {
 `<Copy>
-    {'Example \\n text'}
+  {'Example \\n text'}
 </Copy>`
-          }
-          </CodeBlock>
-          <Copy
-            justified
-            centeredVertically>
-            {'Strings passed to Copy in curly braces and single quotes (or backticks) will break on newline characters, technically generating additional <p> elements to contain the text following them.'}
-          </Copy>
-        </TwoColumnLayout>
-        <H3>
-          Props
-        </H3>
-        <PropsTable
-          props={props}/>
-    </React.Fragment> );
-  }
+        }
+        </CodeBlock>
+        <Copy
+          justified
+          centeredVertically>
+          {'Strings passed to Copy in curly braces and single quotes (or backticks) will break on newline characters, technically generating additional <p> elements to contain the text following them.'}
+        </Copy>
+      </TwoColumnLayout>
+      <H3>
+        Props
+      </H3>
+      <PropsTable
+        props={copyProps}/>
+  </React.Fragment> );
 }

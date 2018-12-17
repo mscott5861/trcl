@@ -7,6 +7,7 @@ const StyledH1 = styled.h1`
   font-size: calc(32px + ((24 * (100vw-800px))/799));
   line-height: 1.05rem;
   text-align: ${props => props.rightAligned ? 'right' : 'left'};
+  margin-bottom: 3rem;
 
   //-------------------------------------------------------------
   // Medium devices: tablets
@@ -25,15 +26,13 @@ const StyledH1 = styled.h1`
   }
 `
 
-export default class H1 extends React.Component {
-  render() {
-    return (
-      <StyledH1
-        rightAligned={this.props.rightAligned}>
-        { this.props.children }
-      </StyledH1>
-    );
-  }
+export default function H1(props) {
+  return (
+    <StyledH1
+      rightAligned={props.rightAligned}>
+      { props.children }
+    </StyledH1>
+  );
 }
 
 H1.propTypes = {
