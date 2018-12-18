@@ -48,6 +48,7 @@ const copyProps = [{
   default: 'false'
 }];
 
+
 export default function CopyLeaflet(props) {
   return (
     <React.Fragment>
@@ -56,10 +57,10 @@ export default function CopyLeaflet(props) {
         Copy
       </H1>
       <Copy>
-        A component for copy text that incorporates best practices, such as optimal character length (66 characters for desktop, according to Bringhurst, and roughly half that for mobile), responsive line-height, etc. 
+        A component for copy text that incorporates best practices, such as optimal character length (66 characters for desktop, according to Bringhurst, and roughly half that for mobile), responsive line-height (conforming to an 8-pixel grid system), etc. 
       </Copy>
       <TwoColumnLayout
-        columns='.3fr 1fr'>
+        columns='.4fr 1fr'>
         <CodeBlock>
         {
 `<Copy>

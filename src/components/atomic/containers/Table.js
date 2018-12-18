@@ -24,7 +24,9 @@ export default class Table extends React.Component {
   render() {
     return (
       <StyledTable>
-        { this.props.children }
+        <tbody>
+          { this.props.children }
+        </tbody>
       </StyledTable>
     );
   }

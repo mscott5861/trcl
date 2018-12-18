@@ -14,7 +14,7 @@ const StyledTwoColumnLayout = styled.div`
   display: grid; 
   grid-gap: 2rem;
   grid-template-columns: ${props => props.columns ? props.columns : '1fr 1fr'};
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 
   &:first-child {
     grid-column: 1 / span 1;
@@ -26,9 +26,23 @@ const StyledTwoColumnLayout = styled.div`
 `
 
 export default class TwoColumnLayout extends React.Component {
+  //-----------------------------------------------------------------
+  //  This is kind of gross. I need these container heights to be
+  //  divisible by 8 (to conform to an 8-pixel grid system), and
+  //  I don't know of any non-javascript way of ensuring they are.
+  //-----------------------------------------------------------------
+  componentDidMount() {
+    let layout = document.getElementById('two-column-layout'),
+        oldHeight = layout.offsetHeight,
+        newHeight = ((Math.floor( oldHeight / 8 ) + 1) * 8) + 'px';
+
+    layout.style.height = newHeight;
+  }
+
   render() {
     return (
       <StyledTwoColumnLayout
+        id='two-column-layout'
         columns={this.props.columns}>
         { this.props.children }
       </StyledTwoColumnLayout>

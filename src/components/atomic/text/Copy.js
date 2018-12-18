@@ -39,7 +39,6 @@ const StyledCopy = styled.p`
   color: ${props => props.color ? props.color : '#333'};
   
   @media(max-width: 768px) {
-    line-height: 1.25rem;
     max-width: ${props => props.optimizeLength ? '30ch' : 'initial'};
   }
 `
@@ -49,9 +48,8 @@ export default function Copy(props) {
       <React.Fragment>
       { props.children && props.children.split('\n').map((paragraph, idx) => {
         return (
-        <React.Fragment>
+        <React.Fragment key={'lorem-' + idx}>
           <StyledCopy
-            key={'lorem-' + idx}
             weight={props.weight}
             centeredHorizontally={props.centeredHorizontally}
             centeredVertically={props.centeredVertically}

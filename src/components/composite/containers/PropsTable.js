@@ -7,25 +7,25 @@ export default class PropsTable extends React.Component {
     return (
       <Table>
         <tr>
-          <th align="left">Property</th>
-          <th>Required</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
+          <th align='left'>Property</th>
+          <th align='left'>Required</th>
+          <th align='left'>Type</th>
+          <th align='left'>Description</th>
+          <th align='left'>Default</th>
         </tr>
         { this.props.props.map((prop, idx) => {
             return(
-              <tr>
+              <tr key={'props-table-' + idx}>
                 <td>
                   {prop.property}
                 </td>
                 <td>
                   {prop.required}
                 </td>
-                <td style={{textAlign: 'center'}}>
+                <td>
                   {prop.type}
                 </td>
-                <td style={{textAlign: 'center'}}>
+                <td>
                   {prop.description}
                 </td>
                 <td>
