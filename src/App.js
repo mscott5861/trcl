@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ThemeProvider } from 'styled-components'
 import { MainContent, Sidebar, SingleColumnWithSidebar } from './components'
 import { ViewCopy, ViewLeaflet } from './views'
+import { EightPtGrid } from './design'
 
 
 
@@ -30,14 +31,15 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <React.Fragment>
+        <>
         <SingleColumnWithSidebar>
           <Sidebar/>
           <MainContent>
+          <EightPtGrid/>
             <ViewLeaflet/>
           </MainContent>
         </SingleColumnWithSidebar>
-        </React.Fragment>
+        </>
       </ThemeProvider>
     );
   }

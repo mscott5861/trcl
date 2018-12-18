@@ -22,7 +22,7 @@ function useWebsocketDataProvider(src) {
     }
 
     return() => {
-      we.close(); 
+      ws.close(); 
     }
   });
 }
