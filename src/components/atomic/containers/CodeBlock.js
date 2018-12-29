@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 
 const StyledCodeBlock = styled.pre`
+  display: flex;
+  align-items: center;
   color: #393318;
   background-color: #eff0f1;
   padding: 2rem;

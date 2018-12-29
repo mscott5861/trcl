@@ -3,16 +3,11 @@ import styled from 'styled-components'
 
 const StyledTable = styled.table` 
   border-collapse: collapse;
-  font-family: Arial;
   font-size: .75rem;
 
-  td {
+  td, th {
     word-wrap: break-word;
-    padding: .5em 1em;
-  }
-
-  th {
-    padding: .5em 1em;
+    padding: .75em 1em;
   }
 
   tr:nth-child(even) {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { CodeBlock, Copy, H1, H3, PropsTable, TwoColumnLayout } from '../components'
+import { CodeBlock, Copy, H1, H3, HR, PropsTable, TwoColumnLayout } from '../components'
 import { generateLoremIpsum } from '../utilities'
 
 
@@ -73,6 +73,21 @@ export default function CopyLeaflet(props) {
           centeredVertically>
           {'Strings passed to Copy in curly braces and single quotes (or backticks) will break on newline characters, technically generating additional <p> elements to contain the text following them.'}
         </Copy>
+      </TwoColumnLayout>
+      <TwoColumnLayout
+        columns='1fr .4fr'>
+        <Copy
+          columns={2}>
+          { generateLoremIpsum() }
+        </Copy>
+        <CodeBlock>
+        {
+`<Copy
+    columns={2}>
+    { generateLoremIpsum() }
+</Copy>`
+        }
+        </CodeBlock>
       </TwoColumnLayout>
       <H3>
         Props

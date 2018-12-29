@@ -7,7 +7,7 @@ const StyledH1 = styled.h1`
   font-size: calc(32px + ((24 * (100vw-800px))/799));
   line-height: 1.05rem;
   text-align: ${props => props.rightAligned ? 'right' : 'left'};
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
 
   //-------------------------------------------------------------
   // Medium devices: tablets

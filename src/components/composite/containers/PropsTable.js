@@ -1,6 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
 import { Table } from '../../../components'
+
+
 
 export default class PropsTable extends React.Component {
   render() {

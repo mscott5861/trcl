@@ -29,6 +29,8 @@ const StyledCopy = styled.p`
   display: ${props => props.centeredVertically ? 'flex' : 'block'};
   align-items: ${props => props.centeredVertically ? 'center' : 'initial'};
   margin-bottom: ${props => props.centeredVertically ? '0' : '2rem'};
+  column-count: ${props => props.columns ? props.columns : '1'};
+  columns-gap: ${props => props.columnGap ? props.columnGap : 'initial'};
 
   line-height: 1.5rem;
   letter-spacing: ${props => props.tracking ? props.tracking : 'initial'};
@@ -48,18 +50,21 @@ export default function Copy(props) {
       <React.Fragment>
       { props.children && props.children.split('\n').map((paragraph, idx) => {
         return (
-        <React.Fragment key={'lorem-' + idx}>
-          <StyledCopy
-            weight={props.weight}
-            centeredHorizontally={props.centeredHorizontally}
-            centeredVertically={props.centeredVertically}
-            rightAligned={props.rightAligned}
-            justified={props.justified}
-            tracking={props.tracking}
-            optimizeLength={props.optimizeLength}>
-            { paragraph }
-          </StyledCopy>
-        </React.Fragment>
+          paragraph.length > 0 &&
+          <React.Fragment key={'lorem-' + idx}>
+            <StyledCopy
+              centeredHorizontally={props.centeredHorizontally}
+              centeredVertically={props.centeredVertically}
+              columns={props.columns}
+              columnGap={props.columnGap} 
+              justified={props.justified}
+              optimizeLength={props.optimizeLength}
+              rightAligned={props.rightAligned}
+              tracking={props.tracking}
+              weight={props.weight}>
+              { paragraph }
+            </StyledCopy>
+          </React.Fragment>
         );
       })}
       </React.Fragment>
@@ -67,6 +72,7 @@ export default function Copy(props) {
 }
 
 Copy.propTypes = {
+  children: PropTypes.node.isRequired,
   weight: PropTypes.oneOf(['extraLight', 'light', 'medium', 'regular', 'semiBold', 'bold', 'ultraBold']),
   centeredHorizontally: PropTypes.bool,
   centeredVertically: PropTypes.bool,
@@ -74,5 +80,7 @@ Copy.propTypes = {
   justified: PropTypes.bool,
   tracking: PropTypes.string,
   optimizeLength: PropTypes.bool,
+  columns: PropTypes.number,
+  columnGap: PropTypes.string,
 }
 
