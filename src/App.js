@@ -3,8 +3,7 @@ import { ThemeProvider } from 'styled-components'
 import { MainContent, Sidebar, SingleColumnWithSidebar } from './components'
 import { ViewCopy, ViewLeaflet } from './views'
 //import { EightPtGrid } from './design'
-
-
+import { ViewSampleStretched3C } from './views'
 
 const colors = {
   primary: 'grey',
@@ -31,14 +30,7 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <>
-        <SingleColumnWithSidebar>
-          <Sidebar/>
-          <MainContent>
-            <ViewCopy/>
-          </MainContent>
-        </SingleColumnWithSidebar>
-        </>
+        <ViewSampleStretched3C/>
       </ThemeProvider>
     );
   }
