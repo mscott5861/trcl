@@ -16,7 +16,7 @@ import styled from 'styled-components'
  *  <p> elements to contain text following them.
  * -------------------------------------------------------------- */
 
-const StyledCopy = styled.p`
+const StCopy = styled.p`
   font-size: 1rem;
   font-weight: ${props => props.weight === 'extraLight' ? '200' :
                           props.weight === 'light' ? '300' :
@@ -56,7 +56,7 @@ export default function Copy(props) {
         return (
           paragraph.length > 0 &&
           <React.Fragment key={'lorem-' + idx}>
-            <StyledCopy
+            <StCopy
               centeredHorizontally={props.centeredHorizontally}
               centeredVertically={props.centeredVertically}
               columns={props.columns}
@@ -68,7 +68,7 @@ export default function Copy(props) {
               tracking={props.tracking}
               weight={props.weight}>
               { paragraph }
-            </StyledCopy>
+            </StCopy>
           </React.Fragment>
         );
       })}

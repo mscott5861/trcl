@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 
 
-const StyledSingleColumnWithSidebarAndNavbar = styled.div`
+const StSingleColumnWithSidebarAndNavbar = styled.div`
   display: grid; 
   grid-template-columns: 15rem 1fr;
   grid-template-rows: 5rem 1fr;
@@ -40,9 +40,9 @@ const StyledSingleColumnWithSidebarAndNavbar = styled.div`
 
 export default function SingleColumnWithSidebarAndNavbar(props) {
   return (
-    <StyledSingleColumnWithSidebarAndNavbar>
+    <StSingleColumnWithSidebarAndNavbar>
       { props.children }
-    </StyledSingleColumnWithSidebarAndNavbar>
+    </StSingleColumnWithSidebarAndNavbar>
   );
 }
 

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-const StyledLeaflet = styled.div`
+const StLeaflet = styled.div`
   position: relative;
   display: ${props => props.display};
   opacity: ${props => props.isVisible ? '1' : '0'};
@@ -46,7 +46,7 @@ const StyledLeaflet = styled.div`
     }
 `
 
-StyledLeaflet.defaultProps = {
+StLeaflet.defaultProps = {
   theme: {
     cardTitlebarColor: 'red',
     copyFont: 'sans-serif',
@@ -110,7 +110,7 @@ export default class Leaflet extends React.Component {
 
   render() {
     return (
-      <StyledLeaflet
+      <StLeaflet
         display={this.state.display}
         fitContent={this.props.fitContent}
         title={this.props.title}
@@ -127,7 +127,7 @@ export default class Leaflet extends React.Component {
               position={this.props.titlebarPosition}/>
         }
         { this.props.children }
-      </StyledLeaflet>
+      </StLeaflet>
     );
   }
 }

@@ -9,6 +9,9 @@ const StImageWithCaption = styled.img`
 
 const StCaption = styled.p`
   font-size: 0.75rem; 
+  font-style: italic;
+  text-align: ${props => props.centeredHorizontally ? 'center' : (props.rightAligned ? 'right' : 'left')};
+  line-height: 2rem;
 `
 
 const StWrapper = styled.div`
@@ -20,7 +23,9 @@ export default function ImageWithCaption(props) {
     <StWrapper>
       <StImageWithCaption
         src={props.src}/>
-      <StCaption>
+      <StCaption
+        centeredHorizontally={props.centeredHorizontally}
+        rightAligned={props.rightAligned}>
         {props.children}
       </StCaption>
     </StWrapper>
@@ -29,6 +34,9 @@ export default function ImageWithCaption(props) {
 
 
 ImageWithCaption.propTypes = {
+  centeredHorizontally: PropTypes.bool,
   children: PropTypes.node.isRequired,
+  rightAligned: PropTypes.bool,
   src: PropTypes.string.isRequired,
+  weight: PropTypes.oneOf(['extraLight', 'light', 'medium', 'regular', 'semiBold', 'bold', 'ultraBold']),
 }

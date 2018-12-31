@@ -13,7 +13,7 @@ import { generateUniqueId } from '../../../../utilities'
  *  they should be passed in using wrappers.
  * -------------------------------------------------------------- */
 
-const StyledTwoColumnLayout = styled.div`
+const StTwoColumnLayout = styled.div`
   display: grid; 
   grid-gap: 2rem;
   grid-template-columns: ${props => props.columns ? props.columns : '1fr 1fr'};
@@ -65,12 +65,12 @@ export default class TwoColumnLayout extends React.Component {
 
   render() {
     return (
-      <StyledTwoColumnLayout
+      <StTwoColumnLayout
         id={this.state.id}
         columns={this.props.columns}
         centeredVertically={this.props.centeredVertically}>
         { this.props.children }
-      </StyledTwoColumnLayout>
+      </StTwoColumnLayout>
     );
   }
 }

@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-const StyledH2 = styled.h2`
+const StH2 = styled.h2`
   font-size: ${props => props.fontSize ? props.fontSize : '2.25rem'};
+  line-height: ${props => props.fontSize ? 'calc(' + props.fontSize + ' + 1rem)' : '3.25rem'};
   line-height: 2.5rem;
   color: ${props=> props.color ? props.color : '#000'};
 
@@ -26,13 +27,13 @@ const StyledH2 = styled.h2`
 
 export default function H2(props) {
   return (
-    <StyledH2
+    <StH2
       centered={props.centered}
       color={props.color}
       fontSize={props.fontSize}
       rightAligned={props.rightAligned}>
       { props.children }
-    </StyledH2>
+    </StH2>
   );
 }
 

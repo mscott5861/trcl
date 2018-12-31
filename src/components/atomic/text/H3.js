@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-const StyledH3 = styled.h3`
+const StH3 = styled.h3`
   font-size: ${props => props.fontSize ? props.fontSize : '1.75rem'};
-  line-height: ${props => props.fontSize ? 'calc(' + props.fontSize + ' + 2rem)' : '5rem'};
+  line-height: ${props => props.fontSize ? 'calc(' + props.fontSize + ' + 1rem)' : '2.75rem'};
   color: ${props=> props.color ? props.color : '#000'};
   margin: 0;
 
@@ -21,19 +21,19 @@ const StyledH3 = styled.h3`
   //-------------------------------------------------------------
   @media only screen and (max-width: 600px) {
     font-size: 1.375rem;
-    line-height: 2.375rem;
+    line-height: 1.5rem;
   }
 `
 
 export default function H3(props) {
   return (
-    <StyledH3
+    <StH3
       centered={props.centered}
       color={props.color}
       fontSize={props.fontSize}
       rightAligned={props.rightAligned}>
       { props.children }
-    </StyledH3>
+    </StH3>
   );
 }
 

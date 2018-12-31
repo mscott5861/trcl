@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Copy, HeroBanner, ImageWithCaption, MainContent, TwoColumnLayout } from '../components'
+import { Copy, HeroBanner, ImageWithCaption, MainContent, Navbar, TwoColumnLayout } from '../components'
 import { generateLoremIpsum } from '../utilities'
 
 const StPageWrapper = styled.div`
@@ -11,6 +11,10 @@ export default class ViewSampleStretched3C extends React.Component {
   render() {
     return (
       <StPageWrapper>
+        <Navbar
+          bgColor='#03174A'>
+          Some navbar stuff
+        </Navbar>
         <HeroBanner
           header='A Header'
           headerColor='#03174A'
@@ -27,8 +31,9 @@ export default class ViewSampleStretched3C extends React.Component {
           </Copy>
           <TwoColumnLayout>
             <ImageWithCaption
-              src={'./img/sample-img-01.jpg'}>
-              A caption that really explains some things.
+              src={'./img/sample-img-01.jpg'}
+              centeredHorizontally>
+              Fig 1.1: A caption that really explains some things.
             </ImageWithCaption>
             <Copy
               stylizeFirstLetter>

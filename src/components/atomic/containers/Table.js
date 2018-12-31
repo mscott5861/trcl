@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const StyledTable = styled.table` 
+const StTable = styled.table` 
   border-collapse: collapse;
   font-size: .75rem;
 
@@ -18,11 +18,11 @@ const StyledTable = styled.table`
 export default class Table extends React.Component {
   render() {
     return (
-      <StyledTable>
+      <StTable>
         <tbody>
           { this.props.children }
         </tbody>
-      </StyledTable>
+      </StTable>
     );
   }
 }

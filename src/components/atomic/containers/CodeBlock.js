@@ -8,7 +8,7 @@ import styled from 'styled-components'
  *  for syntax highlighting. Currently limited in functionality.
  *--------------------------------------------------------------- */
  
-const StyledCodeBlock = styled.pre`
+const StCodeBlock = styled.pre`
   display: flex;
   align-items: center;
   color: #393318;
@@ -25,11 +25,11 @@ const StyledCodeBlock = styled.pre`
 export default class CodeBlock extends React.Component {
   render() {
     return (
-      <StyledCodeBlock>
+      <StCodeBlock>
         <code className='prettyprint'>
           { this.props.children }
         </code>
-      </StyledCodeBlock>
+      </StCodeBlock>
     )
   };
 }

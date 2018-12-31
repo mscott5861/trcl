@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
  *  populates its `grid-template-columns` property.
  * -------------------------------------------------------------- */
 
-const StyledThreeColumnLayout = styled.div`
+const StThreeColumnLayout = styled.div`
   display: grid; 
   grid-gap: 2rem;
   grid-template-columns: ${props => props.columns ? props.columns : '1fr 1fr 1fr'};
@@ -57,12 +57,12 @@ export default class ThreeColumnLayout extends React.Component {
 
   render() {
     return (
-      <StyledThreeColumnLayout
+      <StThreeColumnLayout
         id={this.state.id}
         columns={this.props.columns}
         centeredVertically={this.props.centeredVertically}>
         { this.props.children }
-      </StyledThreeColumnLayout>
+      </StThreeColumnLayout>
     );
   }
 }

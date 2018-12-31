@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const StyledMainContent = styled.div`
+const StMainContent = styled.div`
   padding: 3rem;
 
   @meda(max-width: 768px) {
@@ -12,9 +12,9 @@ const StyledMainContent = styled.div`
 export default class MainContent extends React.Component {
   render() {
     return (
-      <StyledMainContent className='main-content'>
+      <StMainContent className='main-content'>
         { this.props.children }
-      </StyledMainContent>
+      </StMainContent>
     );
   }
 }
