@@ -72,15 +72,15 @@ export default function Copy(props) {
 }
 
 Copy.propTypes = {
-  children: PropTypes.node.isRequired,
-  weight: PropTypes.oneOf(['extraLight', 'light', 'medium', 'regular', 'semiBold', 'bold', 'ultraBold']),
   centeredHorizontally: PropTypes.bool,
   centeredVertically: PropTypes.bool,
-  rightAligned: PropTypes.bool,
-  justified: PropTypes.bool,
-  tracking: PropTypes.string,
-  optimizeLength: PropTypes.bool,
-  columns: PropTypes.number,
+  children: PropTypes.node.isRequired,
   columnGap: PropTypes.string,
+  columns: PropTypes.number,
+  justified: PropTypes.bool,
+  optimizeLength: PropTypes.bool,
+  rightAligned: PropTypes.bool,
+  tracking: PropTypes.string,
+  weight: PropTypes.oneOf(['extraLight', 'light', 'medium', 'regular', 'semiBold', 'bold', 'ultraBold']),
 }
 

@@ -38,6 +38,7 @@ export default function H2(props) {
 
 H2.propTypes = {
   centered: PropTypes.bool,
+  children: PropTypes.node.isRequired,
   color: PropTypes.string,
   fontSize: PropTypes.fontSize,
   rightAligned: PropTypes.bool

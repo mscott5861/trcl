@@ -5,8 +5,10 @@ import H2 from './atomic/text/H2'
 import H3 from './atomic/text/H3'
 import HR from './atomic/embellishments/HR'
 import HeroBanner from './atomic/images/HeroBanner'
+import ImageWithCaption from './atomic/images/ImageWithCaption'
 import Input from './atomic/text/Input'
 import Leaflet from './atomic/containers/Leaflet'
+import Link from './atomic/text/Link'
 import MainContent from './atomic/containers/MainContent'
 import Navbar from './atomic/containers/Navbar'
 import PropsTable from './composite/containers/PropsTable'
@@ -25,8 +27,10 @@ export {
   H3,
   HR,
   HeroBanner,
+  ImageWithCaption,
   Input,
   Leaflet,
+  Link,
   MainContent,
   Navbar,
   PropsTable,

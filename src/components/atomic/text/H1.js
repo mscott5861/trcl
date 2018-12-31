@@ -40,6 +40,7 @@ export default function H1(props) {
 
 H1.propTypes = {
   centered: PropTypes.bool,
+  children: PropTypes.node.isRequired,
   color: PropTypes.string,
   fontSize: PropTypes.string,
   rightAligned: PropTypes.bool

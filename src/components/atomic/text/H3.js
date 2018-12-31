@@ -39,6 +39,7 @@ export default function H3(props) {
 
 H3.propTypes = {
   centered: PropTypes.bool,
+  children: PropTypes.node.isRequired,
   color: PropTypes.string,
   fontSize: PropTypes.string,
   rightAligned: PropTypes.bool

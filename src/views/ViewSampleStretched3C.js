@@ -18,8 +18,8 @@ export default class ViewSampleStretched3C extends React.Component {
           headerColor='#03174A'
           headerTop='40%'
           headerLeft='5rem'
-          headerTextAlign='left'>
-        </HeroBanner>
+          headerTextAlign='left'
+          headerFontSize='7rem'/>
         <MainContent>
           <Copy
             columns={3}>
