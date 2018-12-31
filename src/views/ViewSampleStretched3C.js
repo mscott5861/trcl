@@ -12,7 +12,8 @@ export default class ViewSampleStretched3C extends React.Component {
     return (
       <StPageWrapper>
         <Navbar
-          bgColor='#03174A'>
+          bgColor='#03174A'
+          sticky>
           Some navbar stuff
         </Navbar>
         <HeroBanner
