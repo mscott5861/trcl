@@ -4,7 +4,7 @@ import H1 from './atomic/text/H1'
 import H2 from './atomic/text/H2'
 import H3 from './atomic/text/H3'
 import HR from './atomic/embellishments/HR'
-import HeroImage from './atomic/images/HeroImage'
+import HeroBanner from './atomic/images/HeroBanner'
 import Input from './atomic/text/Input'
 import Leaflet from './atomic/containers/Leaflet'
 import MainContent from './atomic/containers/MainContent'
@@ -24,7 +24,7 @@ export {
   H2,
   H3,
   HR,
-  HeroImage,
+  HeroBanner,
   Input,
   Leaflet,
   MainContent,

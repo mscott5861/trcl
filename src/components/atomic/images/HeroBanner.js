@@ -29,18 +29,26 @@ const StBannerWrapper = styled.div`
 
 const StHeaderWrapper = styled.div`
   position: absolute;
-  top: 25%;
-  left: 4rem;
+  top: ${props => props.headerTop ? props.headerTop : '25%'};
+  left: ${props => props.headerLeft ? props.headerLeft : '4rem'};
+
+  & > h1,
+  & > h3 {
+    text-align: ${props => props.headerTextAlign ? props.headerTextAlign : 'left'};
+  }
 `
 
 
 
-export default function HeroImage(props) {
+export default function HeroBanner(props) {
   return (
     <StBannerWrapper>
       <StHeroImage
         src={props.src}/>
-      <StHeaderWrapper>
+      <StHeaderWrapper
+        headerTop={props.headerTop}
+        headerLeft={props.headerLeft}
+        headerTextAlign={props.headerTextAlign}>
         <StHeroHeader
           color={props.headerColor}
           fontSize='7rem'>

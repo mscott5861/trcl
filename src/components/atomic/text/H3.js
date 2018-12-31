@@ -4,15 +4,16 @@ import styled from 'styled-components'
 
 const StyledH3 = styled.h3`
   font-size: ${props => props.fontSize ? props.fontSize : '1.75rem'};
-  line-height: 2rem;
+  line-height: ${props => props.fontSize ? 'calc(' + props.fontSize + ' + 2rem)' : '5rem'};
   color: ${props=> props.color ? props.color : '#000'};
+  margin: 0;
 
   //-------------------------------------------------------------
   // Medium devices: tablets
   //-------------------------------------------------------------
   @media only screen and (min-width: 768px) and (max-width: 992px) {
     font-size: 1.5rem;
-    line-height: 1.5rem;
+    line-height: 3.5rem;
   }
 
   //-------------------------------------------------------------
@@ -20,6 +21,7 @@ const StyledH3 = styled.h3`
   //-------------------------------------------------------------
   @media only screen and (max-width: 600px) {
     font-size: 1.375rem;
+    line-height: 2.375rem;
   }
 `
 
