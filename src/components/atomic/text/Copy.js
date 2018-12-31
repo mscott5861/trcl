@@ -39,6 +39,10 @@ const StyledCopy = styled.p`
                           props.centeredHorizontally ? 'center' : 'left'};
   max-width: ${props => props.optimizeLength ? '66ch' : 'initial'};
   color: ${props => props.color ? props.color : '#333'};
+
+  &::first-letter {
+    font-size: ${props => props.stylizeFirstLetter ? '2rem' : '1rem'};
+  }
   
   @media(max-width: 768px) {
     max-width: ${props => props.optimizeLength ? '30ch' : 'initial'};
@@ -60,6 +64,7 @@ export default function Copy(props) {
               justified={props.justified}
               optimizeLength={props.optimizeLength}
               rightAligned={props.rightAligned}
+              stylizeFirstLetter={props.stylizeFirstLetter}
               tracking={props.tracking}
               weight={props.weight}>
               { paragraph }

@@ -1,7 +1,5 @@
 //--------------------------------------------------------------------
 //  repetitions: number of repetitions of the Lorem Ipsum paragraph 
-//  withLineBreaks: whether or not to include line breaks in the Lorem
-//                  Ipsum text. Defaults to true.
 //--------------------------------------------------------------------
 export function generateLoremIpsum(repetitions = 1) {
   let lorem = "";

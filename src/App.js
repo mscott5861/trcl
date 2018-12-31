@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { ThemeProvider } from 'styled-components'
-import { MainContent, Sidebar, SingleColumnWithSidebar } from './components'
-import { ViewCopy, ViewLeaflet } from './views'
-//import { EightPtGrid } from './design'
 import { ViewSampleStretched3C } from './views'
 
 const colors = {

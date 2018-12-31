@@ -8,7 +8,9 @@ import { generateUniqueId } from '../../../../utilities'
 /*---------------------------------------------------------------
  *  A sub-layout that generates a two-column layout for its
  *  children. Accepts an optional 'columns' prop, which 
- *  populates its `grid-template-columns` property.
+ *  populates its `grid-template-columns` property. Expects only
+ *  two children, so if multiple elements are needed per column,
+ *  they should be passed in using wrappers.
  * -------------------------------------------------------------- */
 
 const StyledTwoColumnLayout = styled.div`
@@ -47,6 +49,8 @@ export default class TwoColumnLayout extends React.Component {
   //  This is kind of gross. I need these container heights to be
   //  divisible by 8 (to conform to an 8-pixel grid system), and
   //  I don't know of any non-javascript way of ensuring they are.
+  //  Need to figure one out; too much garbage exists for supporting
+  //  this solution.
   //-----------------------------------------------------------------
   componentDidMount() {
     this.roundHeightToMultipleOfEight();

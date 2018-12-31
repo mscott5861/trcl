@@ -6,7 +6,8 @@ import React from 'react'
 // Swappable data provider HOCs, allowing wrapped components to consume
 // {data} props for a variety of source types (files/protocols). Each
 // HOC should accept a {src} prop (e.g., "ws://localhost:8080" or "file://path")
-// and provide its wrapped component with a {data} prop.
+// and provide its wrapped component with a {data} prop. Currently stubbed in place
+// without real testing.
 //----------------------------------------------------------------------------------
 
 export const withWSDataProvider = (WrappedComponent, src) => {

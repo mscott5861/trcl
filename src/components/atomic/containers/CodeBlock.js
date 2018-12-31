@@ -1,6 +1,13 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
+
+/*---------------------------------------------------------------
+ *  A component for displaying code. Uses Google's code-prettify
+ *  for syntax highlighting. Currently limited in functionality.
+ *--------------------------------------------------------------- */
+ 
 const StyledCodeBlock = styled.pre`
   display: flex;
   align-items: center;
@@ -25,4 +32,8 @@ export default class CodeBlock extends React.Component {
       </StyledCodeBlock>
     )
   };
+}
+
+CodeBlock.propTypes = {
+  children: PropTypes.node.isRequired,
 }
