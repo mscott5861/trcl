@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ThemeProvider } from 'styled-components'
-import { ViewSampleStretched3C } from './views'
+import { ViewSampleStretched3C } from 'views'
 
 const colors = {
   primary: 'grey',

@@ -1,3 +1,4 @@
+import Carousel from './composite/images/Carousel'
 import CodeBlock from './atomic/containers/CodeBlock'
 import Copy from './atomic/text/Copy'
 import H1 from './atomic/text/H1'
@@ -20,6 +21,7 @@ import ThreeColumnLayout from './atomic/layouts/sublayouts/ThreeColumnLayout'
 import TwoColumnLayout from './atomic/layouts/sublayouts/TwoColumnLayout'
 
 export {
+  Carousel,
   CodeBlock,
   Copy,
   H1,

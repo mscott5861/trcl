@@ -1,6 +1,6 @@
 import React from 'react'
-import { CodeBlock, Copy, H1, H3, Leaflet, TwoColumnLayout } from '../components'
-import { generateLoremIpsum } from '../utilities'
+import { CodeBlock, Copy, H1, H3, Leaflet, TwoColumnLayout } from 'components'
+import { generateLoremIpsum } from 'utilities'
 
 
 

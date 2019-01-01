@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Copy, HeroBanner, ImageWithCaption, MainContent, Navbar, TwoColumnLayout } from '../components'
-import { generateLoremIpsum } from '../utilities'
+import { Copy, HeroBanner, ImageWithCaption, MainContent, Navbar, TwoColumnLayout } from 'components'
+import { generateLoremIpsum } from 'utilities'
 
 const StPageWrapper = styled.div`
   display: block;

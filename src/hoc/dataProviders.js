@@ -7,7 +7,7 @@ import React from 'react'
 // {data} props for a variety of source types (files/protocols). Each
 // HOC should accept a {src} prop (e.g., "ws://localhost:8080" or "file://path")
 // and provide its wrapped component with a {data} prop. Currently stubbed in place
-// without real testing.
+// without significant testing.
 //----------------------------------------------------------------------------------
 
 export const withWSDataProvider = (WrappedComponent, src) => {
