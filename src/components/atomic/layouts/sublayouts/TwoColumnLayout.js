@@ -53,7 +53,11 @@ export default class TwoColumnLayout extends React.Component {
   //  this solution.
   //-----------------------------------------------------------------
   componentDidMount() {
-    this.roundHeightToMultipleOfEight();
+    //this.roundHeightToMultipleOfEight();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.roundHeightToMultiplesOfEight);
   }
 
   roundHeightToMultipleOfEight = () => {

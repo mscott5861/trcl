@@ -1,20 +1,40 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Copy, HeroBanner, ImageWithCaption, MainContent, Navbar, TwoColumnLayout } from 'components'
+import { Copy, HamburgerButton, HeroBanner, ImageWithCaption, MainContent, Navbar, Stripe, TwoColumnLayout } from 'components'
 import { generateLoremIpsum } from 'utilities'
 
 const StPageWrapper = styled.div`
   display: block;
 `
 
+
 export default class ViewSampleStretched3C extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      hamburgerClicked: false
+    }
+  }
+
   render() {
     return (
       <StPageWrapper>
         <Navbar
           bgColor='#03174A'
-          sticky>
-          Some navbar stuff
+          sticky
+          groupRight={
+            <p>
+              A Sticky Navbar
+            </p>
+          }
+          groupLeft={
+            <HamburgerButton
+              onHamburgerButtonClick={() => {
+                this.setState({
+                  hamburgerClicked: !this.state.hambugerClicked
+                });}}>
+            </HamburgerButton>
+          }>
         </Navbar>
         <HeroBanner
           header='A Header'
@@ -42,6 +62,13 @@ export default class ViewSampleStretched3C extends React.Component {
             </Copy>
           </TwoColumnLayout>
         </MainContent>
+        <Stripe
+          bgColor='#e6f2ff'>
+          <Copy
+            columns={1}>
+            { generateLoremIpsum(1) }
+          </Copy>
+        </Stripe>
       </StPageWrapper>
     );
   }

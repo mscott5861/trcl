@@ -50,7 +50,7 @@ export default class ThreeColumnLayout extends React.Component {
   componentDidMount() {
     let layout = document.getElementById(this.state.id),
         oldHeight = layout.offsetHeight,
-        newHeight = ((Math.floor( oldHeight / 8 ) + 1) * 8) + 'px';
+        newHeight = (Math.ceil( oldHeight / 8 ) * 8) + 'px';
 
     layout.style.height = newHeight;
   }
