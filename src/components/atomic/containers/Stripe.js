@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const StStripe = styled.div`
-  padding: 3rem;
+  padding: 2rem 3rem;
   background-color: ${props => props.bgColor ? props.bgColor : '#d2d2d2'};
   width: 100%;
 

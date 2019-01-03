@@ -48,7 +48,7 @@ export default class ViewSampleStretched3C extends React.Component {
         <MainContent>
           <Copy
             columns={3}>
-            { generateLoremIpsum(1) }
+            { generateLoremIpsum(3) }
           </Copy>
           <TwoColumnLayout>
             <ImageWithCaption
@@ -58,15 +58,15 @@ export default class ViewSampleStretched3C extends React.Component {
             </ImageWithCaption>
             <Copy
               stylizeFirstLetter>
-              { generateLoremIpsum() }
+              { generateLoremIpsum(2) }
             </Copy>
           </TwoColumnLayout>
         </MainContent>
         <Stripe
           bgColor='#e6f2ff'>
           <Copy
-            columns={1}>
-            { generateLoremIpsum(1) }
+            columns={3}>
+            { generateLoremIpsum(4) }
           </Copy>
         </Stripe>
       </StPageWrapper>

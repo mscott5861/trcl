@@ -9,11 +9,6 @@ import styled from 'styled-components'
  *  such as optimal length (66 characters for desktop, according 
  *  to Bringhurst, and roughly half that for mobile), responsive
  *  line-height, etc.
- *
- *  Strings passed to Copy in curly braces and single quotes
- *  (e.g., <Copy> {'Example \n break'} </Copy>) will break on
- *  newline characters ('\n'), technically generating additional
- *  <p> elements to contain text following them.
  * -------------------------------------------------------------- */
 
 const StCopy = styled.p`
@@ -46,33 +41,25 @@ const StCopy = styled.p`
   
   @media(max-width: 768px) {
     max-width: ${props => props.optimizeLength ? '30ch' : 'initial'};
+    column-count: 1;
   }
 `
 
 export default function Copy(props) {
     return (
-      <React.Fragment>
-      { props.children && props.children.split('\n').map((paragraph, idx) => {
-        return (
-          paragraph.length > 0 &&
-          <React.Fragment key={'lorem-' + idx}>
-            <StCopy
-              centeredHorizontally={props.centeredHorizontally}
-              centeredVertically={props.centeredVertically}
-              columns={props.columns}
-              columnGap={props.columnGap} 
-              justified={props.justified}
-              optimizeLength={props.optimizeLength}
-              rightAligned={props.rightAligned}
-              stylizeFirstLetter={props.stylizeFirstLetter}
-              tracking={props.tracking}
-              weight={props.weight}>
-              { paragraph }
-            </StCopy>
-          </React.Fragment>
-        );
-      })}
-      </React.Fragment>
+      <StCopy
+        centeredHorizontally={props.centeredHorizontally}
+        centeredVertically={props.centeredVertically}
+        columns={props.columns}
+        columnGap={props.columnGap} 
+        justified={props.justified}
+        optimizeLength={props.optimizeLength}
+        rightAligned={props.rightAligned}
+        stylizeFirstLetter={props.stylizeFirstLetter}
+        tracking={props.tracking}
+        weight={props.weight}>
+        { props.children }
+      </StCopy>
     );
 }
 
