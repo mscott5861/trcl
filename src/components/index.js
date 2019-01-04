@@ -22,6 +22,7 @@ import Stripe from './atomic/containers/Stripe'
 import Table from './atomic/containers/Table'
 import ThreeColumnLayout from './atomic/layouts/sublayouts/ThreeColumnLayout'
 import TwoColumnLayout from './atomic/layouts/sublayouts/TwoColumnLayout'
+import VideoPlayer from './atomic/media/VideoPlayer'
 
 export {
   Carousel,
@@ -48,4 +49,5 @@ export {
   Table,
   ThreeColumnLayout,
   TwoColumnLayout,
+  VideoPlayer,
 }

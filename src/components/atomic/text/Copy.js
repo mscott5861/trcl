@@ -21,12 +21,12 @@ const StCopy = styled.p`
                           props.weight === 'bold' ? '800' : 
                           props.weight === 'ultraBold' ? '900' : '400' };
   
-  color: ${props => props.textColor ? props.textColor : '#000'};
+  color: ${props => props.textColor ? props.textColor : '#333'};
   display: ${props => props.centeredVertically ? 'flex' : 'block'};
   align-items: ${props => props.centeredVertically ? 'center' : 'initial'};
   margin-bottom: ${props => props.centeredVertically ? '0' : '2rem'};
   column-count: ${props => props.columns ? props.columns : '1'};
-  columns-gap: ${props => props.columnGap ? props.columnGap : 'initial'};
+  column-gap: ${props => props.columnGap ? props.columnGap : 'initial'};
 
   line-height: 1.5rem;
   letter-spacing: ${props => props.tracking ? props.tracking : 'initial'};
@@ -34,7 +34,6 @@ const StCopy = styled.p`
                           props.rightAligned ? 'right' :
                           props.centeredHorizontally ? 'center' : 'left'};
   max-width: ${props => props.optimizeLength ? '66ch' : 'initial'};
-  color: ${props => props.color ? props.color : '#333'};
 
   &::first-letter {
     font-size: ${props => props.stylizeFirstLetter ? '2rem' : '1rem'};

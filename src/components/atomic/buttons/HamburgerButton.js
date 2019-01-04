@@ -22,10 +22,10 @@ const StHamburgerButton = styled.button`
   -moz-transform: rotate(0deg);
   -o-transform: rotate(0deg);
   transform: rotate(0deg);
-  -webkit-transition: .25s ease-in-out;
-  -moz-transition: .25s ease-in-out;
-  -o-transition: .25s ease-in-out;
-  transition: .25s ease-in-out;
+  -webkit-transition: .1s ease-in-out;
+  -moz-transition: .1s ease-in-out;
+  -o-transition: .1s ease-in-out;
+  transition: .1s ease-in-out;
   cursor: pointer;
 
   & span {
@@ -49,6 +49,7 @@ const StHamburgerButton = styled.button`
 
   & span:nth-child(1) {
     top: 0px;
+    transition: .1s ease-in;
   }
 
   & span:nth-child(2), & span:nth-child(3) {
@@ -76,14 +77,16 @@ const StHamburgerButton = styled.button`
     -o-transform: rotate(45deg);
     transform: rotate(45deg);
     top: 12px;
+    transition-delay: .1s;
   }
 
   &.open span:nth-child(3) {
-    -webkit-transform: rotate(-45deg);
-    -moz-transform: rotate(-45deg);
-    -o-transform: rotate(-45deg);
-    transform: rotate(-45deg);
+    -webkit-transform: rotate(-405deg);
+    -moz-transform: rotate(-405deg);
+    -o-transform: rotate(-405deg);
+    transform: rotate(-405deg);
     top: 12px;
+    transition-delay: .1s;
   }
 
   &.open span:nth-child(4) {

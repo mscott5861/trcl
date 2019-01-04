@@ -43,7 +43,8 @@ const StBannerWrapper = styled.div`
 const StHeaderWrapper = styled.div`
   position: absolute;
   top: ${props => props.headerTop ? props.headerTop : '25%'};
-  left: ${props => props.headerLeft ? props.headerLeft : '4rem'};
+  left: ${props => props.headerLeft ? props.headerLeft : 'unset'};
+  right: ${props => props.headerRight ? props.headerRight : 'unset'};
 
   & > h1,
   & > h3 {
@@ -62,6 +63,7 @@ export default function HeroBanner(props) {
         fontFamily={props.headerFontFamily}
         headerTop={props.headerTop}
         headerLeft={props.headerLeft}
+        headerRight={props.headerRight}
         headerTextAlign={props.headerTextAlign}>
         <StHeroHeader
           color={props.headerColor}
@@ -83,6 +85,7 @@ HeroBanner.propTypes = {
   headerFontFamily: PropTypes.string,
   headerFontSize: PropTypes.string,
   headerLeft: PropTypes.string,
+  headerRight: PropTypes.string,
   headerTextAlign: PropTypes.string,
   headerTop: PropTypes.string,
   src: PropTypes.string.isRequired,
