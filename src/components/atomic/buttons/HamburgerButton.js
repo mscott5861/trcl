@@ -2,6 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
+
+
+/*---------------------------------------------------------------
+ *  A hamburger button, as often seen in navigation bars. Expects
+ *  a callback function, handleHamburgerButtonClick, to let it
+ *  know what to do when a user clicks on it.
+ *---------------------------------------------------------------*/
+ 
 const StHamburgerButton = styled.button`
   background-color: transparent;
   background-repeat: no-repeat;
@@ -14,18 +22,18 @@ const StHamburgerButton = styled.button`
   -moz-transform: rotate(0deg);
   -o-transform: rotate(0deg);
   transform: rotate(0deg);
-  -webkit-transition: .5s ease-in-out;
-  -moz-transition: .5s ease-in-out;
-  -o-transition: .5s ease-in-out;
-  transition: .5s ease-in-out;
+  -webkit-transition: .25s ease-in-out;
+  -moz-transition: .25s ease-in-out;
+  -o-transition: .25s ease-in-out;
+  transition: .25s ease-in-out;
   cursor: pointer;
 
   & span {
     display: block;
     position: absolute;
-    height: 5px;
+    height: 4px;
     width: 100%;
-    background: #fff;
+    background: ${props => props.buttonColorUnclicked ? props.buttonColorUnclicked : '#fff'};
     border-radius: 9px;
     opacity: 1;
     left: 0;
@@ -47,21 +55,27 @@ const StHamburgerButton = styled.button`
     top: 12px;
   }
 
-  & span:nth-child(4) {
+  & span:nth-child(3) {
     top: 24px;
   }
 
-  &.open span:nth-child(1) {
-    top: 12px;
-    width: 0%;
-    left: 50%;
+  &.open span:nth-child(1),
+  &.open span:nth-child(2),
+  &.open span:nth-child(3) {
+    background: ${props => props.buttonColorClicked ? props.buttonColorClicked : '#fff'}
   }
 
   &.open span:nth-child(2) {
+    top: 12px;
+    transform: translateX(-100%);
+  }
+
+  &.open span:nth-child(1) {
     -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
     -o-transform: rotate(45deg);
     transform: rotate(45deg);
+    top: 12px;
   }
 
   &.open span:nth-child(3) {
@@ -69,6 +83,7 @@ const StHamburgerButton = styled.button`
     -moz-transform: rotate(-45deg);
     -o-transform: rotate(-45deg);
     transform: rotate(-45deg);
+    top: 12px;
   }
 
   &.open span:nth-child(4) {
@@ -102,9 +117,10 @@ export default class HamburgerButton extends React.Component {
   render() {
     return (
       <StHamburgerButton
+        buttonColorClicked={this.props.buttonColorClicked}
+        buttonColorUnclicked={this.props.buttonColorUnclicked}
         className={this.state.clicked ? 'open' : ''}
         onClick={this.handleHamburgerButtonClick}>
-        <span></span>
         <span></span>
         <span></span>
         <span></span>
@@ -114,5 +130,7 @@ export default class HamburgerButton extends React.Component {
 }
 
 HamburgerButton.propTypes = {
+  buttonColorClicked: PropTypes.string,
+  buttonColorUnclicked: PropTypes.string,
   onHamburgerButtonClick: PropTypes.func.isRequired
 }

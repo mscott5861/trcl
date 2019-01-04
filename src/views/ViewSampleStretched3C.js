@@ -23,9 +23,9 @@ export default class ViewSampleStretched3C extends React.Component {
           bgColor='#03174A'
           sticky
           groupRight={
-            <p>
-              A Sticky Navbar
-            </p>
+            <div>
+              <span>A Sticky Navbar</span>
+            </div>
           }
           groupLeft={
             <HamburgerButton

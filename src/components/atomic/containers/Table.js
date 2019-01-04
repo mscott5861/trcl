@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 const StTable = styled.table` 
@@ -27,3 +28,6 @@ export default class Table extends React.Component {
   }
 }
 
+Table.propTypes = {
+  children: PropTypes.node.isRequired
+}

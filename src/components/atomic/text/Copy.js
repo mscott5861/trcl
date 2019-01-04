@@ -21,6 +21,7 @@ const StCopy = styled.p`
                           props.weight === 'bold' ? '800' : 
                           props.weight === 'ultraBold' ? '900' : '400' };
   
+  color: ${props => props.textColor ? props.textColor : '#000'};
   display: ${props => props.centeredVertically ? 'flex' : 'block'};
   align-items: ${props => props.centeredVertically ? 'center' : 'initial'};
   margin-bottom: ${props => props.centeredVertically ? '0' : '2rem'};
@@ -56,6 +57,7 @@ export default function Copy(props) {
         optimizeLength={props.optimizeLength}
         rightAligned={props.rightAligned}
         stylizeFirstLetter={props.stylizeFirstLetter}
+        textColor={props.textColor}
         tracking={props.tracking}
         weight={props.weight}>
         { props.children }
@@ -72,6 +74,7 @@ Copy.propTypes = {
   justified: PropTypes.bool,
   optimizeLength: PropTypes.bool,
   rightAligned: PropTypes.bool,
+  textColor: PropTypes.string,
   tracking: PropTypes.string,
   weight: PropTypes.oneOf(['extraLight', 'light', 'medium', 'regular', 'semiBold', 'bold', 'ultraBold']),
 }
