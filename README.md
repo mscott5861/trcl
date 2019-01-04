@@ -9,8 +9,7 @@ A playground for developing ideas about component libraries.
 
 ## Usage
 
-Not particularly useable at the moment, as it isn't structured correctly for use as an `npm_module`. Still very much
-in development. 
+Not particularly useable at the moment, as it isn't structured correctly for use as an `npm_module`.
 
 Clone the repo, `cd` to the root level of the project, and run `npm install`.
 
