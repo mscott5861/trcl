@@ -7,7 +7,7 @@ import styled from 'styled-components'
 /*---------------------------------------------------------------
  *  A hamburger button, as often seen in navigation bars. Expects
  *  a callback function, handleHamburgerButtonClick, to let it
- *  know what to do when a user clicks on it.
+ *  know what occurs when a user clicks on the button.
  *---------------------------------------------------------------*/
  
 const StHamburgerButton = styled.button`
@@ -120,6 +120,7 @@ export default class HamburgerButton extends React.Component {
   render() {
     return (
       <StHamburgerButton
+        animationVariant={this.props.animationVariant}
         buttonColorClicked={this.props.buttonColorClicked}
         buttonColorUnclicked={this.props.buttonColorUnclicked}
         className={this.state.clicked ? 'open' : ''}
@@ -133,6 +134,7 @@ export default class HamburgerButton extends React.Component {
 }
 
 HamburgerButton.propTypes = {
+  animationVariant: PropTypes.oneOf(['1', '2', '3', '4']),
   buttonColorClicked: PropTypes.string,
   buttonColorUnclicked: PropTypes.string,
   onHamburgerButtonClick: PropTypes.func.isRequired
