@@ -16,7 +16,8 @@ export default class Input extends React.Component {
 
   render() {
     return (
-      <StInput>
+      <StInput
+        onChange={this.props.handleInput}>
         { this.props.children } 
       </StInput>
     );
