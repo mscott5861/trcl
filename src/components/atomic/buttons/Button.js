@@ -14,8 +14,10 @@ const StButton = styled.div`
   cursor: pointer;
   transition: opacity .15s linear;
 
-  &:hover {
-    opacity: 0.85;
+  &:hover,
+  &:focus {
+    opacity: 0.75;
+    outline: none;
   }
 `
 
@@ -30,12 +32,18 @@ export default class Button extends React.Component {
     }
   }
 
+  handleOnFocus = () => {
+    console.log("Got that focus");
+  }
+
 
   render() {
     return (
       <StButton
         bgColor={this.props.bgColor}
-        onClick={this.handleOnClick}>
+        onClick={this.handleOnClick}
+        onFocus={this.handleOnFocus}
+        tabIndex='0'>
         <StLabel
           labelColor={this.props.labelColor}>
           { this.props.label }

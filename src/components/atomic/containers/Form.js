@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 const StForm = styled.div`
   
@@ -50,5 +50,9 @@ export default class Form extends React.Component {
       </StForm>
     );
   }
+}
+
+Form.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
 }
 

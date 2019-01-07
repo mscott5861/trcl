@@ -1,5 +1,5 @@
 import React from 'react'
-import { CodeBlock, Copy, H1, H3, HR, PropsTable, TwoColumnLayout } from 'components'
+import { CodeBlock, Copy, H1, H3, PropsTable, TwoColumnLayout } from 'components'
 import { generateLoremIpsum } from 'utilities'
 
 

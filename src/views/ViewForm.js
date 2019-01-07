@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button, Copy, Form, Image, Input, H1, MainContent, Stripe, ThreeColumnLayout, TwoColumnLayout } from 'components'
-import { generateLoremIpsum } from 'utilities'
-import { withMask } from 'hoc'
+import { Button, Form, HamburgerButton, Image, Input, H1, TwoColumnLayout } from 'components'
+import { withMask, withValidation } from 'hoc'
 
-const PasswordInput = withMask(Input, '*');
+const ValidatedInput = withValidation(withMask(Input, '*'));
+//const ValidatedInput = withValidation(MaskedInput, '/%a'); 
 
 const FormWrapper = styled.div`
   padding: 2rem;
@@ -16,17 +16,18 @@ const FormWrapper = styled.div`
 
 const ContentWrapper = styled.div`
   display: block;
+  padding-left: 3rem;
 `
 
-const Column35Rem = styled.div`
-  width: 35rem;
+const Column = styled.div`
+  width: 24rem;
 `
 
-const TopPadding = styled.div`
-  height: .75rem;
+const Wrapper = styled.div`
+  position: relative;
+  height: 100%;
   width: 100%;
 `
-
 export default class ViewForm extends React.Component {
   constructor(props) {
     super(props);
@@ -34,8 +35,17 @@ export default class ViewForm extends React.Component {
     }
   }
 
+  onHamburgerButtonClick = () => {
+  }
+
   render() {
     return (
+      <React.Fragment>
+      <HamburgerButton
+        buttonColorClicked='#333'
+        buttonColorUnclicked='#333'
+        fixed='top-left'
+        onHamburgerButtonClick={this.onHamburgerButtonClick}/>
       <TwoColumnLayout
         columns='0.5fr 1fr'
         matchViewportHeight>
@@ -44,26 +54,29 @@ export default class ViewForm extends React.Component {
             <H1>
               A Header
             </H1>
-            <TopPadding/>
-            <Column35Rem>
+            <Column>
               <Form>
                 <Input
                   inputID='username'
                   label='Username'/>
-                <PasswordInput
+                <ValidatedInput
                   inputID='password'
                   label='Password'/>
                 <Button
-                  bgColor='#5D2E5C'
+                  bgColor='#A1297B'
                   label='Login'/>
               </Form>
-            </Column35Rem>
+            </Column>
           </ContentWrapper>
         </FormWrapper>
-        <Image
-          clipPath='polygon(0 0, 100% 0, 100% 100%, 20% 100%)'
-          src={'./img/sample-img-02.jpg'}/>
+        <Wrapper>
+          <Image
+            clipPath='polygon(0 0, 100% 0, 100% 100%, 20% 100%)'
+            maxHeight='100vh'
+            src={'./img/sample-img-06.jpg'}/>
+        </Wrapper>
       </TwoColumnLayout>
+      </React.Fragment>
     );
   }
 }

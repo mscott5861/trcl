@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { generateUniqueId } from '../../../../utilities'
 
 
 
@@ -40,9 +39,6 @@ const StTwoColumnLayout = styled.div`
     }
   }
 `
-
-let resizeTimer;
-
 
 export default class TwoColumnLayout extends React.Component {
   render() {

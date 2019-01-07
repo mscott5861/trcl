@@ -27,6 +27,11 @@ const StHamburgerButton = styled.button`
   -o-transition: .1s ease-in-out;
   transition: .1s ease-in-out;
   cursor: pointer;
+  position: ${props => (props.fixed === 'top-left' || props.fixed === 'top-right' || props.fixed === 'bottom-left' || props.fixed === 'bottom-right') ? 'fixed' : 'static'};
+  top: ${props => props.fixed === 'top-left' || props.fixed === 'top-right' ? '2rem' : 'initial'};
+  left: ${props => props.fixed === 'top-left' || props.fixed === 'bottom-left' ? '2rem' : 'initial'};
+  right: ${props => props.fixed === 'top-right' || props.fixed === 'bottom-right' ? '2rem' : 'initial'};
+  bottom: ${props => props.fixed === 'bottom-left' || props.fixed === 'bottom-right' ? '2rem' : 'initial'};
 
   & span {
     display: block;
@@ -124,6 +129,7 @@ export default class HamburgerButton extends React.Component {
         buttonColorClicked={this.props.buttonColorClicked}
         buttonColorUnclicked={this.props.buttonColorUnclicked}
         className={this.state.clicked ? 'open' : ''}
+        fixed={this.props.fixed}
         onClick={this.handleHamburgerButtonClick}>
         <span></span>
         <span></span>
@@ -137,5 +143,6 @@ HamburgerButton.propTypes = {
   animationVariant: PropTypes.oneOf(['1', '2', '3', '4']),
   buttonColorClicked: PropTypes.string,
   buttonColorUnclicked: PropTypes.string,
+  fixed: PropTypes.oneOf(['top-left', 'top-right', 'bottom-left', 'bottom-right']),
   onHamburgerButtonClick: PropTypes.func.isRequired
 }
