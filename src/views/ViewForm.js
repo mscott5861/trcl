@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button, Copy, Image, Input, H1, MainContent, Stripe, ThreeColumnLayout, TwoColumnLayout } from 'components'
+import { Button, Copy, Form, Image, Input, H1, MainContent, Stripe, ThreeColumnLayout, TwoColumnLayout } from 'components'
 import { generateLoremIpsum } from 'utilities'
 import { withMask } from 'hoc'
 
@@ -18,12 +18,12 @@ const ContentWrapper = styled.div`
   display: block;
 `
 
-const Form = styled.div`
+const Column35Rem = styled.div`
   width: 35rem;
 `
 
 const TopPadding = styled.div`
-  height: 1.75rem;
+  height: .75rem;
   width: 100%;
 `
 
@@ -37,6 +37,7 @@ export default class ViewForm extends React.Component {
   render() {
     return (
       <TwoColumnLayout
+        columns='0.5fr 1fr'
         matchViewportHeight>
         <FormWrapper>
           <ContentWrapper>
@@ -44,18 +45,24 @@ export default class ViewForm extends React.Component {
               A Header
             </H1>
             <TopPadding/>
-            <Form>
-              <Input
-                label='Username'/>
-              <PasswordInput
-                label='Password'/>
-              <Button
-                label='Login'/>
-            </Form>
+            <Column35Rem>
+              <Form>
+                <Input
+                  inputID='username'
+                  label='Username'/>
+                <PasswordInput
+                  inputID='password'
+                  label='Password'/>
+                <Button
+                  bgColor='#5D2E5C'
+                  label='Login'/>
+              </Form>
+            </Column35Rem>
           </ContentWrapper>
         </FormWrapper>
         <Image
-          src={'./img/sample-hero-banner-03.jpg'}/>
+          clipPath='polygon(0 0, 100% 0, 100% 100%, 20% 100%)'
+          src={'./img/sample-img-02.jpg'}/>
       </TwoColumnLayout>
     );
   }

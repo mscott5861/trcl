@@ -12,6 +12,11 @@ const StButton = styled.div`
   border-radius: 6px;
   background: ${props => props.bgColor ? props.bgColor : '#333'};
   cursor: pointer;
+  transition: opacity .15s linear;
+
+  &:hover {
+    opacity: 0.85;
+  }
 `
 
 const StLabel = styled.p`
@@ -29,6 +34,7 @@ export default class Button extends React.Component {
   render() {
     return (
       <StButton
+        bgColor={this.props.bgColor}
         onClick={this.handleOnClick}>
         <StLabel
           labelColor={this.props.labelColor}>

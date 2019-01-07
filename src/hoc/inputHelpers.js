@@ -44,10 +44,10 @@ export const withMask = (WrappedInput, mask) => {
 
       this.setState({
         displayValue,
-        realValue
-      }, () => {
-        console.log("Set at: " + this.state.realValue); 
+        realValue,
       });
+
+      return realValue;
     }
 
     render() {

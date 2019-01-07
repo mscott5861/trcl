@@ -2,6 +2,7 @@ import Button from './atomic/buttons/Button'
 import Carousel from './composite/images/Carousel'
 import CodeBlock from './atomic/containers/CodeBlock'
 import Copy from './atomic/text/Copy'
+import Form from './atomic/containers/Form'
 import H1 from './atomic/text/H1'
 import H2 from './atomic/text/H2'
 import H3 from './atomic/text/H3'
@@ -31,6 +32,7 @@ export {
   Carousel,
   CodeBlock,
   Copy,
+  Form,
   H1,
   H2,
   H3,

@@ -63,12 +63,12 @@ export default class Input extends React.Component {
 
   
   handleOnChange = (e) => {
+    let realValue = this.props.handleInputReceived ? this.props.handleInputReceived(e.target.value) : e.target.value;
+    
     this.setState({
-      realValue: e.target.value
+      realValue
     }, () => {
-      if (this.props.handleInputReceived) {
-        this.props.handleInputReceived(this.state.realValue);
-      }
+      this.props.updateForm && this.props.updateForm(this.props.inputID, this.state.realValue);
     });
 
     e.stopPropagation();
@@ -134,5 +134,6 @@ Input.propTypes = {
   borderless: PropTypes.bool,
   borderColor: PropTypes.string,
   handleInputReceived: PropTypes.func,
+  inputID: PropTypes.string,
   labelColor: PropTypes.string,
 }

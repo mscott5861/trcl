@@ -7,15 +7,22 @@ const StImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  clip-path: ${props => props.clipPath ? props.clipPath : 'initial'};
+
+  @media(max-width: 1024px) {
+    clip-path: initial;
+  }
 `
 
 export default function Image(props) {
   return (
     <StImage
+      clipPath={props.clipPath}
       src={props.src}/>
   );
 }
 
 Image.propTypes = {
+  clipPath: PropTypes.string,
   src: PropTypes.string.isRequired,
 }
