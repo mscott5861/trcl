@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Button, Form, HamburgerButton, Image, Input, H1, TwoColumnLayout } from 'components'
 import { withMask, withValidation } from 'hoc'
 
-const ValidatedInput = withValidation(withMask(Input, '*'));
+const ValidatedInput = withValidation(Input, '*');
 //const ValidatedInput = withValidation(MaskedInput, '/%a'); 
 
 const FormWrapper = styled.div`

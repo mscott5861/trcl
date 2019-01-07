@@ -9,11 +9,10 @@ const StInputWrapper = styled.div`
   width: 100%;
   height: 2.25rem;
   border: ${props => props.borderless ? '0' : (
-    props.error && props.error !== '' ? '1px solid red' :
     (props.borderColor ? '1px solid' + props.borderColor : '1px solid #CCC'))};
   border-radius: 4px;
   margin-top: 2rem;
-  background-color: ${props => props.error ? 'rgba(255,0,0,0.1)' : (props.bgColor ? props.bgColor : (props.inputActive ? '#FFF' : '#F2F2F2'))};
+  background-color: ${props => props.bgColor ? props.bgColor : (props.inputActive ? '#FFF' : '#F2F2F2')};
   transition: background-color linear .25s;
 `
 

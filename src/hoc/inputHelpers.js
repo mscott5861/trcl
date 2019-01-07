@@ -75,7 +75,9 @@ const StErrorBlock = styled.div`
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   width: 35px;
-  border-left: ${props => props.error ? '1px solid red' : '1px solid #CCC'};
+  border-left: 1px solid #CCC;
+  background-color: ${props => props.error ? 'rgba(255,0,0,0.1)' : 'rgba(0,255,0,0.1)'};
+  transition: background-color .25s linear;
 `
 
 export const withValidation = (WrappedInput, schema) => {
@@ -88,6 +90,15 @@ export const withValidation = (WrappedInput, schema) => {
     }
 
     handleInputReceived = (inputReceived) => {
+      if (inputReceived[0] === 'o') {
+        this.setState({
+          error: 'too much'
+        });
+      } else {
+        this.setState({
+          error: ''
+        });
+      }
       console.log(inputReceived);
       return inputReceived;
     }
