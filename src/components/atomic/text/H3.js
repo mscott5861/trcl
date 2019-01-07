@@ -7,6 +7,9 @@ const StH3 = styled.h3`
   line-height: ${props => props.fontSize ? 'calc(' + props.fontSize + ' + 1rem)' : '2.75rem'};
   color: ${props=> props.textColor ? props.textColor : '#333'};
   margin: 0;
+  border-bottom: ${props => props.withUnderline ? "1px solid " + (props.textColor ? props.textColor : '#333') : 'none'};
+
+
 
   //-------------------------------------------------------------
   // Medium devices: tablets
@@ -31,7 +34,8 @@ export default function H3(props) {
       centered={props.centered}
       fontSize={props.fontSize}
       rightAligned={props.rightAligned}
-      textColor={props.textColor}>
+      textColor={props.textColor}
+      withUnderline={props.withUnderline}>
       { props.children }
     </StH3>
   );
@@ -43,6 +47,7 @@ H3.propTypes = {
   fontSize: PropTypes.string,
   rightAligned: PropTypes.bool,
   textColor: PropTypes.string,
+  withUnderline: PropTypes.bool,
 }
 
 
