@@ -1,3 +1,4 @@
+import Button from './atomic/buttons/Button'
 import Carousel from './composite/images/Carousel'
 import CodeBlock from './atomic/containers/CodeBlock'
 import Copy from './atomic/text/Copy'
@@ -7,6 +8,7 @@ import H3 from './atomic/text/H3'
 import HR from './atomic/embellishments/HR'
 import HamburgerButton from './atomic/buttons/HamburgerButton'
 import HeroBanner from './composite/images/HeroBanner'
+import Image from './atomic/images/Image'
 import ImageWithCaption from './composite/images/ImageWithCaption'
 import Input from './atomic/text/Input'
 import Leaflet from './atomic/containers/Leaflet'
@@ -25,6 +27,7 @@ import TwoColumnLayout from './atomic/layouts/sublayouts/TwoColumnLayout'
 import VideoPlayer from './atomic/media/VideoPlayer'
 
 export {
+  Button,
   Carousel,
   CodeBlock,
   Copy,
@@ -34,6 +37,7 @@ export {
   HR,
   HamburgerButton,
   HeroBanner,
+  Image,
   ImageWithCaption,
   Input,
   Leaflet,

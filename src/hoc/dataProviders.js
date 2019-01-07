@@ -12,7 +12,6 @@ import React from 'react'
 
 export const withWSDataProvider = (WrappedComponent, src) => {
   return class extends React.Component {
-    let ws = new WebSocket(this.state.src);
 
     constructor(props) {
       super(props);
@@ -20,10 +19,12 @@ export const withWSDataProvider = (WrappedComponent, src) => {
         src,
         data: []
       };
+
+      this.ws = new WebSocket(this.state.src);
     }
 
     componentWillMount() {
-      ws.onmessage = (e) => {
+      this.ws.onmessage = (e) => {
         if (e.data) {
           this.setState({
             data: e.data
@@ -31,13 +32,13 @@ export const withWSDataProvider = (WrappedComponent, src) => {
         }
       }
 
-      ws.onerror = (e) => {
+      this.ws.onerror = (e) => {
         console.log("Error on Websocket connection with " + this.state.src + " -> " + e.message);
       }
     }
 
     componentWillUnmount() {
-      ws.close();
+      this.ws.close();
     }
 
     render() {
