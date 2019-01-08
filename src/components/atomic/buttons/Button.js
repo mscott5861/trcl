@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-const StButton = styled.div`
+const StButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,8 +11,11 @@ const StButton = styled.div`
   margin-top: 2rem;
   border-radius: 6px;
   background: ${props => props.bgColor ? props.bgColor : '#333'};
-  cursor: pointer;
+  cursor: ${props => props.hasError ? 'not-allowed' : 'pointer'};
   transition: opacity .15s linear;
+  outline: none;
+  border: none;
+  opacity: ${props => props.hasError ? '0.5' : '1'};
 
   &:hover,
   &:focus {
@@ -26,23 +29,23 @@ const StLabel = styled.p`
 `
 
 export default class Button extends React.Component {
-  handleOnClick = () => {
-    if (this.props.handleOnClick) {
-      this.props.handleOnClick();
+  onClick = () => {
+    if (this.props.onClick && !this.props.hasError) {
+      this.props.onClick();
     }
   }
 
-  handleOnFocus = () => {
-    console.log("Got that focus");
+  onFocus = () => {
   }
-
 
   render() {
     return (
       <StButton
         bgColor={this.props.bgColor}
-        onClick={this.handleOnClick}
-        onFocus={this.handleOnFocus}
+        hasError={this.props.hasError}
+        onClick={this.onClick}
+        onFocus={this.onFocus}
+        type='submit'
         tabIndex='0'>
         <StLabel
           labelColor={this.props.labelColor}>
@@ -54,8 +57,8 @@ export default class Button extends React.Component {
 }
 
 Button.propTypes = {
-  handleOnClick: PropTypes.func,
   label: PropTypes.string,
   labelColor: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
 }
 

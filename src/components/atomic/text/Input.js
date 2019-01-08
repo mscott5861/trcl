@@ -55,18 +55,30 @@ const StActiveLabel = styled.p`
   letter-spacing: .125rem;
   transition: all .15s linear;
   pointer-events: none;
+
+  &::before {
+    display: inline-block;
+    content: ${props => props.required ? '"*"' : ''};
+    color: red;
+    margin-right: 4px;
+  }
+
 `
 
 export default class Input extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       displayValue: '',
       inputActive: false,
+      hasError: this.props.required,
       realValue: '',
     };
   }
 
+  componentWillMount() {
+    this.props.updateForm && this.props.updateForm(this.props.inputID, '', this.state.hasError);
+  }
   
   handleOnChange = (e) => {
     //------------------------------------------------------------------------------------
@@ -88,7 +100,13 @@ export default class Input extends React.Component {
       realValue,
       displayValue,
     }, () => {
-      this.props.updateForm && this.props.updateForm(this.props.inputID, this.state.realValue);
+      
+      let hasError = (this.props.errorMessage && this.props.errorMessage.length > 0 && !(this.state.displayValue.length === 0)) ||
+                     (this.props.required && !this.state.displayValue && this.state.displayValue.length === 0) ?
+          true :
+          false;
+
+      this.props.updateForm && this.props.updateForm(this.props.inputID, this.state.realValue, hasError);
     });
 
     e.stopPropagation();
@@ -131,12 +149,14 @@ export default class Input extends React.Component {
         { this.props.errorMessage && this.state.displayValue.length > 0 && this.props.errorMessage.length > 0 ?
           <StActiveLabel
             activeLabelColor='#C45256'
-            inputActive={true}>
+            inputActive={true}
+            required={this.props.required}>
             { this.props.errorMessage }
           </StActiveLabel> :
           <StActiveLabel
             activeLabelColor={this.props.activeLabelColor}
-            inputActive={this.state.inputActive}>
+            inputActive={this.state.inputActive}
+            required={this.props.required}>
             { this.props.label }
           </StActiveLabel> }
         { this.props.children }
@@ -154,4 +174,5 @@ Input.propTypes = {
   handleInputReceived: PropTypes.func,
   inputID: PropTypes.string,
   labelColor: PropTypes.string,
+  required: PropTypes.bool,
 }

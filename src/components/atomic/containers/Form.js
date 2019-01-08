@@ -10,37 +10,49 @@ export default class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      elements: [] 
+      elements: [],
+      hasError: false
     };
   }
 
-  updateForm = (inputID, value) => {
+  updateForm = (inputID, value, hasError) => {
     let elements = this.state.elements,
+        hasFoundError = false,
         hasFoundElement = false;
 
-    for (let i = 0; i < elements.length && !hasFoundElement; i++) {
+    for (let i = 0; i < elements.length; i++) {
       if (elements[i].inputID === inputID) {
-        hasFoundElement = true;
         elements[i].value = value;
+        elements[i].hasError = hasError;
+        hasFoundElement = true;
+      }
+
+      if (elements[i].hasError) {
+        hasFoundError = true;
       }
     };
 
     if (!hasFoundElement) {
       elements.push({
         inputID,
-        value
+        value,
+        hasError
       });
+      
+      hasFoundError = hasError ? true : hasFoundError;
     }
 
     this.setState({
-      elements
+      elements,
+      hasError: hasFoundError
     });
   }
 
   render() {
     const children = React.Children.map(this.props.children, child => {
       return React.cloneElement(child, {
-        updateForm: this.updateForm
+        updateForm: this.updateForm,
+        hasError: this.state.hasError
       });
     });
 

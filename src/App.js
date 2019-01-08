@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ThemeProvider } from 'styled-components'
-import { ViewLogin } from 'views'
+import { ViewArticle, ViewLogin } from 'views'
 
 const colors = {
   primary: 'grey',
@@ -24,10 +24,26 @@ const theme = {
 }
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      submitted: false
+    }
+  }
+
+  onSubmit = (form) => {
+    this.setState({
+      submitted: true
+    });
+  }
+
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <ViewLogin/>
+        { !this.state.submitted ?
+          <ViewLogin
+            onSubmit={this.onSubmit}/> :
+          <ViewArticle/> }
       </ThemeProvider>
     );
   }

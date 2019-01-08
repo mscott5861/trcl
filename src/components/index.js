@@ -17,6 +17,7 @@ import Link from './atomic/text/Link'
 import MainContent from './atomic/containers/MainContent'
 import Navbar from './atomic/containers/Navbar'
 import NavigationDrawer from './atomic/containers/NavigationDrawer'
+import PasswordStrengthGauge from './atomic/gauges/PasswordStrengthGauge'
 import Popover from './atomic/containers/Popover'
 import PropsTable from './composite/containers/PropsTable'
 import Sidebar from './atomic/containers/Sidebar'
@@ -48,6 +49,7 @@ export {
   MainContent,
   Navbar,
   NavigationDrawer,
+  PasswordStrengthGauge,
   Popover,
   PropsTable,
   Sidebar,

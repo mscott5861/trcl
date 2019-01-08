@@ -1,7 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faMinus, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -60,6 +58,59 @@ const StStatusBlock = styled.div`
   transition: background .15s linear;
 `
 
+const StValidationIcon = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 0.5rem;
+
+  & span {
+    position: absolute;
+    height: 3px;
+    width: calc(100% - 1rem);
+    transition: all .15s linear;
+    box-sizing: border-box;
+    border-radius: 3px;
+  }
+
+  & span:nth-child(1) {
+    top: ${props => props.status === 'empty' ? '50%' : 
+                    props.status === 'hasError' ? 'initial' :
+                    '55%'};
+    transform: ${props => props.status === 'empty' ? 'transformY(-50%)' : 'rotate(45deg)'};
+    background-color: ${props => props.status === 'empty' ? '#777' :
+                                 props.status === 'hasError' ? '#C45256' :
+                                 '#55C452'};
+    width: ${props => props.status === 'valid' && '0.55rem'};
+  }
+
+  & span:nth-child(2) {
+    background-color: ${props => props.status === 'empty' ? 'transparent' :
+                                 props.status === 'hasError' ? '#C45256' :
+                                 '#55C452'};
+    top: initial;
+    width: ${props => props.status === 'valid' && '1rem'};
+    left: ${props => props.status === 'valid' && '0.75rem'};
+    transform: ${props => props.status === 'empty' ? 'transformY(-50%)' : 
+                 props => props.status === 'hasError' ? 'rotate(-45deg)' :
+                 'rotate(-45deg)'};
+    }
+  }
+
+`
+
+const ValidationIcon = function(props) {
+  return (
+    <StValidationIcon
+      status={props.status}>
+      <span/>
+      <span/> 
+    </StValidationIcon>
+  );
+}
+
 export const withValidation = (WrappedInput, schemaPackage) => {
   return class extends React.Component {
     constructor(props) {
@@ -93,11 +144,9 @@ export const withValidation = (WrappedInput, schemaPackage) => {
           <StStatusBlock
             valid={this.state.valid}
             emptyString={this.state.emptyString}>
-            { this.state.valid === null || this.state.emptyString ? <FontAwesomeIcon icon={faMinus} color='#777'/> : 
-              this.state.valid ?
-              <FontAwesomeIcon icon={faCheck} color='#55C452'/> :   // green
-              <FontAwesomeIcon icon={faTimes} color='#C45256'/>     // red
-            }
+            <ValidationIcon
+              status={this.state.emptyString ? 'empty' : (this.state.errorMessage && this.state.errorMessage.length > 0 ?
+                      'hasError' : 'valid')}/>
           </StStatusBlock>
         </WrappedInput>
       );
