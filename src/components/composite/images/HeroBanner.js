@@ -4,6 +4,10 @@ import PropTypes from 'prop-types'
 import { H1, H3 } from '../../../components'
 
 
+// Really, this component should re-think its idea of the header/
+// subheader props. A user might want anything displayed atop the
+// HeroBanner component. 
+
 
 /*---------------------------------------------------------------
  *  A hero banner functional component; provides a full-width 

@@ -107,10 +107,6 @@ const ContentWrapper = styled.div\`
   }
 \`
 
-const Column = styled.div\`
-  width: 100%;
-\`
-
 const Wrapper = styled.div\`
   position: relative;
   height: 100%;
@@ -130,21 +126,21 @@ export default class ViewLogin extends React.Component {
                 fontSize='6rem'>
                 A Header
               </H1>
-              <Column>
-                <Form
-                  onSubmit={this.onSubmit}>
-                  <Input
-                    inputID='username'
-                    label='Username'/>
-                  <ValidatedMaskedInput
-                    inputID='password'
-                    label='Password'/>
-                  <Button
-                    bgColor='#A1297B'
-                    label='Login'
-                    onClick={this.props.onSubmit}/>
-                </Form>
-              </Column>
+              <Form
+                onSubmit={this.onSubmit}>
+                <Input
+                  inputID='username'
+                  label='Username'
+                  required/>
+                <ValidatedMaskedInput
+                  inputID='password'
+                  label='Password'
+                  required/>
+                <Button
+                  bgColor='#A1297B'
+                  label='Login'
+                  onClick={this.props.onSubmit}/>
+              </Form>
             </ContentWrapper>
           </FormWrapper>
           <Wrapper>

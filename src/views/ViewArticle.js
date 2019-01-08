@@ -102,11 +102,6 @@ export default class ViewSampleStretched3C extends React.Component {
         <Navbar
           bgColor='#AC370D'
           sticky
-          groupRight={
-            <div>
-              <span>A Sticky Navbar</span>
-            </div>
-          }
           groupLeft={
             <HamburgerButton
               onHamburgerButtonClick={() => {
@@ -114,8 +109,12 @@ export default class ViewSampleStretched3C extends React.Component {
                   hamburgerClicked: !this.state.hambugerClicked
                 });}}>
             </HamburgerButton>
-          }>
-        </Navbar>
+          }
+          groupRight={
+            <div>
+              <span>A Sticky Navbar</span>
+            </div>
+          }/>
         <HeroBanner
           header='A Header'
           headerColor='#'
@@ -156,6 +155,9 @@ export default class ViewSampleStretched3C extends React.Component {
           </Copy>
         </Stripe>
       </StPageWrapper>
+    );
+  }
+}
 `
             }
           </CodeBlock>

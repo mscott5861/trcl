@@ -45,16 +45,13 @@ export const withMask = (WrappedInput, mask) => {
 
 const StStatusBlock = styled.div`
   position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   right: 0;
   height: 100%;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   width: 35px;
   border-left: 1px solid #CCC;
-  background: ${props => props.valid === null || props.emptyString ? 'transparent' : props.valid ? 'rgba(0, 255, 0, 0.075)' : 'rgba(255, 0, 0, 0.075)'};
+  background: ${props => props.valid === null || props.emptyString ? 'transparent' : props.valid ? 'rgba(0, 255, 0, 0.065)' : 'rgba(255, 0, 0, 0.065)'};
   transition: background .15s linear;
 `
 
@@ -79,21 +76,22 @@ const StValidationIcon = styled.div`
     top: ${props => props.status === 'empty' ? '50%' : 
                     props.status === 'hasError' ? 'initial' :
                     '55%'};
-    transform: ${props => props.status === 'empty' ? 'transformY(-50%)' : 'rotate(45deg)'};
+    left: ${props => props.status === 'empty' ? '50%' : 'initial'};
+    transform: ${props => props.status === 'empty' ? 'translateY(-50%) translateX(-50%)' : 'rotate(45deg)'};
     background-color: ${props => props.status === 'empty' ? '#777' :
                                  props.status === 'hasError' ? '#C45256' :
                                  '#55C452'};
-    width: ${props => props.status === 'valid' && '0.55rem'};
+    width: ${props => props.status === 'valid' ? '0.55rem' : 'calc(100% - 1rem)'};
   }
 
   & span:nth-child(2) {
-    background-color: ${props => props.status === 'empty' ? 'transparent' :
+    background-color: ${props => props.status === 'empty' ? '#777' :
                                  props.status === 'hasError' ? '#C45256' :
                                  '#55C452'};
     top: initial;
     width: ${props => props.status === 'valid' && '1rem'};
     left: ${props => props.status === 'valid' && '0.75rem'};
-    transform: ${props => props.status === 'empty' ? 'transformY(-50%)' : 
+    transform: ${props => props.status === 'empty' ? 'rotate(90deg)' : 
                  props => props.status === 'hasError' ? 'rotate(-45deg)' :
                  'rotate(-45deg)'};
     }
