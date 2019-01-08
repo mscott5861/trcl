@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Popover } from 'components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faMinus, faTimes } from '@fortawesome/free-solid-svg-icons'
 
@@ -46,7 +45,7 @@ export const withMask = (WrappedInput, mask) => {
   }
 }
 
-const StErrorBlock = styled.div`
+const StStatusBlock = styled.div`
   position: absolute;
   display: flex;
   align-items: center;
@@ -68,6 +67,7 @@ export const withValidation = (WrappedInput, schemaPackage) => {
       this.state = {
         valid: null,
         emptyString: true,
+        errorMessage: '',
       }
     }
 
@@ -77,7 +77,8 @@ export const withValidation = (WrappedInput, schemaPackage) => {
 
       this.setState({
         valid,
-        emptyString: (inputReceived.length === 0)
+        emptyString: (inputReceived.length === 0),
+        errorMessage: (!valid ? schemaPackage.errorMessage : ''),
       });
 
       return inputReceived;
@@ -86,10 +87,10 @@ export const withValidation = (WrappedInput, schemaPackage) => {
     render() {
       return (
         <WrappedInput
-          error={this.state.error}
+          errorMessage={this.state.errorMessage}
           validateInput={this.validateInput}
           {...this.props}>
-          <StErrorBlock
+          <StStatusBlock
             valid={this.state.valid}
             emptyString={this.state.emptyString}>
             { this.state.valid === null || this.state.emptyString ? <FontAwesomeIcon icon={faMinus} color='#777'/> : 
@@ -97,7 +98,7 @@ export const withValidation = (WrappedInput, schemaPackage) => {
               <FontAwesomeIcon icon={faCheck} color='#55C452'/> :   // green
               <FontAwesomeIcon icon={faTimes} color='#C45256'/>     // red
             }
-          </StErrorBlock>
+          </StStatusBlock>
         </WrappedInput>
       );
     }

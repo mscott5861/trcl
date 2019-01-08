@@ -11,8 +11,8 @@ import { withMask, withValidation } from 'hoc'
  * -------------------------------------------------------------- */
 
 const passwordSchema = {
-  schema: "(.*[a-z]){3}",
-  errorMessage: "Passwords need to be at least 3 characters."
+  schema: "(.*[a-zA-Z0-9]){3}",
+  errorMessage: "Passwords need to be at least 3 alphanumeric characters."
 },
   ValidatedMaskedInput = withValidation(withMask(Input, '*'), passwordSchema);
 

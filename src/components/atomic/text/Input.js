@@ -9,10 +9,11 @@ const StInputWrapper = styled.div`
   width: 100%;
   height: 2.25rem;
   border: ${props => props.borderless ? '0' : (
+    props.error && props.error !== '' ? '1px solid red' :
     (props.borderColor ? '1px solid' + props.borderColor : '1px solid #CCC'))};
   border-radius: 4px;
   margin-top: 2rem;
-  background-color: ${props => props.bgColor ? props.bgColor : (props.inputActive ? '#FFF' : '#F2F2F2')};
+  background-color: ${props => props.errorMessage && props.displayValue && props.displayValue.length > 0 && props.errorMessage.length > 0 ? 'rgba(255,0,0,0.1)' : (props.bgColor ? props.bgColor : (props.inputActive ? '#FFF' : '#F2F2F2'))};
   transition: background-color linear .25s;
 `
 
@@ -41,7 +42,10 @@ const StLabel = styled.p`
 
 const StActiveLabel = styled.p`
   opacity: ${props => props.inputActive ? '1' : '0'};
-  /*transform: ${props => props.inputActive ? 'rotateY(0deg)' : 'rotateY(-180deg)'};*/
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   position: absolute;
   top: -1.25rem;
   color: ${props => props.activeLabelColor ? props.activeLabelColor : '#333'};
@@ -65,6 +69,10 @@ export default class Input extends React.Component {
 
   
   handleOnChange = (e) => {
+    //------------------------------------------------------------------------------------
+    // Among the first things we need to do is maintain a copy of the actual value of the
+    // Input component. We can't rely on the input's content, because it might be masked.
+    //------------------------------------------------------------------------------------
     let displayValue = '',
         inputReceived = e.target.value,
         realValue = inputReceived.length - 1 >= 0 ? (
@@ -100,24 +108,14 @@ export default class Input extends React.Component {
     }
   }
 
-  getValueToDisplay = () => {
-    if (this.props.displayValue !== '') {
-      return this.props.displayValue;
-    } else if (this.state.realValue !== '') {
-      return this.state.realValue;
-    } else {
-      return '';
-    }
-  }
-
-
   render() {
     return (
       <StInputWrapper
         bgColor={this.props.bgColor}
         borderless={this.props.borderless}
         borderColor={this.props.borderColor}
-        error={this.props.error}
+        displayValue={this.state.displayValue}
+        errorMessage={this.props.errorMessage}
         inputActive={this.state.inputActive}
         onChange={this.handleOnChange}>
         <StInput
@@ -130,11 +128,17 @@ export default class Input extends React.Component {
           inputActive={this.state.inputActive}>
           { this.props.label }
         </StLabel>
-        <StActiveLabel
-          activeLabelColor={this.props.activeLabelColor}
-          inputActive={this.state.inputActive}>
-          { this.props.label }
-        </StActiveLabel>
+        { this.props.errorMessage && this.state.displayValue.length > 0 && this.props.errorMessage.length > 0 ?
+          <StActiveLabel
+            activeLabelColor='#C45256'
+            inputActive={true}>
+            { this.props.errorMessage }
+          </StActiveLabel> :
+          <StActiveLabel
+            activeLabelColor={this.props.activeLabelColor}
+            inputActive={this.state.inputActive}>
+            { this.props.label }
+          </StActiveLabel> }
         { this.props.children }
       </StInputWrapper>
     );
