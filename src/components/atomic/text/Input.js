@@ -58,6 +58,7 @@ export default class Input extends React.Component {
   constructor() {
     super();
     this.state = {
+      displayValue: '',
       inputActive: false,
       realValue: '',
     };
@@ -65,10 +66,20 @@ export default class Input extends React.Component {
 
   
   handleOnChange = (e) => {
-    let realValue = this.props.handleInputReceived ? this.props.handleInputReceived(e.target.value) : e.target.value;
+    let displayValue = '',
+        inputReceived = e.target.value,
+        realValue = inputReceived.length - 1 >= 0 ? (
+                      inputReceived[inputReceived.length - 1] === '*' ? 
+                          this.state.realValue.substring(0, this.state.realValue.length - 1) : 
+                          this.state.realValue + inputReceived[inputReceived.length - 1]) : 
+                      '';
+
+    realValue = this.props.validateInput ? this.props.validateInput(realValue, this.props.schema) : realValue;
+    displayValue = this.props.maskInput ? this.props.maskInput(realValue) : realValue;
     
     this.setState({
-      realValue
+      realValue,
+      displayValue,
     }, () => {
       this.props.updateForm && this.props.updateForm(this.props.inputID, this.state.realValue);
     });
@@ -90,7 +101,7 @@ export default class Input extends React.Component {
     }
   }
 
-  getDisplayValue = () => {
+  getValueToDisplay = () => {
     if (this.props.displayValue !== '') {
       return this.props.displayValue;
     } else if (this.state.realValue !== '') {
@@ -114,7 +125,7 @@ export default class Input extends React.Component {
           onBlur={this.handleOnBlur}
           onChange={this.handleOnChange}
           onFocus={this.handleOnFocus}
-          value={this.getDisplayValue()}/>
+          value={this.state.displayValue}/>
         <StLabel
           labelColor={this.props.labelColor}
           inputActive={this.state.inputActive}>
