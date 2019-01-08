@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ThemeProvider } from 'styled-components'
-import { ViewForm } from 'views'
+import { ViewLogin } from 'views'
 
 const colors = {
   primary: 'grey',
@@ -27,7 +27,7 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <ViewForm/>
+        <ViewLogin/>
       </ThemeProvider>
     );
   }

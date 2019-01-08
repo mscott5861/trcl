@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Popover } from 'components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faMinus, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -56,25 +57,27 @@ const StErrorBlock = styled.div`
   border-bottom-right-radius: 5px;
   width: 35px;
   border-left: 1px solid #CCC;
-  background: ${props => props.valid ? 'rgba(0, 255, 0, 0.075)' : 'rgba(255, 0, 0, 0.075)'};
+  background: ${props => props.valid === null || props.emptyString ? 'transparent' : props.valid ? 'rgba(0, 255, 0, 0.075)' : 'rgba(255, 0, 0, 0.075)'};
   transition: background .15s linear;
 `
 
-export const withValidation = (WrappedInput, schema) => {
+export const withValidation = (WrappedInput, schemaPackage) => {
   return class extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        valid: true
+        valid: null,
+        emptyString: true,
       }
     }
 
     validateInput = (inputReceived) => {
-      let regex = new RegExp(schema),
+      let regex = new RegExp(schemaPackage.schema),
           valid = regex.test(inputReceived);
 
       this.setState({
-        valid
+        valid,
+        emptyString: (inputReceived.length === 0)
       });
 
       return inputReceived;
@@ -87,10 +90,12 @@ export const withValidation = (WrappedInput, schema) => {
           validateInput={this.validateInput}
           {...this.props}>
           <StErrorBlock
-            valid={this.state.valid}>
-            { this.state.valid ?
-              <FontAwesomeIcon icon={faCheck} color='#37A853'/> : 
-              <FontAwesomeIcon icon={faTimes} color='#A53A3D'/>
+            valid={this.state.valid}
+            emptyString={this.state.emptyString}>
+            { this.state.valid === null || this.state.emptyString ? <FontAwesomeIcon icon={faMinus} color='#777'/> : 
+              this.state.valid ?
+              <FontAwesomeIcon icon={faCheck} color='#55C452'/> :   // green
+              <FontAwesomeIcon icon={faTimes} color='#C45256'/>     // red
             }
           </StErrorBlock>
         </WrappedInput>

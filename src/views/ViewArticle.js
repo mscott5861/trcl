@@ -8,7 +8,7 @@ const StPageWrapper = styled.div`
 `
 
 
-export default class ViewSampleStretched3C extends React.Component {
+export default class ViewArticle extends React.Component {
   constructor() {
     super();
     this.state = {
