@@ -6,6 +6,9 @@ const StNavigationDrawer = styled.div`
 `
 
 export default class NavigationDrawer extends React.Component {
+  static propTypes = {
+  }
+
   render() {
     return (
       <StNavigationDrawer>
@@ -14,5 +17,4 @@ export default class NavigationDrawer extends React.Component {
   }
 }
 
-NavigationDrawer.propTypes = {
-}
+

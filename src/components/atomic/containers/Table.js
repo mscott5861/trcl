@@ -17,6 +17,10 @@ const StTable = styled.table`
 `
 
 export default class Table extends React.Component {
+  static propTypes = {
+    children: PropTypes.node.isRequired
+  }
+
   render() {
     return (
       <StTable>
@@ -28,6 +32,4 @@ export default class Table extends React.Component {
   }
 }
 
-Table.propTypes = {
-  children: PropTypes.node.isRequired
-}
+

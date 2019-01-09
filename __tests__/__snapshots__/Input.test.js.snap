@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input renders correctly 1`] = `
+<styled.div
+  bgColor="#fff"
+  borderColor="red"
+  borderless={false}
+  displayValue=""
+  isFocused={false}
+  onChange={[Function]}
+>
+  <styled.input
+    onBlur={[Function]}
+    onChange={[Function]}
+    onFocus={[Function]}
+    value=""
+  />
+  <styled.p
+    isFocused={false}
+    labelColor="green"
+  />
+  <styled.p
+    activeLabelColor="#000"
+    isFocused={false}
+    required={true}
+  >
+    Test ActiveLabel
+  </styled.p>
+</styled.div>
+`;
+
+exports[`MaskedInput renders correctly 1`] = `
+<Input
+  activeLabel="Test ActiveLabel"
+  activeLabelColor="#000"
+  bgColor="#fff"
+  borderColor="red"
+  borderless={false}
+  inputID="test input"
+  labelColor="green"
+  maskInput={[Function]}
+  required={true}
+/>
+`;

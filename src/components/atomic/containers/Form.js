@@ -7,6 +7,10 @@ const StForm = styled.div`
 `
 
 export default class Form extends React.Component {
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -64,7 +68,4 @@ export default class Form extends React.Component {
   }
 }
 
-Form.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-}
 

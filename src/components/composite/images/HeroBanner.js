@@ -55,6 +55,11 @@ const StHeaderWrapper = styled.div`
     text-align: ${props => props.headerTextAlign ? props.headerTextAlign : 'left'};
     font-family: ${props => props.fontFamily ? props.fontFamily : 'serif'};
   }
+
+  @media(max-width: 1024px) {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.5);
+  }
 `
 
 

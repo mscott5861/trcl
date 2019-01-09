@@ -29,6 +29,13 @@ const StLabel = styled.p`
 `
 
 export default class Button extends React.Component {
+  static propTypes = {
+    bgColor: PropTypes.string,
+    label: PropTypes.string,
+    labelColor: PropTypes.string,
+    onClick: PropTypes.func.isRequired,
+  }
+
   onClick = () => {
     if (this.props.onClick && !this.props.hasError) {
       this.props.onClick();
@@ -55,10 +62,3 @@ export default class Button extends React.Component {
     );
   }
 }
-
-Button.propTypes = {
-  label: PropTypes.string,
-  labelColor: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
-}
-

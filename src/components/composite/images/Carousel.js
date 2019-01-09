@@ -6,14 +6,13 @@ const StCarousel = styled.div`
 `
 
 export default class Carousel extends React.Component {
+  static propTypes = {
+  }
+
   render() {
     return (
       <StCarousel>
       </StCarousel>
     );
   }
-}
-
-Carousel.propTypes = {
-
 }

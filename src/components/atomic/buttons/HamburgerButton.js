@@ -107,6 +107,14 @@ const StHamburgerButton = styled.button`
 
 
 export default class HamburgerButton extends React.Component {
+  static propTypes = {
+    animationVariant: PropTypes.oneOf(['1', '2', '3', '4']),
+    buttonColorClicked: PropTypes.string,
+    buttonColorUnclicked: PropTypes.string,
+    fixed: PropTypes.oneOf(['top-left', 'top-right', 'bottom-left', 'bottom-right']),
+    onHamburgerButtonClick: PropTypes.func.isRequired
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -139,10 +147,4 @@ export default class HamburgerButton extends React.Component {
   }
 }
 
-HamburgerButton.propTypes = {
-  animationVariant: PropTypes.oneOf(['1', '2', '3', '4']),
-  buttonColorClicked: PropTypes.string,
-  buttonColorUnclicked: PropTypes.string,
-  fixed: PropTypes.oneOf(['top-left', 'top-right', 'bottom-left', 'bottom-right']),
-  onHamburgerButtonClick: PropTypes.func.isRequired
-}
+

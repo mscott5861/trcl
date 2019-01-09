@@ -26,6 +26,10 @@ const StCodeBlock = styled.pre`
 `
 
 export default class CodeBlock extends React.Component {
+  static propTypes = {
+    children: PropTypes.node.isRequired,
+  }
+
   render() {
     return (
       <StCodeBlock>
@@ -37,6 +41,4 @@ export default class CodeBlock extends React.Component {
   };
 }
 
-CodeBlock.propTypes = {
-  children: PropTypes.node.isRequired,
-}
+

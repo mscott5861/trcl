@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button, CodeBlock, Form, Image, Input, H1, MainContent, TwoColumnLayout } from 'components'
+import { Button, CodeBlock, Form, Image, Input, H1, PaddedContent, TwoColumnLayout } from 'components'
 import { withMask, withValidation } from 'hoc'
-
+import { atLeastFiveSchema } from 'utilities'
 
 
 /*---------------------------------------------------------------
@@ -10,11 +10,7 @@ import { withMask, withValidation } from 'hoc'
  *  of complex Input components by wrapping in multiple HOCs.
  * -------------------------------------------------------------- */
 
-const passwordSchema = {
-  schema: "(.*[a-zA-Z0-9]){5}",
-  errorMessage: "Passwords require at least 5 alphanumeric characters."
-},
-  ValidatedMaskedInput = withValidation(withMask(Input, '*'), passwordSchema);
+const ValidatedMaskedInput = withValidation(withMask(Input, '*'), atLeastFiveSchema);
 
 const FormWrapper = styled.div`
   padding: 2rem;
@@ -55,10 +51,12 @@ export default class ViewLogin extends React.Component {
                   <Input
                     inputID='username'
                     label='Username'
+                    activeLabel='Standard <Input/> Component'
                     required/>
                   <ValidatedMaskedInput
                     inputID='password'
                     label='Password'
+                    activeLabel='<Input/> wrapped in withMask() and withValidation() HOCs'
                     required/>
                   <Button
                     bgColor='#A1297B'
@@ -74,7 +72,7 @@ export default class ViewLogin extends React.Component {
               src={'./img/sample-img-06.jpg'}/>
           </Wrapper>
         </TwoColumnLayout>
-        <MainContent>
+        <PaddedContent>
           <CodeBlock>
           {
 `
@@ -82,12 +80,15 @@ import React from 'react'
 import styled from 'styled-components'
 import { Button, Form, Image, Input, H1, TwoColumnLayout } from 'components'
 import { withMask, withValidation } from 'hoc'
+import { atLeastFiveSchema } from 'utilities'
 
-const passwordSchema = {
-  schema: "(.*[a-zA-Z0-9]){5}",
-  errorMessage: "Passwords require at least 5 alphanumeric characters."
-},
-  ValidatedMaskedInput = withValidation(withMask(Input, '*'), passwordSchema);
+
+/*---------------------------------------------------------------
+ *  A sample responsive login view that demonstrates composition
+ *  of complex Input components by wrapping in multiple HOCs.
+ * -------------------------------------------------------------- */
+
+const ValidatedMaskedInput = withValidation(withMask(Input, '*'), atLeastFiveSchema);
 
 const FormWrapper = styled.div\`
   padding: 2rem;
@@ -156,7 +157,7 @@ export default class ViewLogin extends React.Component {
 }
 `}
           </CodeBlock>
-        </MainContent>
+        </PaddedContent>
       </React.Fragment>
     );
   }

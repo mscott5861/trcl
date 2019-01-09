@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import { CodeBlock, Copy, H1, HamburgerButton, HeroBanner, ImageWithCaption, MainContent, Navbar, Stripe, TwoColumnLayout } from 'components'
+import { CodeBlock, Copy, H1, HamburgerButton, HeroBanner, ImageWithCaption, PaddedContent, Navbar, Stripe, TwoColumnLayout } from 'components'
 import { generateLoremIpsum } from 'utilities'
+
 
 const StPageWrapper = styled.div`
   display: block;
 `
-
 
 export default class ViewArticle extends React.Component {
   constructor() {
@@ -37,15 +37,15 @@ export default class ViewArticle extends React.Component {
           }>
         </Navbar>
         <HeroBanner
-          header='A Header'
+          header='HeroBanner'
           headerColor='#'
-          headerFontSize='6rem'
+          headerFontSize='5rem'
           headerLeft='2rem'
           headerTextAlign='right'
           headerTop='40%'
           src={'./img/sample-hero-banner-04.jpg'}
-          subheader='Followed By a Subheader'/>
-        <MainContent>
+          subheader='With Header & Subheader Props'/>
+        <PaddedContent>
           <Copy
             columns={3}
             stylizeFirstLetter>
@@ -61,7 +61,7 @@ export default class ViewArticle extends React.Component {
               { generateLoremIpsum(2) }
             </Copy>
           </TwoColumnLayout>
-        </MainContent>
+        </PaddedContent>
         <Stripe
           bgColor='#AC370D'>
           <H1
@@ -75,13 +75,13 @@ export default class ViewArticle extends React.Component {
             { generateLoremIpsum(4) }
           </Copy>
         </Stripe>
-        <MainContent>
+        <PaddedContent>
           <CodeBlock>
             {
 `
 import React from 'react'
 import styled from 'styled-components'
-import { CodeBlock, Copy, H1, HamburgerButton, HeroBanner, ImageWithCaption, MainContent, Navbar, Stripe, TwoColumnLayout } from 'components'
+import { CodeBlock, Copy, H1, HamburgerButton, HeroBanner, ImageWithCaption, PaddedContent, Navbar, Stripe, TwoColumnLayout } from 'components'
 import { generateLoremIpsum } from 'utilities'
 
 const StPageWrapper = styled.div\`
@@ -124,7 +124,7 @@ export default class ViewSampleStretched3C extends React.Component {
           headerTop='40%'
           src={'./img/sample-hero-banner-04.jpg'}
           subheader='Followed By a Subheader'/>
-        <MainContent>
+        <PaddedContent>
           <Copy
             columns={3}
             stylizeFirstLetter>
@@ -140,7 +140,7 @@ export default class ViewSampleStretched3C extends React.Component {
               { generateLoremIpsum(2) }
             </Copy>
           </TwoColumnLayout>
-        </MainContent>
+        </PaddedContent>
         <Stripe
           bgColor='#AC370D'>
           <H1
@@ -161,7 +161,7 @@ export default class ViewSampleStretched3C extends React.Component {
 `
             }
           </CodeBlock>
-        </MainContent>
+        </PaddedContent>
       </StPageWrapper>
     );
   }

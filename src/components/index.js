@@ -14,10 +14,10 @@ import ImageWithCaption from './composite/images/ImageWithCaption'
 import Input from './atomic/text/Input'
 import Leaflet from './atomic/containers/Leaflet'
 import Link from './atomic/text/Link'
-import MainContent from './atomic/containers/MainContent'
+import PaddedContent from './atomic/containers/PaddedContent'
 import Navbar from './atomic/containers/Navbar'
 import NavigationDrawer from './atomic/containers/NavigationDrawer'
-import PasswordStrengthGauge from './atomic/gauges/PasswordStrengthGauge'
+import PasswordStrengthGauge from './atomic/feedback/PasswordStrengthGauge'
 import Popover from './atomic/containers/Popover'
 import PropsTable from './composite/containers/PropsTable'
 import Sidebar from './atomic/containers/Sidebar'
@@ -46,7 +46,7 @@ export {
   Input,
   Leaflet,
   Link,
-  MainContent,
+  PaddedContent,
   Navbar,
   NavigationDrawer,
   PasswordStrengthGauge,

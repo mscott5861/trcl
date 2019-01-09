@@ -1,26 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
+import { isRequired } from 'utilities'
 
 
 
 //----------------------------------------------------------------------------------
 // Swappable input helper HOCs for standard input functionality (typeahead, vali-
-// dation, error state handling, disabling/enabling, etc.) Currently just stubbed.
+// dation, error state handling, disabling/enabling, etc.)
 //----------------------------------------------------------------------------------
-
-export const withTypeAhead = (WrappedInput, value) => {
-  return class extends React.Component {
-    render() {
-      return (
-        <WrappedInput
-            value={this.state.value}
-            {...this.props} />
-      );
-    }
-  }
-}
-
-export const withMask = (WrappedInput, mask) => {
+export const withMask = (WrappedInput, mask = isRequired('mask is a required parameter for the withMask HOC.')) => {
   return class extends React.Component {
     maskInput = (inputReceived) => {
       let displayValue = '';
@@ -43,6 +31,21 @@ export const withMask = (WrappedInput, mask) => {
   }
 }
 
+
+// TODO: function stub
+export const withTypeAhead = (WrappedInput, value) => {
+  return class extends React.Component {
+    render() {
+      return (
+        <WrappedInput
+            value={this.state.value}
+            {...this.props} />
+      );
+    }
+  }
+}
+
+
 const StStatusBlock = styled.div`
   position: absolute;
   right: 0;
@@ -50,8 +53,8 @@ const StStatusBlock = styled.div`
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   width: 35px;
-  border-left: 1px solid #CCC;
-  background: ${props => props.valid === null || props.emptyString ? 'transparent' : props.valid ? 'rgba(0, 255, 0, 0.065)' : 'rgba(255, 0, 0, 0.065)'};
+  border-left: ${props => props.valid === null || props.inputIsEmpty ? 'none' : '1px solid #CCC'};
+  background: ${props => props.valid === null || props.inputIsEmpty ? 'transparent' : props.valid ? 'rgba(0, 255, 0, 0.075)' : 'rgba(255, 0, 0, 0.075)'};
   transition: background .15s linear;
 `
 
@@ -81,7 +84,8 @@ const StValidationIcon = styled.div`
     background-color: ${props => props.status === 'empty' ? '#777' :
                                  props.status === 'hasError' ? '#C45256' :
                                  '#55C452'};
-    width: ${props => props.status === 'valid' ? '0.55rem' : 'calc(100% - 1rem)'};
+    width: ${props => props.status === 'empty' ? '0%' :
+             (props.status === 'valid' ? '0.55rem' : 'calc(100% - 1rem)')};
   }
 
   & span:nth-child(2) {
@@ -89,7 +93,7 @@ const StValidationIcon = styled.div`
                                  props.status === 'hasError' ? '#C45256' :
                                  '#55C452'};
     top: initial;
-    width: ${props => props.status === 'valid' && '1rem'};
+    width: ${props => props.status === 'empty' ? '0' : props.status === 'valid' && '1rem'};
     left: ${props => props.status === 'valid' && '0.75rem'};
     transform: ${props => props.status === 'empty' ? 'rotate(90deg)' : 
                  props => props.status === 'hasError' ? 'rotate(-45deg)' :
@@ -109,13 +113,14 @@ const ValidationIcon = function(props) {
   );
 }
 
-export const withValidation = (WrappedInput, schemaPackage) => {
+
+export const withValidation = (WrappedInput, schemaPackage = isRequired('schemaPackage is a required object for the withValidation HOC.')) => {
   return class extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
         valid: null,
-        emptyString: true,
+        inputIsEmpty: true,
         errorMessage: '',
       }
     }
@@ -126,7 +131,7 @@ export const withValidation = (WrappedInput, schemaPackage) => {
 
       this.setState({
         valid,
-        emptyString: (inputReceived.length === 0),
+        inputIsEmpty: (inputReceived.length === 0),
         errorMessage: (!valid ? schemaPackage.errorMessage : ''),
       });
 
@@ -141,9 +146,9 @@ export const withValidation = (WrappedInput, schemaPackage) => {
           {...this.props}>
           <StStatusBlock
             valid={this.state.valid}
-            emptyString={this.state.emptyString}>
+            inputIsEmpty={this.state.inputIsEmpty}>
             <ValidationIcon
-              status={this.state.emptyString ? 'empty' : (this.state.errorMessage && this.state.errorMessage.length > 0 ?
+              status={this.state.inputIsEmpty ? 'empty' : (this.state.errorMessage && this.state.errorMessage.length > 0 ?
                       'hasError' : 'valid')}/>
           </StStatusBlock>
         </WrappedInput>

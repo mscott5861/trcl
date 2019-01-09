@@ -41,6 +41,13 @@ const StTwoColumnLayout = styled.div`
 `
 
 export default class TwoColumnLayout extends React.Component {
+  static propTypes = {
+    centeredVertically: PropTypes.bool,
+    children: PropTypes.node.isRequired,
+    columns: PropTypes.string,
+    matchViewportHeight: PropTypes.bool
+  }
+
   render() {
     return (
       <StTwoColumnLayout
@@ -53,9 +60,4 @@ export default class TwoColumnLayout extends React.Component {
   }
 }
 
-TwoColumnLayout.propTypes = {
-  centeredVertically: PropTypes.bool,
-  children: PropTypes.node.isRequired,
-  columns: PropTypes.string,
-  matchViewportHeight: PropTypes.bool
-}
+

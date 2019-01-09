@@ -13,6 +13,10 @@ const StPopover = styled.div`
 `
 
 export default class Popover extends React.Component {
+  static propTypes = {
+    children: PropTypes.node.isRequired,
+  }
+
   constructor(props) {
     super(props);
 
@@ -26,8 +30,4 @@ export default class Popover extends React.Component {
       </StPopover>
     );
   }
-}
-
-Popover.propTypes = {
-  children: PropTypes.node.isRequired
 }

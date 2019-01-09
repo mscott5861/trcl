@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { generateUniqueId } from '../../../../utilities'
 import PropTypes from 'prop-types'
 
 
@@ -32,27 +31,14 @@ const StThreeColumnLayout = styled.div`
 `
 
 export default class ThreeColumnLayout extends React.Component {
+  static propTypes = {
+    centeredVertically: PropTypes.bool,
+    children: PropTypes.node.isRequired,
+    columns: PropTypes.string,
+  }
+
   state = {
     id: ''
-  }
-
-  componentWillMount() {
-    this.setState({
-      id: generateUniqueId('three-column-layout')
-    });
-  }
-
-  //-----------------------------------------------------------------
-  //  This is kind of gross. I need these container heights to be
-  //  divisible by 8 (to conform to an 8-pixel grid system), and
-  //  I don't know of any non-javascript way of ensuring they are.
-  //-----------------------------------------------------------------
-  componentDidMount() {
-    let layout = document.getElementById(this.state.id),
-        oldHeight = layout.offsetHeight,
-        newHeight = (Math.ceil( oldHeight / 8 ) * 8) + 'px';
-
-    layout.style.height = newHeight;
   }
 
   render() {
@@ -67,8 +53,4 @@ export default class ThreeColumnLayout extends React.Component {
   }
 }
 
-ThreeColumnLayout.propTypes = {
-  centeredVertically: PropTypes.bool,
-  children: PropTypes.node.isRequired,
-  columns: PropTypes.string,
-}
+

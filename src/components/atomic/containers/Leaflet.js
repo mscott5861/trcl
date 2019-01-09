@@ -87,6 +87,18 @@ const CloseButton = styled.span`
 `
 
 export default class Leaflet extends React.Component {
+  static propTypes = {
+    dismissable: PropTypes.bool,
+    fitContent: PropTypes.bool,
+    title: PropTypes.string,
+    titlebarBGColor: PropTypes.string,
+    titlebarPosition: PropTypes.string,
+    titlebarTextColor: PropTypes.string,
+    columnGap: PropTypes.string,
+    columnRule: PropTypes.string,
+    columnCount: PropTypes.number,
+  }
+
   constructor() {
     super();
 
@@ -132,14 +144,4 @@ export default class Leaflet extends React.Component {
   }
 }
 
-Leaflet.propTypes = {
-  dismissable: PropTypes.bool,
-  fitContent: PropTypes.bool,
-  title: PropTypes.string,
-  titlebarBGColor: PropTypes.string,
-  titlebarPosition: PropTypes.string,
-  titlebarTextColor: PropTypes.string,
-  columnGap: PropTypes.string,
-  columnRule: PropTypes.string,
-  columnCount: PropTypes.number,
-}
+
