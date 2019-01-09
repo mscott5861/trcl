@@ -24,21 +24,45 @@ exports[`Input renders correctly 1`] = `
     isFocused={false}
     required={true}
   >
-    Test ActiveLabel
+    test activeLabel
   </styled.p>
 </styled.div>
 `;
 
 exports[`MaskedInput renders correctly 1`] = `
 <Input
-  activeLabel="Test ActiveLabel"
+  activeLabel="test activeLabel"
   activeLabelColor="#000"
   bgColor="#fff"
   borderColor="red"
   borderless={false}
-  inputID="test input"
+  inputID="test inputID"
   labelColor="green"
   maskInput={[Function]}
   required={true}
 />
+`;
+
+exports[`ValidatedInput renders correctly 1`] = `
+<Input
+  activeLabel="test activeLabel"
+  activeLabelColor="#000"
+  bgColor="#fff"
+  borderColor="red"
+  borderless={false}
+  errorMessage=""
+  inputID="test inputID"
+  labelColor="green"
+  required={true}
+  validateInput={[Function]}
+>
+  <styled.div
+    inputIsEmpty={true}
+    valid={null}
+  >
+    <ValidationIcon
+      status="empty"
+    />
+  </styled.div>
+</Input>
 `;

@@ -81,6 +81,7 @@ export default class Input extends React.Component {
     bgColor: PropTypes.string,
     borderless: PropTypes.bool,
     borderColor: PropTypes.string,
+    errorMessage: PropTypes.string,
     inputID: PropTypes.string,
     labelColor: PropTypes.string,
     maskInput: PropTypes.func,
