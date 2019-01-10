@@ -32,6 +32,7 @@ class App extends Component {
   }
 
   onSubmit = (form) => {
+    console.log(form);
     this.setState({
       submitted: true
     });

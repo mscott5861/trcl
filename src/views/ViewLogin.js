@@ -34,6 +34,15 @@ const Wrapper = styled.div`
   width: 100%;
 `
 export default class ViewLogin extends React.Component {
+  constructor() {
+    super();
+    this.formRef = React.createRef();
+  }
+
+  onSubmit = (data) => {
+    this.formRef && this.formRef.current.onSubmit(data);
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -47,7 +56,8 @@ export default class ViewLogin extends React.Component {
                 A Header
               </H1>
                 <Form
-                  onSubmit={this.onSubmit}>
+                  ref={this.formRef}
+                  onSubmit={this.props.onSubmit}>
                   <Input
                     inputID='username'
                     label='Username'
@@ -61,7 +71,7 @@ export default class ViewLogin extends React.Component {
                   <Button
                     bgColor='#A1297B'
                     label='Login'
-                    onClick={this.props.onSubmit}/>
+                    onClick={this.onSubmit}/>
                 </Form>
             </ContentWrapper>
           </FormWrapper>
@@ -78,7 +88,7 @@ export default class ViewLogin extends React.Component {
 `
 import React from 'react'
 import styled from 'styled-components'
-import { Button, Form, Image, Input, H1, TwoColumnLayout } from 'components'
+import { Button, CodeBlock, Form, Image, Input, H1, PaddedContent, TwoColumnLayout } from 'components'
 import { withMask, withValidation } from 'hoc'
 import { atLeastFiveSchema } from 'utilities'
 
@@ -115,6 +125,15 @@ const Wrapper = styled.div\`
 \`
 
 export default class ViewLogin extends React.Component {
+  constructor() {
+    super();
+    this.formRef = React.createRef();
+  }
+
+  onSubmit = (data) => {
+    this.formRef && this.formRef.current.onSubmit(data);
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -127,21 +146,24 @@ export default class ViewLogin extends React.Component {
                 fontSize='6rem'>
                 A Header
               </H1>
-              <Form
-                onSubmit={this.onSubmit}>
-                <Input
-                  inputID='username'
-                  label='Username'
-                  required/>
-                <ValidatedMaskedInput
-                  inputID='password'
-                  label='Password'
-                  required/>
-                <Button
-                  bgColor='#A1297B'
-                  label='Login'
-                  onClick={this.props.onSubmit}/>
-              </Form>
+                <Form
+                  ref={this.formRef}
+                  onSubmit={this.props.onSubmit}>
+                  <Input
+                    inputID='username'
+                    label='Username'
+                    activeLabel='Standard <Input/> Component'
+                    required/>
+                  <ValidatedMaskedInput
+                    inputID='password'
+                    label='Password'
+                    activeLabel='<Input/> wrapped in withMask() and withValidation() HOCs'
+                    required/>
+                  <Button
+                    bgColor='#A1297B'
+                    label='Login'
+                    onClick={this.onSubmit}/>
+                </Form>
             </ContentWrapper>
           </FormWrapper>
           <Wrapper>

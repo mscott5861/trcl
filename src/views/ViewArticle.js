@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { CodeBlock, Copy, H1, HamburgerButton, HeroBanner, ImageWithCaption, PaddedContent, Navbar, Stripe, TwoColumnLayout } from 'components'
+import { CodeBlock, Copy, H1, HamburgerButton, HeroBanner, ImageWithCaption, Navbar, NavigationDrawer, PaddedContent, Stripe, TwoColumnLayout } from 'components'
 import { generateLoremIpsum } from 'utilities'
 
 
@@ -19,6 +19,14 @@ export default class ViewArticle extends React.Component {
   render() {
     return (
       <StPageWrapper>
+        <NavigationDrawer
+          isOpen={this.state.hamburgerClicked}
+          bgColor='#666459'
+          shouldClearNavbar={true}>
+          <div>
+            Some great stuff
+          </div>
+        </NavigationDrawer>
         <Navbar
           bgColor='#AC370D'
           sticky
@@ -31,7 +39,7 @@ export default class ViewArticle extends React.Component {
             <HamburgerButton
               onHamburgerButtonClick={() => {
                 this.setState({
-                  hamburgerClicked: !this.state.hambugerClicked
+                  hamburgerClicked: !this.state.hamburgerClicked
                 });}}>
             </HamburgerButton>
           }>

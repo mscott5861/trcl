@@ -32,6 +32,7 @@ export default function H1(props) {
   return (
     <StH1
       centered={props.centered}
+      className={props.className}
       fontSize={props.fontSize}
       rightAligned={props.rightAligned}
       textColor={props.textColor}
@@ -44,6 +45,7 @@ export default function H1(props) {
 H1.propTypes = {
   centered: PropTypes.bool,
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
   fontSize: PropTypes.string,
   rightAligned: PropTypes.bool,
   textColor: PropTypes.string,

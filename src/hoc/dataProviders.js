@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { isRequired } from 'utilities'
 
 
 //----------------------------------------------------------------------------------
@@ -82,3 +82,20 @@ export const withHTTPDataProvider = (WrappedComponent, src) => {
   }
 }
 
+export const withSubmitHandler = (WrappedComponent, 
+                                  formRef=isRequired('a reference to the form is required for this HOC.'), 
+                                  onSubmit=isRequired('an onSubmit function prop is required for this HOC.')) => {
+  return class extends React.Component {
+    onSubmit = () => {
+      let data = formRef.current.getElements(); 
+      onSubmit && onSubmit(data);
+    }
+
+    render() {
+      return(
+        <WrappedComponent
+          {...this.props}/>
+      );
+    }
+  }
+}

@@ -50,11 +50,12 @@ const StStatusBlock = styled.div`
   position: absolute;
   right: 0;
   height: 100%;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
   width: 35px;
-  border-left: ${props => props.valid === null || props.inputIsEmpty ? 'none' : '1px solid #CCC'};
-  background: ${props => props.valid === null || props.inputIsEmpty ? 'transparent' : props.valid ? 'rgba(0, 255, 0, 0.075)' : 'rgba(255, 0, 0, 0.075)'};
+  background: ${props => props.valid === null || props.inputIsEmpty ? 'transparent' : props.valid ? 'linear-gradient(to right, rgba(0, 255, 0, 0), rgba(0, 255, 0, 0.1))' : 'linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,0.1))'};
+
+linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1))
   transition: background .15s linear;
 `
 
@@ -68,7 +69,7 @@ const StValidationIcon = styled.div`
 
   & span {
     position: absolute;
-    height: 3px;
+    height: 1px;
     width: calc(100% - 1rem);
     transition: all .15s linear;
     box-sizing: border-box;

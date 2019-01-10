@@ -18,12 +18,14 @@ const StInputWrapper = styled.div`
   width: 100%;
   height: 2.25rem;
   border: ${props => props.borderless ? '0' : (
-    props.error && props.error !== '' ? '1px solid red' :
-    (props.borderColor ? '1px solid' + props.borderColor : '1px solid #CCC'))};
+    props.errorMessage && props.errorMessage.length > 0 && props.displayValue && props.displayValue.length > 0 ? '2px solid rgba(200,0,0,0.4)' :
+    (props.borderColor ? '1px solid' + props.borderColor : '1px solid #DDD'))};
   border-radius: 4px;
-  margin-top: 2rem;
-  background-color: ${props => props.errorMessage && props.displayValue && props.displayValue.length > 0 && props.errorMessage.length > 0 ? 'rgba(255,0,0,0.1)' : (props.bgColor ? props.bgColor : (props.isFocused ? '#FFF' : '#F2F2F2'))};
-  transition: background-color linear .25s;
+  box-shadow: ${props => props.errorMessage && props.errorMessage.length > 0 && props.displayValue && props.displayValue.length > 0 ? '0 5px 5px 0 rgba(0,0,0,0.1)' : 'none'};
+  transform: ${props => props.errorMessage && props.errorMessage.length > 0 && props.displayValue && props.displayValue.length > 0 ? 'scale(1.03)' : 'scale(1)'};
+  margin-top: 2rem; 
+  background-color: ${props => props.errorMessage && props.errorMessage.length > 0 && props.displayValue.length > 0 ? 'rgba(255,0,0,0.05)' : (props.bgColor ? props.bgColor : (props.isFocused ? '#FFF' : '#F2F2F2'))};
+  transition: all ease-in .15s;
 `
 
 const StInput = styled.input`
@@ -61,7 +63,6 @@ const StActiveLabel = styled.p`
   left: .25rem;
   left: ${props => props.isFocused ? '.25rem' : '25%'};
   font-size: .65rem;
-  letter-spacing: .125rem;
   transition: all .15s linear;
   pointer-events: none;
 

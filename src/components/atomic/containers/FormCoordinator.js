@@ -6,9 +6,8 @@ const StForm = styled.div`
   
 `
 
-export default class Form extends React.Component {
+export default class FormCoordinator extends React.Component {
   static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -19,22 +18,27 @@ export default class Form extends React.Component {
     };
   }
 
+  getElements = () => {
+    console.log("GetElements called!");
+    return this.state.elements;
+  }
+
   updateForm = (inputID, value, hasError) => {
     let elements = this.state.elements,
         hasFoundError = false,
         hasFoundElement = false;
 
-    for (let i = 0; i < elements.length; i++) {
-      if (elements[i].inputID === inputID) {
-        elements[i].value = value;
-        elements[i].hasError = hasError;
+    elements.forEach((element) => {
+      if (element.inputID === inputID) {
+        element.value = value;
+        element.hasError = hasError;
         hasFoundElement = true;
       }
 
-      if (elements[i].hasError) {
+      if (element.hasError) {
         hasFoundError = true;
       }
-    };
+    });
 
     if (!hasFoundElement) {
       elements.push({

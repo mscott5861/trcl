@@ -32,6 +32,7 @@ export default function H3(props) {
   return (
     <StH3
       centered={props.centered}
+      className={props.className}
       fontSize={props.fontSize}
       rightAligned={props.rightAligned}
       textColor={props.textColor}
@@ -44,6 +45,7 @@ export default function H3(props) {
 H3.propTypes = {
   centered: PropTypes.bool,
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
   fontSize: PropTypes.string,
   rightAligned: PropTypes.bool,
   textColor: PropTypes.string,

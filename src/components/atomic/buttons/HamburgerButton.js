@@ -63,6 +63,7 @@ const StHamburgerButton = styled.button`
 
   & span:nth-child(3) {
     top: 24px;
+    transition: .25s cubic-bezier(0.42, 0, 0.26, 1.22);
   }
 
   &.open span:nth-child(1),
