@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { CodeBlock, Copy, H1, HamburgerButton, HeroBanner, ImageWithCaption, Navbar, NavigationDrawer, PaddedContent, Stripe, TwoColumnLayout } from 'components'
+import { CodeBlock, Copy, H1, HamburgerButton, HeroBanner, ImageWithCaption, List, ListItem, Navbar, NavigationDrawer, PaddedContent, Stripe, TwoColumnLayout } from 'components'
 import { generateLoremIpsum } from 'utilities'
 
 
@@ -20,12 +20,23 @@ export default class ViewArticle extends React.Component {
     return (
       <StPageWrapper>
         <NavigationDrawer
+          hasRightBorder
           isOpen={this.state.hamburgerClicked}
-          bgColor='#666459'
+          bgColor='#232321'
           shouldClearNavbar={true}>
-          <div>
-            Some great stuff
-          </div>
+          <List
+            listItemHeight='5rem'
+            listItemPrimaryTextColor='#FFF'
+            listItemSecondaryTextColor='#C4C631'>
+            <ListItem
+              imageSrc='./icon/square-icon-01.jpg'
+              primaryText='Forms'
+              secondaryText='Statically and dynamically generated'/>
+            <ListItem
+              imageSrc='./icon/square-icon-02.jpg'
+              primaryText='Copy'
+              secondaryText='Text, containers, and white space'/>
+          </List>
         </NavigationDrawer>
         <Navbar
           bgColor='#AC370D'

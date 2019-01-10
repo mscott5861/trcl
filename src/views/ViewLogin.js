@@ -79,7 +79,7 @@ export default class ViewLogin extends React.Component {
             <Image
               clipPath='polygon(0 0, 100% 0, 100% 100%, 20% 100%)'
               maxHeight='100vh'
-              src={'./img/sample-img-06.jpg'}/>
+              src={'./img/sample-img-05.jpg'}/>
           </Wrapper>
         </TwoColumnLayout>
         <PaddedContent>
@@ -170,7 +170,7 @@ export default class ViewLogin extends React.Component {
             <Image
               clipPath='polygon(0 0, 100% 0, 100% 100%, 20% 100%)'
               maxHeight='100vh'
-              src={'./img/sample-img-06.jpg'}/>
+              src={'./img/sample-img-05.jpg'}/>
           </Wrapper>
         </TwoColumnLayout>
       </React.Fragment>

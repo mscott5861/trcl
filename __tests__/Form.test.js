@@ -9,6 +9,7 @@ Enzyme.configure({
   adapter: new Adapter()
 });
 
+const mockFn = jest.fn();
 
 //------------------------------------------------------------------
 // Snapshot the Input
@@ -17,7 +18,7 @@ describe('Form', () => {
   it('renders correctly', () => {
     const output = shallow(
       <Form
-        onSubmit={() => { console.log("test form submitted."); }}
+        onSubmit={mockFn}
         />);
     expect(shallowToJson(output)).toMatchSnapshot();
   });

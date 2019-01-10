@@ -19,7 +19,6 @@ export default class FormCoordinator extends React.Component {
   }
 
   getElements = () => {
-    console.log("GetElements called!");
     return this.state.elements;
   }
 
