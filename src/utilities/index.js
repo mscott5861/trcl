@@ -1,11 +1,13 @@
+import { atLeastFiveSchema } from './validationSchema'
 import { generateLoremIpsum } from './typography'
 import { generateUniqueId } from './internal'
 import { isRequired } from './internal'
-import { atLeastFiveSchema } from './validationSchema'
+import { requiredSchema } from './validationSchema'
 
 export {
+  atLeastFiveSchema,
   generateLoremIpsum,
   generateUniqueId,
   isRequired,
-  atLeastFiveSchema,
+  requiredSchema,
 }

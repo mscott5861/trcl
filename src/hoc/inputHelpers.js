@@ -11,13 +11,7 @@ import { isRequired } from 'utilities'
 export const withMask = (WrappedInput, mask = isRequired('mask is a required parameter for the withMask HOC.')) => {
   return class extends React.Component {
     maskInput = (inputReceived) => {
-      let displayValue = '';
-
-      for (let i = 0; i < inputReceived.length; i++) {
-        displayValue += mask;
-      }
-
-      
+      let displayValue = mask.repeat(inputReceived.length);
       return displayValue;
     }
 
