@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ThemeProvider } from 'styled-components'
-import { ViewArticle, ViewLogin } from 'views'
+import { ViewArticle, ViewForm, ViewLogin } from 'views'
 
 const colors = {
   primary: 'grey',
@@ -27,7 +27,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      submitted: false
+      submitted: false,
+      showForm: true
     }
   }
 

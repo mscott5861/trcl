@@ -105,45 +105,48 @@ export default class Input extends React.Component {
   }
   
   handleOnChange = (e) => {
-    //------------------------------------------------------------------------------------
-    // We need to do a few things on every keystroke:
-    //
-    // 1. Keep track of the 'real' input value (un-masked)
-    // 2. Update the 'display' input value, if applicable
-    // 3. Perform validation, if applicable, and keep track of whether or not this
-    //    <Input/> is in an error state
-    // 4. Update the 'active' (hovering) label, if applicable
-    // 5. Send some information up to our <Form/> component (the 'real' input value of
-    //    our component, a unique string to identify it, and whether or not the 
-    //    component is in an error state.)
-    //------------------------------------------------------------------------------------
-    // TODO: enforce a policy that input IDs must be unique on a per-Form basis. 
-    //------------------------------------------------------------------------------------
-    let displayValue = '',
-        inputReceived = e.target.value,
-        realValue = inputReceived.length - 1 >= 0 ? (
-                      inputReceived[inputReceived.length - 1] === '*' ? 
-                          this.state.realValue.substring(0, this.state.realValue.length - 1) : 
-                          this.state.realValue + inputReceived[inputReceived.length - 1]) : 
-                      '';
+    e && e.preventDefault();
 
-    realValue = this.props.validateInput ? this.props.validateInput(realValue, this.props.schema) : realValue;
-    displayValue = this.props.maskInput ? this.props.maskInput(realValue) : realValue;
+    if (typeof e !== 'undefined') {
+      //------------------------------------------------------------------------------------
+      // We need to do a few things on every keystroke:
+      //
+      // 1. Keep track of the 'real' input value (un-masked)
+      // 2. Update the 'display' input value, if applicable
+      // 3. Perform validation, if applicable, and keep track of whether or not this
+      //    <Input/> is in an error state
+      // 4. Update the 'active' (hovering) label, if applicable
+      // 5. Send some information up to our <Form/> component (the 'real' input value of
+      //    our component, a unique string to identify it, and whether or not the 
+      //    component is in an error state.)
+      //------------------------------------------------------------------------------------
+      // TODO: enforce a policy that input IDs must be unique on a per-Form basis. 
+      //------------------------------------------------------------------------------------
+      let displayValue = '',
+          realValue = e.target.value.length === 1 ?
+                        e.target.value :
+                          e.target.value.length < this.state.realValue.length ? 
+                            this.state.realValue.substring(0, this.state.realValue.length - 1) :
+                              this.state.realValue + e.target.value[e.target.value.length - 1];
+                          
+      realValue = this.props.validateInput ? this.props.validateInput(realValue, this.props.schema) : realValue;
+      displayValue = this.props.maskInput ? this.props.maskInput(realValue) : realValue;
 
-    this.updateActiveLabel();
-    
-    this.setState({
-      displayValue,
-      realValue,
-    }, () => {
+      this.updateActiveLabel();
+
       this.setState({
-        hasError: this.checkForErrors(),
+        displayValue,
+        realValue,
       }, () => {
-        this.updateForm();
+        this.setState({
+          hasError: this.checkForErrors(),
+        }, () => {
+          this.updateForm();
+        });
       });
-    });
+    }
 
-    e.stopPropagation && e.stopPropagation();
+    e && e.stopPropagation();
   }
 
   checkForErrors = () => {
@@ -192,7 +195,7 @@ export default class Input extends React.Component {
         onChange={this.handleOnChange}>
         <StInput
           onBlur={this.handleOnBlur}
-          onChange={this.handleOnChange}
+          onChange={(e) => { this.handleOnChange(e); }}
           onFocus={this.handleOnFocus}
           value={this.state.displayValue}/>
         <StLabel

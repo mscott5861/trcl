@@ -24,5 +24,5 @@ function useWebsocketDataProvider(src) {
     return() => {
       ws.close(); 
     }
-  });
+  }, []);
 }
