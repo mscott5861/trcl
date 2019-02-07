@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ThemeProvider } from 'styled-components'
-import { ViewArticle, ViewForm, ViewLogin } from 'views'
+import { ViewArticle, ViewForm, ViewLogin, ViewParallax } from 'views'
 
 const colors = {
   primary: 'grey',
@@ -41,10 +41,7 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        { !this.state.submitted ?
-          <ViewLogin
-            onSubmit={this.onSubmit}/> :
-          <ViewArticle/> }
+        <ViewParallax/>
       </ThemeProvider>
     );
   }

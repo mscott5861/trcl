@@ -9,8 +9,8 @@ export function isRequired(error) {
 }
 
 export function vendorize(el, prop, val) {
-  el.style["webkit" + prop] = value;
-  el.style["moz" + prop] = value;
-  el.style["ms" + prop] = value;
-  el.style["o" + prop] = value;
+  el.style["webkit" + prop] = val;
+  el.style["moz" + prop] = val;
+  el.style["ms" + prop] = val;
+  el.style["o" + prop] = val;
 }
