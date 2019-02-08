@@ -12,7 +12,7 @@ import styled from 'styled-components'
  * -------------------------------------------------------------- */
 
 const StCopy = styled.p`
-  font-size: 1rem;
+  font-size: ${props => props.fontSize ? props.fontSize : '1rem'};
   font-weight: ${props => props.weight === 'extraLight' ? '200' :
                           props.weight === 'light' ? '300' :
                           props.weight === 'regular' ? '400' :
@@ -28,7 +28,7 @@ const StCopy = styled.p`
   column-count: ${props => props.columns ? props.columns : '1'};
   column-gap: ${props => props.columnGap ? props.columnGap : 'initial'};
 
-  line-height: 1.5rem;
+  line-height: ${props => props.fontSize ? props.fontSize : '1.5rem'};
   letter-spacing: ${props => props.tracking ? props.tracking : 'initial'};
   text-align:  ${props => props.justified ? 'justify' :
                           props.rightAligned ? 'right' :
@@ -36,7 +36,7 @@ const StCopy = styled.p`
   max-width: ${props => props.optimizeLength ? '66ch' : 'initial'};
 
   &::first-letter {
-    font-size: ${props => props.stylizeFirstLetter ? '2rem' : '1rem'};
+    font-size: ${props => props.stylizeFirstLetter ? '2rem' : 'unset'};
   }
   
   @media(max-width: 768px) {
@@ -52,6 +52,7 @@ export default function Copy(props) {
         centeredVertically={props.centeredVertically}
         columns={props.columns}
         columnGap={props.columnGap} 
+        fontSize={props.fontSize}
         justified={props.justified}
         optimizeLength={props.optimizeLength}
         rightAligned={props.rightAligned}
@@ -70,6 +71,7 @@ Copy.propTypes = {
   children: PropTypes.node.isRequired,
   columnGap: PropTypes.string,
   columns: PropTypes.number,
+  fontSize: PropTypes.string,
   justified: PropTypes.bool,
   optimizeLength: PropTypes.bool,
   rightAligned: PropTypes.bool,
