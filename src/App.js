@@ -41,12 +41,10 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <ViewParallax/>
-        {
-        /* { !this.state.submitted ?
+        { !this.state.submitted ?
             <ViewLogin
               onSubmit={this.onSubmit}/> :
-            <ViewArticle/> } */}
+            <ViewArticle/> }
       </ThemeProvider>
     );
   }
