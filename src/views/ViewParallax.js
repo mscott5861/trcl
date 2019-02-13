@@ -1,10 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Copy, Image, PaddedContent } from 'components'
-import { withParallax } from 'hoc'
+import { withDuotone, withParallax } from 'hoc'
 import { generateLoremIpsum } from 'utilities'
 
-const ParallaxedImage = withParallax(Image, 6);
+const DuotonedImage = withDuotone(Image);
+const ParallaxedImage = withParallax(DuotonedImage, 6);
 const StContainer = styled.div`
   position: absolute;
   padding: 2rem;
@@ -27,7 +28,7 @@ export default class ViewParallax extends React.Component {
             { generateLoremIpsum() }
           </Copy>
         </StContainer>
-        <ParallaxedImage
+        <DuotonedImage
           src={'./img/sample-img-04.jpg'}/>
       </PaddedContent>
     );

@@ -65,3 +65,38 @@ export const withParallax = (WrappedComponent, depth, pageOrientation = 'portrai
   }
 }
 
+const StDuotoneContainer = styled.div`
+  &::before,
+  &::after {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: '';
+  }
+
+  &::before {
+    background-color: #F00E2E;
+    mix-blend-mode: darken;
+  }
+
+  &::after {
+    background-color: #192550;
+    mix-blend-mode: lighten;
+  }
+`
+
+export const withDuotone = (WrappedComponent) => {
+  return class extends React.Component {
+    render() {
+      return(
+        <StDuotoneContainer>
+          <WrappedComponent
+            {...this.props} />
+        </StDuotoneContainer>
+      );
+    }
+  }
+}
