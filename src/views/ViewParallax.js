@@ -29,7 +29,7 @@ export default class ViewParallax extends React.Component {
           </Copy>
         </StContainer>
         <DuotonedImage
-          src={'./img/sample-img-04.jpg'}/>
+          src={'./img/sample-img-01.jpg'}/>
       </PaddedContent>
     );
   }

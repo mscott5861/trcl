@@ -39,9 +39,7 @@ export const withParallax = (WrappedComponent, depth, pageOrientation = 'portrai
       }`;
       
       let styleSheet = document.getElementById('withParallaxHOC');
-      if (styleSheet === null) {
-        document.getElementsByTagName('head')[0].appendChild(style);
-      }
+      styleSheet === null && document.getElementsByTagName('head')[0].appendChild(style);
     }
 
     componentWillMount() {
@@ -64,6 +62,10 @@ export const withParallax = (WrappedComponent, depth, pageOrientation = 'portrai
     }
   }
 }
+
+const StRelativeContainer = styled.div`
+  position: relative;
+`
 
 const StDuotoneContainer = styled.div`
   &::before,
@@ -92,10 +94,12 @@ export const withDuotone = (WrappedComponent) => {
   return class extends React.Component {
     render() {
       return(
-        <StDuotoneContainer>
-          <WrappedComponent
-            {...this.props} />
-        </StDuotoneContainer>
+        <StRelativeContainer>
+          <StDuotoneContainer>
+            <WrappedComponent
+              {...this.props} />
+          </StDuotoneContainer>
+        </StRelativeContainer>
       );
     }
   }
