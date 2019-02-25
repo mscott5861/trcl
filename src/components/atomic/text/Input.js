@@ -55,15 +55,6 @@ const StLabel = styled.p`
   pointer-events: none;
 `
 
-const StTypeaheadLabel = styled.p`
-  position: absolute;
-  left: 1rem;
-  color: #888;
-  font-size: .75rem;
-  letter-spacing: .025rem;
-  line-height: 2rem;
-  pointer-events: none;
-`
 
 const StActiveLabel = styled.p`
   opacity: ${props => props.isFocused ? '1' : '0'};
@@ -110,7 +101,6 @@ export default class Input extends React.Component {
       hasError: this.props.required ? this.props.required : false,
       isFocused: false,
       realValue: '',
-      typeaheadValue: '',
     };
   }
 
@@ -119,11 +109,10 @@ export default class Input extends React.Component {
   }
 
   handleOnKeyDown = (e) => {
-    this.props.handleTypeaheadInput && this.props.handleTypeaheadKeydown(e);
+    this.props.handleTypeaheadKeydown && this.props.handleTypeaheadKeydown(e);
   }
 
   tabComplete = (realValue) => {
-    console.log(realValue);
     this.setState({
       realValue,
       displayValue: realValue,
@@ -131,7 +120,6 @@ export default class Input extends React.Component {
   }
   
   handleOnChange = (e) => {
-    console.log(e);
     e && e.preventDefault();
 
     if (typeof e !== 'undefined') {
@@ -152,8 +140,7 @@ export default class Input extends React.Component {
       //       handle the case where user moves caret.
       //------------------------------------------------------------------------------------
       let displayValue = '',
-          typeaheadValue = '',
-          realValue = e.target.value.length === 1 ?
+          realValue = e.target && e.target.value.length === 1 ?
                         e.target.value :
                           e.target.value.length < this.state.realValue.length ? 
                             this.state.realValue.substring(0, e.target.value.length) :
@@ -162,14 +149,13 @@ export default class Input extends React.Component {
                           
       realValue = this.props.validateInput ? this.props.validateInput(realValue, this.props.schema) : realValue;
       displayValue = this.props.maskInput ? this.props.maskInput(realValue) : realValue;
-      typeaheadValue = this.props.handleTypeaheadInput ? this.props.handleTypeaheadInput(realValue) : '';
+      this.props.handleTypeaheadInput && this.props.handleTypeaheadInput(realValue);
 
       this.updateActiveLabel();
 
       this.setState({
         displayValue,
         realValue,
-        typeaheadValue,
       }, () => {
         this.setState({
           hasError: this.checkForErrors(),
@@ -214,6 +200,10 @@ export default class Input extends React.Component {
         isFocused: false
       });
     }
+
+    if (this.props.cleanup) {
+      this.props.cleanup();
+    }
   }
 
   render() {
@@ -228,7 +218,7 @@ export default class Input extends React.Component {
         onChange={this.handleOnChange}>
         <StInput
           onBlur={this.handleOnBlur}
-          onChange={(e) => { this.handleOnChange(e); }}
+          onChange={this.handleOnChange}
           onKeyDown={this.handleOnKeyDown}
           onFocus={this.handleOnFocus}
           value={this.state.displayValue}/>
@@ -237,9 +227,6 @@ export default class Input extends React.Component {
           isFocused={this.state.isFocused}>
           { this.props.label }
         </StLabel>
-        <StTypeaheadLabel>
-          { this.props.typeaheadValue }
-        </StTypeaheadLabel>
         { this.props.errorMessage && this.state.displayValue.length > 0 && this.props.errorMessage.length > 0 ?
           <StActiveLabel
             activeLabelColor='#C45256'

@@ -27,7 +27,7 @@ export const withMask = (WrappedInput, mask = isRequired('mask is a required par
 
 const StContainer = styled.div`
   position: relative;
-  z-index: 20;
+  z-index: ${props => props.zIndex ? props.zIndex : 10};
 `
 
 const StSuggestionBox = styled.div`
@@ -41,70 +41,61 @@ const StSuggestionBox = styled.div`
   z-index: 20;
 `
 
+const StTypeaheadValue = styled.p`
+  position: absolute;
+  left: 1rem;
+  color: #888;
+  font-size: .75rem;
+  letter-spacing: .025rem;
+  line-height: 2rem;
+  pointer-events: none;
+`
+
+const StBold = styled.span`
+  font-weight: 800;
+  color: red;
+`
+
+const StRegular = styled.span`
+  font-weight: 400;
+`
+
 const StSuggestion = styled.p`
   padding: .5rem 0;
   background: ${props => props.active ? '#DDD' : '#FFF'};
+  cursor: pointer;
+  &:hover {
+    background: #DDD;
+  }
 `
 
-export const withTypeahead = (WrappedInput) => {
+export const withTypeahead = (WrappedInput, data = isRequired('data is a required parameter for the withTypeahead HOC.')) => {
   return class extends React.Component {
     constructor() {
       super();
       this.state = {
         typeaheadValue: '',
+        suggestionPrefix: '',
         suggestionIdx: -1,
         suggestions: [],
+        zIndex: 0,
       }
       this.input = React.createRef();
+      this.me = React.createRef();
     }
 
-
-    //------------------------------------------------------------------
-    // A DP implementation of the Levenshtein distance.
-    // Courtesy of https://gist.github.com/andrei-m/982927
-    //------------------------------------------------------------------
-    getLevenshteinDistance = (realValue, datum) => {
-      let m = [],
-          i = 0,
-          j = 0;
-
-      if (!(realValue && datum)) {
-        return (realValue || datum).length;
-      }
-
-      for (i = 0; i <= datum.length; m[i] = [i++]);
-      for (j = 0; j <= realValue.length; m[0][j] = j++);
-
-      for (i = 1; i <= datum.length; i++) {
-        for (j = 1; j <= realValue.length; j++) {
-          m[i][j] = datum.charAt(i - 1) === realValue.charAt(j - 1)
-            ? m[i - 1][j - 1]
-            : m[i][j] = Math.min(
-              m[i - 1][j - 1] + 1,
-              Math.min(m[i][j - 1] + 1, m[i - 1][j] + 1))
-        }
-      }
-
-      return m[datum.length][realValue.length];
-    }
-
-    getData = () => {
-      return ['Toiletries', 'Medical expenses', 'Electricity', 'Cats', 'Cars'];
+    componentDidMount() {
+      const previousZ = getComputedStyle(this.me.current.previousSibling).zIndex;
+      this.setState({
+        zIndex: (parseInt(previousZ) + 1),
+      })
     }
 
     handleTypeaheadKeydown = (e) => {
       let suggestionIdx = this.state.suggestionIdx,
           typeaheadValue = '';
 
-      if (e.key === "Tab") {
-        this.input.current.tabComplete(this.state.suggestions[this.state.suggestionIdx]);
-        this.setState({
-          suggestions: []
-        })
-        //e.preventDefault();
-        //e.stopPropagation();
-
-      } else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
         e.key === "ArrowDown" && this.state.suggestionIdx < (this.state.suggestions.length - 1) && suggestionIdx++;
         e.key === "ArrowUp" && this.state.suggestionIdx > -1 && suggestionIdx--;
           
@@ -120,18 +111,57 @@ export const withTypeahead = (WrappedInput) => {
       }
     }
 
-    handleTypeaheadInput = (realValue) => {
-      let acceptableLevenshteinDistance = 3,
-          levenshteinDistance = 0,
-          suggestions = [];
+    cleanup = () => {
+      this.props.suggestionIdx !== -1 && this.input.current.tabComplete(this.state.suggestions[this.state.suggestionIdx]);
+      this.setState({
+        suggestions: [],
+        suggestionIdx: -1,
+        suggestionPrefix: '',
+        typeaheadValue: '',
+      })
+    }
 
-      this.getData().forEach(datum => {
-        levenshteinDistance = this.getLevenshteinDistance(realValue, datum);
+    getSuggestions = (realValue) => {
+      let suggestions = [],
+          suggestionPrefix = '';
 
-        if (levenshteinDistance <= acceptableLevenshteinDistance) {
+      data.forEach((datum) => {
+        if (realValue.toLowerCase() === datum.substring(0, realValue.length).toLowerCase()) {
           suggestions.push(datum);
+          suggestionPrefix = datum.substring(0, realValue.length);
         }
       });
+      if (suggestions.length > 0) {
+        this.setState({
+          suggestionPrefix,
+        })
+      }
+      return suggestions;
+    }
+
+    handleOnClick = () => {
+          
+    }
+
+    handleOnMouseEnter = (e) => {
+      let typeaheadValue = this.state.suggestions[e.target.id];
+      this.setState({
+        suggestionIdx: e.target.id,
+        typeaheadValue,
+      });
+    }
+
+    handleOnMouseLeave = (e) => {
+      /*this.setState({
+        suggestionIdx: -1,
+      }, () => {
+        this.cleanup();
+      })*/
+    }
+
+    handleTypeaheadInput = (realValue) => {
+      let suggestions = [];
+      suggestions = realValue.length > 0 && this.getSuggestions(realValue);
 
       this.setState({
         suggestions,
@@ -140,21 +170,37 @@ export const withTypeahead = (WrappedInput) => {
 
     render() {
       return (
-        <StContainer>
+        <StContainer
+          ref={this.me}
+          zIndex={this.props.zIndex}>
           <WrappedInput
             ref={this.input}
+            cleanup={this.cleanup}
             handleTypeaheadKeydown={this.handleTypeaheadKeydown}
             handleTypeaheadInput={this.handleTypeaheadInput}
             typeaheadValue={this.state.typeaheadValue}
-            {...this.props}/>
+            {...this.props}>
+            <StTypeaheadValue>
+              { this.state.typeaheadValue && this.state.typeaheadValue }
+            </StTypeaheadValue>
+          </WrappedInput>
             { this.state.suggestions.length > 0 &&
               <StSuggestionBox>
                 { this.state.suggestions.map((suggestion, idx) => {
                   return (
                     <StSuggestion
+                      id={idx}
                       key={'suggestion-' + idx}
-                      active={this.state.suggestionIdx === idx}>
-                      { suggestion }
+                      active={this.state.suggestionIdx === idx}
+                      onClick={this.handleOnClick}
+                      onMouseEnter={this.handleOnMouseEnter}
+                      onMouseLeave={this.handleOnMouseLeave}>
+                      <StBold>
+                        { this.state.suggestionPrefix }
+                      </StBold>
+                      <StRegular>
+                        { suggestion.substring(this.state.suggestionPrefix.length, suggestion.length) }
+                      </StRegular>
                     </StSuggestion>
                   )
                 })}
