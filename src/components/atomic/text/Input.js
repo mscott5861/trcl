@@ -26,6 +26,7 @@ const StInputWrapper = styled.div`
   margin-top: 2rem; 
   background-color: ${props => props.errorMessage && props.errorMessage.length > 0 && props.displayValue.length > 0 ? 'rgba(255,0,0,0.05)' : (props.bgColor ? props.bgColor : (props.isFocused ? '#FFF' : '#F2F2F2'))};
   transition: all ease-in .15s;
+  z-index: 10;
 `
 
 const StInput = styled.input`
@@ -36,6 +37,9 @@ const StInput = styled.input`
   height: 98%;
   width: 100%;
   padding-left: 1rem;
+  font-size: .75rem;
+  letter-spacing: .025rem;
+  line-height: 2rem;
 `
 
 const StLabel = styled.p`
@@ -47,6 +51,16 @@ const StLabel = styled.p`
   color: ${props => props.labelColor ? props.labelColor : '#555'};
   letter-spacing: .125rem;
   transition: all .25s linear;
+  line-height: 2rem;
+  pointer-events: none;
+`
+
+const StTypeaheadLabel = styled.p`
+  position: absolute;
+  left: 1rem;
+  color: #888;
+  font-size: .75rem;
+  letter-spacing: .025rem;
   line-height: 2rem;
   pointer-events: none;
 `
@@ -72,7 +86,6 @@ const StActiveLabel = styled.p`
     color: red;
     margin-right: 4px;
   }
-
 `
 
 export default class Input extends React.Component {
@@ -97,14 +110,28 @@ export default class Input extends React.Component {
       hasError: this.props.required ? this.props.required : false,
       isFocused: false,
       realValue: '',
+      typeaheadValue: '',
     };
   }
 
   componentWillMount() {
     this.updateForm();
   }
+
+  handleOnKeyDown = (e) => {
+    this.props.handleTypeaheadInput && this.props.handleTypeaheadKeydown(e);
+  }
+
+  tabComplete = (realValue) => {
+    console.log(realValue);
+    this.setState({
+      realValue,
+      displayValue: realValue,
+    })
+  }
   
   handleOnChange = (e) => {
+    console.log(e);
     e && e.preventDefault();
 
     if (typeof e !== 'undefined') {
@@ -121,22 +148,28 @@ export default class Input extends React.Component {
       //    component is in an error state.)
       //------------------------------------------------------------------------------------
       // TODO: enforce a policy that input IDs must be unique on a per-Form basis. 
+      // TODO: either enforce caret position for masked inputs to remain at end or
+      //       handle the case where user moves caret.
       //------------------------------------------------------------------------------------
       let displayValue = '',
+          typeaheadValue = '',
           realValue = e.target.value.length === 1 ?
                         e.target.value :
                           e.target.value.length < this.state.realValue.length ? 
-                            this.state.realValue.substring(0, this.state.realValue.length - 1) :
+                            this.state.realValue.substring(0, e.target.value.length) :
                               this.state.realValue + e.target.value[e.target.value.length - 1];
+
                           
       realValue = this.props.validateInput ? this.props.validateInput(realValue, this.props.schema) : realValue;
       displayValue = this.props.maskInput ? this.props.maskInput(realValue) : realValue;
+      typeaheadValue = this.props.handleTypeaheadInput ? this.props.handleTypeaheadInput(realValue) : '';
 
       this.updateActiveLabel();
 
       this.setState({
         displayValue,
         realValue,
+        typeaheadValue,
       }, () => {
         this.setState({
           hasError: this.checkForErrors(),
@@ -196,6 +229,7 @@ export default class Input extends React.Component {
         <StInput
           onBlur={this.handleOnBlur}
           onChange={(e) => { this.handleOnChange(e); }}
+          onKeyDown={this.handleOnKeyDown}
           onFocus={this.handleOnFocus}
           value={this.state.displayValue}/>
         <StLabel
@@ -203,6 +237,9 @@ export default class Input extends React.Component {
           isFocused={this.state.isFocused}>
           { this.props.label }
         </StLabel>
+        <StTypeaheadLabel>
+          { this.props.typeaheadValue }
+        </StTypeaheadLabel>
         { this.props.errorMessage && this.state.displayValue.length > 0 && this.props.errorMessage.length > 0 ?
           <StActiveLabel
             activeLabelColor='#C45256'

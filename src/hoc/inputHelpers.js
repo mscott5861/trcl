@@ -25,15 +25,142 @@ export const withMask = (WrappedInput, mask = isRequired('mask is a required par
   }
 }
 
+const StContainer = styled.div`
+  position: relative;
+  z-index: 20;
+`
 
-// TODO: function stub
-export const withTypeAhead = (WrappedInput, value) => {
+const StSuggestionBox = styled.div`
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #DDD;
+  background: #FFF;
+  padding: 1rem;
+  z-index: 20;
+`
+
+const StSuggestion = styled.p`
+  padding: .5rem 0;
+  background: ${props => props.active ? '#DDD' : '#FFF'};
+`
+
+export const withTypeahead = (WrappedInput) => {
   return class extends React.Component {
+    constructor() {
+      super();
+      this.state = {
+        typeaheadValue: '',
+        suggestionIdx: -1,
+        suggestions: [],
+      }
+      this.input = React.createRef();
+    }
+
+
+    //------------------------------------------------------------------
+    // A DP implementation of the Levenshtein distance.
+    // Courtesy of https://gist.github.com/andrei-m/982927
+    //------------------------------------------------------------------
+    getLevenshteinDistance = (realValue, datum) => {
+      let m = [],
+          i = 0,
+          j = 0;
+
+      if (!(realValue && datum)) {
+        return (realValue || datum).length;
+      }
+
+      for (i = 0; i <= datum.length; m[i] = [i++]);
+      for (j = 0; j <= realValue.length; m[0][j] = j++);
+
+      for (i = 1; i <= datum.length; i++) {
+        for (j = 1; j <= realValue.length; j++) {
+          m[i][j] = datum.charAt(i - 1) === realValue.charAt(j - 1)
+            ? m[i - 1][j - 1]
+            : m[i][j] = Math.min(
+              m[i - 1][j - 1] + 1,
+              Math.min(m[i][j - 1] + 1, m[i - 1][j] + 1))
+        }
+      }
+
+      return m[datum.length][realValue.length];
+    }
+
+    getData = () => {
+      return ['Toiletries', 'Medical expenses', 'Electricity', 'Cats', 'Cars'];
+    }
+
+    handleTypeaheadKeydown = (e) => {
+      let suggestionIdx = this.state.suggestionIdx,
+          typeaheadValue = '';
+
+      if (e.key === "Tab") {
+        this.input.current.tabComplete(this.state.suggestions[this.state.suggestionIdx]);
+        this.setState({
+          suggestions: []
+        })
+        //e.preventDefault();
+        //e.stopPropagation();
+
+      } else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.key === "ArrowDown" && this.state.suggestionIdx < (this.state.suggestions.length - 1) && suggestionIdx++;
+        e.key === "ArrowUp" && this.state.suggestionIdx > -1 && suggestionIdx--;
+          
+        e.preventDefault();
+        e.stopPropagation();
+
+        typeaheadValue = this.state.suggestions[suggestionIdx];
+    
+        this.setState({
+          suggestionIdx,
+          typeaheadValue,
+        });
+      }
+    }
+
+    handleTypeaheadInput = (realValue) => {
+      let acceptableLevenshteinDistance = 3,
+          levenshteinDistance = 0,
+          suggestions = [];
+
+      this.getData().forEach(datum => {
+        levenshteinDistance = this.getLevenshteinDistance(realValue, datum);
+
+        if (levenshteinDistance <= acceptableLevenshteinDistance) {
+          suggestions.push(datum);
+        }
+      });
+
+      this.setState({
+        suggestions,
+      });
+    }
+
     render() {
       return (
-        <WrappedInput
-            value={this.state.value}
-            {...this.props} />
+        <StContainer>
+          <WrappedInput
+            ref={this.input}
+            handleTypeaheadKeydown={this.handleTypeaheadKeydown}
+            handleTypeaheadInput={this.handleTypeaheadInput}
+            typeaheadValue={this.state.typeaheadValue}
+            {...this.props}/>
+            { this.state.suggestions.length > 0 &&
+              <StSuggestionBox>
+                { this.state.suggestions.map((suggestion, idx) => {
+                  return (
+                    <StSuggestion
+                      key={'suggestion-' + idx}
+                      active={this.state.suggestionIdx === idx}>
+                      { suggestion }
+                    </StSuggestion>
+                  )
+                })}
+              </StSuggestionBox>
+            }
+        </StContainer>
       );
     }
   }
