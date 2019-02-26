@@ -81,21 +81,12 @@ export const withTypeahead = (WrappedInput, data = isRequired('data is a require
         zIndex: 0,
       }
       this.input = React.createRef();
-      this.me = React.createRef();
     }
-
-    componentDidMount() {
-      const previousZ = getComputedStyle(this.me.current.previousSibling).zIndex;
-      this.setState({
-        zIndex: (parseInt(previousZ) + 1),
-      })
-    }
-
+    
     handleTypeaheadKeydown = (e) => {
       let suggestionIdx = this.state.suggestionIdx,
           typeaheadValue = '';
 
-      
       if (e.key === "ArrowDown" || e.key === "ArrowUp") {
         e.key === "ArrowDown" && this.state.suggestionIdx < (this.state.suggestions.length - 1) && suggestionIdx++;
         e.key === "ArrowUp" && this.state.suggestionIdx > -1 && suggestionIdx--;
@@ -119,8 +110,10 @@ export const withTypeahead = (WrappedInput, data = isRequired('data is a require
           })
         }
       } else if (e.key === 'Tab') {
-        console.log("Tabbing")
-        this.props.suggestionIdx !== -1 && this.input.current.tabComplete(this.state.suggestions[this.state.suggestionIdx]);
+        if (this.state.suggestionIdx !== -1) {
+          this.input.current.tabComplete(this.state.suggestions[this.state.suggestionIdx]);
+          this.cleanup();
+        }
       }
     }
 
@@ -152,8 +145,9 @@ export const withTypeahead = (WrappedInput, data = isRequired('data is a require
       return suggestions;
     }
 
-    handleOnClick = () => {
-          
+    handleSuggestionClick = () => {
+      this.state.suggestionIdx !== -1 && this.input.current.tabComplete(this.state.suggestions[this.state.suggestionIdx]);
+      this.cleanup();
     }
 
     handleOnMouseEnter = (e) => {
@@ -202,7 +196,6 @@ export const withTypeahead = (WrappedInput, data = isRequired('data is a require
     render() {
       return (
         <StContainer
-          ref={this.me}
           zIndex={this.props.zIndex}>
           <WrappedInput
             ref={this.input}
@@ -223,7 +216,7 @@ export const withTypeahead = (WrappedInput, data = isRequired('data is a require
                       id={idx}
                       key={'suggestion-' + idx}
                       active={this.state.suggestionIdx === idx}
-                      onClick={this.handleOnClick}
+                      onClick={this.handleSuggestionClick}
                       onMouseEnter={this.handleOnMouseEnter}
                       onMouseLeave={this.handleOnMouseLeave}>
                       <StBold>

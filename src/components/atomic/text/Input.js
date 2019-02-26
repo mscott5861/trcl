@@ -201,9 +201,9 @@ export default class Input extends React.Component {
       });
     }
 
-    if (this.props.cleanup) {
+    /*if (this.props.cleanup) {
       this.props.cleanup();
-    }
+    }*/
   }
 
   render() {
