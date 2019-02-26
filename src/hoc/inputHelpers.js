@@ -95,6 +95,7 @@ export const withTypeahead = (WrappedInput, data = isRequired('data is a require
       let suggestionIdx = this.state.suggestionIdx,
           typeaheadValue = '';
 
+      
       if (e.key === "ArrowDown" || e.key === "ArrowUp") {
         e.key === "ArrowDown" && this.state.suggestionIdx < (this.state.suggestions.length - 1) && suggestionIdx++;
         e.key === "ArrowUp" && this.state.suggestionIdx > -1 && suggestionIdx--;
@@ -108,11 +109,22 @@ export const withTypeahead = (WrappedInput, data = isRequired('data is a require
           suggestionIdx,
           typeaheadValue,
         });
+      } else if (e.key === 'Backspace') {
+        if (this.input.current.state.realValue.length === 1) {
+          this.setState({
+            suggestions: [],
+            suggestionIdx: -1,
+            suggestionPrefix: '',
+            typeaheadValue: '',
+          })
+        }
+      } else if (e.key === 'Tab') {
+        console.log("Tabbing")
+        this.props.suggestionIdx !== -1 && this.input.current.tabComplete(this.state.suggestions[this.state.suggestionIdx]);
       }
     }
 
     cleanup = () => {
-      this.props.suggestionIdx !== -1 && this.input.current.tabComplete(this.state.suggestions[this.state.suggestionIdx]);
       this.setState({
         suggestions: [],
         suggestionIdx: -1,
@@ -131,6 +143,7 @@ export const withTypeahead = (WrappedInput, data = isRequired('data is a require
           suggestionPrefix = datum.substring(0, realValue.length);
         }
       });
+
       if (suggestions.length > 0) {
         this.setState({
           suggestionPrefix,
@@ -159,9 +172,27 @@ export const withTypeahead = (WrappedInput, data = isRequired('data is a require
       })*/
     }
 
-    handleTypeaheadInput = (realValue) => {
-      let suggestions = [];
+    handleTypeaheadInput = (realValue = '') => {
+      let suggestions = [],
+          suggestionIdx = -1,
+          typeaheadValue = '';
+
       suggestions = realValue.length > 0 && this.getSuggestions(realValue);
+
+      if (suggestions.length === 0) {
+        this.setState({
+          suggestionIdx,
+          typeaheadValue,
+        })
+      } else if (suggestions.length === 1) {
+        typeaheadValue = suggestions[0];
+        suggestionIdx = 0;
+
+        this.setState({
+          suggestionIdx,
+          typeaheadValue,
+        })
+      }
 
       this.setState({
         suggestions,

@@ -112,10 +112,10 @@ export default class Input extends React.Component {
     this.props.handleTypeaheadKeydown && this.props.handleTypeaheadKeydown(e);
   }
 
-  tabComplete = (realValue) => {
+  tabComplete = (realValue = '') => {
     this.setState({
       realValue,
-      displayValue: realValue,
+      displayValue: this.props.maskInput ? this.props.maskInput(realValue) : realValue,
     })
   }
   
@@ -140,7 +140,7 @@ export default class Input extends React.Component {
       //       handle the case where user moves caret.
       //------------------------------------------------------------------------------------
       let displayValue = '',
-          realValue = e.target && e.target.value.length === 1 ?
+          realValue = typeof e.target !== 'undefined' && e.target.value.length === 1 ?
                         e.target.value :
                           e.target.value.length < this.state.realValue.length ? 
                             this.state.realValue.substring(0, e.target.value.length) :
@@ -169,7 +169,7 @@ export default class Input extends React.Component {
   }
 
   checkForErrors = () => {
-    let hasError = (this.props.errorMessage && this.props.errorMessage.length > 0 && !(this.state.displayValue.length === 0)) ||
+    let hasError = (typeof this.props.errorMessage !== 'undefined' && this.props.errorMessage.length > 0 && !(this.state.displayValue.length === 0)) ||
                    (this.props.required && this.state.displayValue !== null && this.state.displayValue.length === 0) ?
           true :
           false;
