@@ -25,15 +25,233 @@ export const withMask = (WrappedInput, mask = isRequired('mask is a required par
   }
 }
 
+const StContainer = styled.div`
+  position: relative;
+  z-index: ${props => props.zIndex ? props.zIndex : 10};
+`
 
-// TODO: function stub
-export const withTypeAhead = (WrappedInput, value) => {
+const StSuggestionBox = styled.div`
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #DDD;
+  background: #FFF;
+  padding: 1rem;
+  z-index: 20;
+`
+
+const StTypeaheadValue = styled.p`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  height: 98%;
+  left: 1rem;
+  font-size: .75rem;
+  line-height: 2rem;
+  letter-spacing: .025rem;
+  pointer-events: none;
+`
+
+const StTransparent = styled.span`
+  color: transparent;
+`
+const StColored = styled.span`
+  color: #888;
+`
+const StBold = styled.span`
+  font-weight: 800;
+  color: red;
+`
+
+const StRegular = styled.span`
+  font-weight: 400;
+`
+
+const StSuggestion = styled.p`
+  padding: .5rem;
+  background: ${props => props.active ? '#DDD' : '#FFF'};
+  cursor: pointer;
+  &:hover {
+    background: #DDD;
+  }
+`
+
+export const withTypeahead = (WrappedInput, data = isRequired('data is a required parameter for the withTypeahead HOC.')) => {
   return class extends React.Component {
+    constructor() {
+      super();
+      this.state = {
+        typeaheadValue: '',
+        suggestionPrefix: '',
+        suggestionIdx: -1,
+        suggestions: [],
+        zIndex: 0,
+      }
+      this.input = React.createRef();
+    }
+    
+    handleTypeaheadKeydown = (e) => {
+      let suggestionIdx = this.state.suggestionIdx,
+          typeaheadValue = '';
+
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.key === "ArrowDown" && this.state.suggestionIdx < (this.state.suggestions.length - 1) && suggestionIdx++;
+        e.key === "ArrowUp" && this.state.suggestionIdx > -1 && suggestionIdx--;
+
+        suggestionIdx === -1 && this.cleanup();
+          
+        e.preventDefault();
+        e.stopPropagation();
+
+        typeaheadValue = this.state.suggestions[suggestionIdx];
+    
+        this.setState({
+          suggestionIdx,
+          typeaheadValue,
+        });
+      } else if (e.key === 'Backspace') {
+        if (this.input.current.state.realValue.length === 1) {
+          this.setState({
+            suggestions: [],
+            suggestionIdx: -1,
+            suggestionPrefix: '',
+            typeaheadValue: '',
+          })
+        }
+      } else if (e.key === 'Tab') {
+        if (this.state.suggestionIdx !== -1) {
+          this.input.current.tabComplete(this.state.suggestions[this.state.suggestionIdx]);
+          this.cleanup();
+        }
+      }
+    }
+
+    cleanup = (isCallback = false) => {
+      this.setState({
+        suggestions: [],
+        suggestionIdx: -1,
+        suggestionPrefix: '',
+        typeaheadValue: '',
+      })
+      if (isCallback) {
+        if (this.state.suggestionIdx !== -1) {
+          this.input.current.tabComplete(this.state.suggestions[this.state.suggestionIdx]);
+        }
+      }
+    }
+
+    getSuggestions = (realValue) => {
+      let suggestions = [],
+          suggestionPrefix = '';
+
+      data.forEach((datum) => {
+        if (realValue.toLowerCase() === datum.substring(0, realValue.length).toLowerCase()) {
+          suggestions.push(datum);
+          suggestionPrefix = datum.substring(0, realValue.length);
+        }
+      });
+
+      if (suggestions.length > 0) {
+        this.setState({
+          suggestionPrefix,
+        })
+      }
+      return suggestions;
+    }
+
+    handleSuggestionClick = () => {
+      this.state.suggestionIdx !== -1 && this.input.current.tabComplete(this.state.suggestions[this.state.suggestionIdx]);
+      this.cleanup();
+    }
+
+    handleOnMouseEnter = (e) => {
+      let typeaheadValue = this.state.suggestions[e.target.id];
+      this.setState({
+        suggestionIdx: e.target.id,
+        typeaheadValue,
+      });
+    }
+
+    handleOnMouseLeave = (e) => {
+      /*this.setState({
+        suggestionIdx: -1,
+      }, () => {
+        this.cleanup();
+      })*/
+    }
+
+    handleTypeaheadInput = (realValue = '') => {
+      let suggestions = [],
+          suggestionIdx = -1,
+          typeaheadValue = '';
+
+      suggestions = realValue.length > 0 && this.getSuggestions(realValue);
+
+      if (suggestions.length === 0) {
+        this.setState({
+          suggestionIdx,
+          typeaheadValue,
+        })
+      } else if (suggestions.length === 1) {
+        typeaheadValue = suggestions[0];
+        suggestionIdx = 0;
+
+        this.setState({
+          suggestionIdx,
+          typeaheadValue,
+        })
+      }
+
+      this.setState({
+        suggestions,
+      });
+    }
+
     render() {
       return (
-        <WrappedInput
-            value={this.state.value}
-            {...this.props} />
+        <StContainer
+          zIndex={this.props.zIndex}>
+          <WrappedInput
+            ref={this.input}
+            cleanup={this.cleanup}
+            handleTypeaheadKeydown={this.handleTypeaheadKeydown}
+            handleTypeaheadInput={this.handleTypeaheadInput}
+            typeaheadValue={this.state.typeaheadValue}
+            {...this.props}>
+            { this.state.typeaheadValue &&
+            <StTypeaheadValue>
+                  <StTransparent>
+                    { this.state.suggestionPrefix }
+                  </StTransparent>
+                  <StColored>
+                    { this.state.typeaheadValue.substr(this.state.suggestionPrefix.length, this.state.typeaheadValue.length)}
+                  </StColored>
+            </StTypeaheadValue> }
+          </WrappedInput>
+            { this.state.suggestions.length > 0 &&
+              <StSuggestionBox>
+                { this.state.suggestions.map((suggestion, idx) => {
+                  return (
+                    <StSuggestion
+                      id={idx}
+                      key={'suggestion-' + idx}
+                      active={this.state.suggestionIdx === idx}
+                      onClick={this.handleSuggestionClick}
+                      onMouseEnter={this.handleOnMouseEnter}
+                      onMouseLeave={this.handleOnMouseLeave}>
+                      <StBold>
+                        { this.state.suggestionPrefix }
+                      </StBold>
+                      <StRegular>
+                        { suggestion.substring(this.state.suggestionPrefix.length, suggestion.length) }
+                      </StRegular>
+                    </StSuggestion>
+                  )
+                })}
+              </StSuggestionBox>
+            }
+        </StContainer>
       );
     }
   }
@@ -114,20 +332,18 @@ export const withValidation = (WrappedInput, schemaPackage = isRequired('schemaP
     constructor(props) {
       super(props);
       this.state = {
-        valid: null,
         inputIsEmpty: true,
-        errorMessage: '',
+        valid: true,
       }
     }
 
     validateInput = (inputReceived) => {
       let regex = new RegExp(schemaPackage.schema),
-          valid = regex.test(inputReceived);
+          valid = regex.test(inputReceived) || inputReceived.length === 0;
 
       this.setState({
         valid,
         inputIsEmpty: (inputReceived.length === 0),
-        errorMessage: (!valid ? schemaPackage.errorMessage : ''),
       });
 
       return inputReceived;
@@ -136,15 +352,16 @@ export const withValidation = (WrappedInput, schemaPackage = isRequired('schemaP
     render() {
       return (
         <WrappedInput
-          errorMessage={this.state.errorMessage}
+          valid={this.state.valid}
           validateInput={this.validateInput}
+          validationErrorMessage={schemaPackage.validationErrorMessage}
           {...this.props}>
           <StStatusBlock
             valid={this.state.valid}
             inputIsEmpty={this.state.inputIsEmpty}>
             <ValidationIcon
-              status={this.state.inputIsEmpty ? 'empty' : (this.state.errorMessage && this.state.errorMessage.length > 0 ?
-                      'hasError' : 'valid')}/>
+              status={this.state.inputIsEmpty ? 'empty' : (this.state.valid ?
+                      'valid' : 'hasError')}/>
           </StStatusBlock>
         </WrappedInput>
       );

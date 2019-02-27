@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
 import { FormCoordinator } from 'components'
 
 
@@ -15,7 +14,8 @@ import { FormCoordinator } from 'components'
 //-------------------------------------------------------------------
 export default class Form extends React.Component {
   static propTypes = {
-    children: PropTypes.node.isRequired
+    children: PropTypes.node.isRequired,
+    onSubmit: PropTypes.func.isRequired,
   }
 
   constructor() {
@@ -25,7 +25,7 @@ export default class Form extends React.Component {
 
   onSubmit = () => {
     let data = this.formRef.current.getElements(); 
-    this.props.onSubmit && this.props.onSubmit(data);
+    this.props.onSubmit && typeof this.props.onSubmit !== 'undefined' && this.props.onSubmit(data);
   }
 
   render() {

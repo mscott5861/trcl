@@ -1,20 +1,11 @@
 import React from 'react'
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
-
-const StForm = styled.div`
-  
-`
 
 export default class FormCoordinator extends React.Component {
-  static propTypes = {
-  }
-
   constructor(props) {
     super(props);
     this.state = {
       elements: [],
-      hasError: false
+      formElementHasError: false,
     };
   }
 
@@ -22,20 +13,20 @@ export default class FormCoordinator extends React.Component {
     return this.state.elements;
   }
 
-  updateForm = (inputID, value, hasError) => {
+  updateForm = (inputID, value, formElementHasError) => {
     let elements = this.state.elements,
-        hasFoundError = false,
+        formHasError = false,
         hasFoundElement = false;
 
     elements.forEach((element) => {
       if (element.inputID === inputID) {
         element.value = value;
-        element.hasError = hasError;
+        element.formElementHasError = formElementHasError;
         hasFoundElement = true;
       }
 
-      if (element.hasError) {
-        hasFoundError = true;
+      if (element.formElementHasError) {
+        formHasError = true;
       }
     });
 
@@ -43,15 +34,15 @@ export default class FormCoordinator extends React.Component {
       elements.push({
         inputID,
         value,
-        hasError
+        formElementHasError,
       });
       
-      hasFoundError = hasError ? true : hasFoundError;
+      formHasError = formElementHasError ? true : formHasError;
     }
 
     this.setState({
       elements,
-      hasError: hasFoundError
+      formElementHasError: formHasError
     });
   }
 
@@ -59,14 +50,14 @@ export default class FormCoordinator extends React.Component {
     const children = React.Children.map(this.props.children, child => {
       return React.cloneElement(child, {
         updateForm: this.updateForm,
-        hasError: this.state.hasError
+        formElementHasError: this.state.formElementHasError
       });
     });
 
     return (
-      <StForm>
+      <div>
         { children }
-      </StForm>
+      </div>
     );
   }
 }
