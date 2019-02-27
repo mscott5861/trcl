@@ -18,11 +18,11 @@ const StInputWrapper = styled.div`
   width: 100%;
   height: 2.25rem;
   border: ${props => props.borderless ? '0' : (
-    props.errorMessage && props.errorMessage.length > 0 && props.displayValue && props.displayValue.length > 0 ? '2px solid rgba(200,0,0,0.4)' :
+    (props.failsRequiredCheck || props.failsValidationCheck) ? '2px solid rgba(200,0,0,0.4)' :
     (props.borderColor ? '1px solid' + props.borderColor : '1px solid #DDD'))};
   border-radius: 4px;
-  box-shadow: ${props => props.errorMessage && props.errorMessage.length > 0 && props.displayValue && props.displayValue.length > 0 ? '0 5px 5px 0 rgba(0,0,0,0.1)' : 'none'};
-  transform: ${props => props.errorMessage && props.errorMessage.length > 0 && props.displayValue && props.displayValue.length > 0 ? 'scale(1.03)' : 'scale(1)'};
+  box-shadow: ${props => (props.failsRequiredCheck || props.failsValidationCheck) ? '0 5px 5px 0 rgba(0,0,0,0.1)' : 'none'};
+  transform: ${props => (props.failsRequiredCheck || props.failsValidationCheck) ? 'scale(1.03)' : 'scale(1)'};
   margin-top: 2rem; 
   background-color: ${props => props.errorMessage && props.errorMessage.length > 0 && props.displayValue.length > 0 ? 'rgba(255,0,0,0.05)' : (props.bgColor ? props.bgColor : (props.isFocused ? '#FFF' : '#F2F2F2'))};
   transition: all ease-in .15s;
@@ -55,7 +55,6 @@ const StLabel = styled.p`
   pointer-events: none;
 `
 
-
 const StActiveLabel = styled.p`
   opacity: ${props => props.isFocused ? '1' : '0'};
   width: 100%;
@@ -78,7 +77,9 @@ const StActiveLabel = styled.p`
     margin-right: 4px;
   }
 `
-
+//-----------------------------------------------------------------------------------
+// TODO: enforce a policy that inputIDs must be unique on a per-Form basis. 
+//-----------------------------------------------------------------------------------
 export default class Input extends React.Component {
   static propTypes = {
     activeLabel: PropTypes.string,
@@ -86,19 +87,21 @@ export default class Input extends React.Component {
     bgColor: PropTypes.string,
     borderless: PropTypes.bool,
     borderColor: PropTypes.string,
-    errorMessage: PropTypes.string,
-    inputID: PropTypes.string,
+    inputID: PropTypes.string.isRequired,
     labelColor: PropTypes.string,
     maskInput: PropTypes.func,
     required: PropTypes.bool,
+    valid: PropTypes.bool,
     validateInput: PropTypes.func,
+    validationErrorMessage: PropTypes.string,
   }
 
   constructor(props) {
     super(props);
     this.state = {
       displayValue: '',
-      hasError: this.props.required ? this.props.required : false,
+      inputFailsRequiredCheck: false,
+      inputFailsValidationCheck: false,
       isFocused: false,
       realValue: '',
     };
@@ -109,20 +112,21 @@ export default class Input extends React.Component {
   }
 
   handleOnKeyDown = (e) => {
-    this.props.handleTypeaheadKeydown && this.props.handleTypeaheadKeydown(e);
+    this.props.handleTypeaheadKeydown && typeof this.props.handleTypeaheadKeydown !== 'undefined' && this.props.handleTypeaheadKeydown(e);
   }
 
   tabComplete = (realValue = '') => {
     this.setState({
       realValue,
       displayValue: this.props.maskInput ? this.props.maskInput(realValue) : realValue,
+    }, () => {
+      this.updateForm()
     })
   }
   
   handleOnChange = (e) => {
-    e && e.preventDefault();
-
-    if (typeof e !== 'undefined') {
+    if (e && typeof e !== 'undefined') {
+      e.preventDefault();
       //------------------------------------------------------------------------------------
       // We need to do a few things on every keystroke:
       //
@@ -135,18 +139,14 @@ export default class Input extends React.Component {
       //    our component, a unique string to identify it, and whether or not the 
       //    component is in an error state.)
       //------------------------------------------------------------------------------------
-      // TODO: enforce a policy that input IDs must be unique on a per-Form basis. 
-      // TODO: either enforce caret position for masked inputs to remain at end or
-      //       handle the case where user moves caret.
-      //------------------------------------------------------------------------------------
-      let displayValue = '',
+      let caretPosition = e.target.selectionStart, 
+          displayValue = '',
           realValue = typeof e.target !== 'undefined' && e.target.value.length === 1 ?
                         e.target.value :
                           e.target.value.length < this.state.realValue.length ? 
                             this.state.realValue.substring(0, e.target.value.length) :
-                              this.state.realValue + e.target.value[e.target.value.length - 1];
-
-                          
+                              this.state.realValue.substr(0, caretPosition - 1) + e.target.value[caretPosition - 1] + this.state.realValue.substr(caretPosition - 1);
+      
       realValue = this.props.validateInput ? this.props.validateInput(realValue, this.props.schema) : realValue;
       displayValue = this.props.maskInput ? this.props.maskInput(realValue) : realValue;
       this.props.handleTypeaheadInput && this.props.handleTypeaheadInput(realValue);
@@ -158,34 +158,44 @@ export default class Input extends React.Component {
         realValue,
       }, () => {
         this.setState({
-          hasError: this.checkForErrors(),
+          inputFailsRequiredCheck: this.failsRequiredCheck(),
+          inputFailsValidationCheck: this.failsValidationCheck(),
         }, () => {
           this.updateForm();
         });
       });
+      e.stopPropagation();
     }
+  }
 
-    e && e.stopPropagation();
+  failsRequiredCheck = () => {
+    return typeof this.props.required !== 'undefined' && this.props.required === true && this.state.realValue.length === 0;
+  }
+
+  failsValidationCheck = () => {
+    return typeof this.props.valid !== 'undefined' && this.props.valid === false;
   }
 
   checkForErrors = () => {
-    let hasError = (typeof this.props.errorMessage !== 'undefined' && this.props.errorMessage.length > 0 && !(this.state.displayValue.length === 0)) ||
-                   (this.props.required && this.state.displayValue !== null && this.state.displayValue.length === 0) ?
-          true :
-          false;
-
-    return hasError;
+    this.setState({
+      inputFailsRequiredCheck: this.failsRequiredCheck(),
+      inputFailsValidationCheck: this.failsValidationCheck(),
+    }, () => {
+      return this.state.inputFailsRequiredCheck || this.state.inputFailsValidationCheck;
+    })
   }
 
-  // Need a system for prioritizing the value to display when multiple error states might exist; e.g., 
-  // an <Input/> component has its 'required' prop set to true, has a length requirement of more than 
-  // 0 characters, and is empty.
+  // TODO: Need a system for prioritizing the value to display when multiple error states might exist; e.g., 
+  // an <Input/> component has its 'required' prop set to true and is empty, but also has a length requirement
+  // of at least 4 characters (it would have conflicting "This is a required field" and "This field needs at
+  // least 4 characters" messages)
   updateActiveLabel = () => {
     
   }
 
   updateForm = () => {
-    this.props.updateForm && this.props.updateForm(this.props.inputID, this.state.realValue, this.state.hasError);
+    this.props.updateForm && typeof this.props.updateForm !== 'undefined' && this.props.updateForm(this.props.inputID, 
+      this.state.realValue, (this.state.inputFailsRequiredCheck || this.state.inputFailsValidationCheck));
   }
 
   handleOnFocus = () => {
@@ -200,10 +210,8 @@ export default class Input extends React.Component {
         isFocused: false
       });
     }
-
-    /*if (this.props.cleanup) {
-      this.props.cleanup();
-    }*/
+    this.checkForErrors();
+    this.props.cleanup && typeof this.props.cleanup !== 'undefined' && this.props.cleanup(true);
   }
 
   render() {
@@ -213,7 +221,8 @@ export default class Input extends React.Component {
         borderless={this.props.borderless}
         borderColor={this.props.borderColor}
         displayValue={this.state.displayValue}
-        errorMessage={this.props.errorMessage}
+        failsRequiredCheck={this.state.inputFailsRequiredCheck}
+        failsValidationCheck={this.state.inputFailsValidationCheck}
         isFocused={this.state.isFocused}
         onChange={this.handleOnChange}>
         <StInput
@@ -227,20 +236,27 @@ export default class Input extends React.Component {
           isFocused={this.state.isFocused}>
           { this.props.label }
         </StLabel>
-        { this.props.errorMessage && this.state.displayValue.length > 0 && this.props.errorMessage.length > 0 ?
+        { typeof this.props.valid !== 'undefined' && this.failsValidationCheck() ?
           <StActiveLabel
             activeLabelColor='#C45256'
             isFocused={true}
             required={this.props.required}>
-            { this.props.errorMessage }
+            { this.props.validationErrorMessage }
           </StActiveLabel> :
+          ( this.props.required && typeof this.props.required !== 'undefined' && this.state.inputFailsRequiredCheck ?
+            <StActiveLabel
+              activeLabelColor='#C45256'
+              isFocused={true}
+              required={this.props.required}>
+              { "This field is required" }
+            </StActiveLabel> :
           <StActiveLabel
             activeLabelColor={this.props.activeLabelColor}
             isFocused={this.state.isFocused}
             required={this.props.required}>
             { this.props.activeLabel && this.props.activeLabel.length > 0 ?
               this.props.activeLabel : this.props.label }
-          </StActiveLabel> }
+          </StActiveLabel>) }
         { this.props.children }
       </StInputWrapper>
     );

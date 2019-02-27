@@ -43,14 +43,22 @@ const StSuggestionBox = styled.div`
 
 const StTypeaheadValue = styled.p`
   position: absolute;
+  display: flex;
+  align-items: center;
+  height: 98%;
   left: 1rem;
-  color: #888;
   font-size: .75rem;
-  letter-spacing: .025rem;
   line-height: 2rem;
+  letter-spacing: .025rem;
   pointer-events: none;
 `
 
+const StTransparent = styled.span`
+  color: transparent;
+`
+const StColored = styled.span`
+  color: #888;
+`
 const StBold = styled.span`
   font-weight: 800;
   color: red;
@@ -61,7 +69,7 @@ const StRegular = styled.span`
 `
 
 const StSuggestion = styled.p`
-  padding: .5rem 0;
+  padding: .5rem;
   background: ${props => props.active ? '#DDD' : '#FFF'};
   cursor: pointer;
   &:hover {
@@ -90,6 +98,8 @@ export const withTypeahead = (WrappedInput, data = isRequired('data is a require
       if (e.key === "ArrowDown" || e.key === "ArrowUp") {
         e.key === "ArrowDown" && this.state.suggestionIdx < (this.state.suggestions.length - 1) && suggestionIdx++;
         e.key === "ArrowUp" && this.state.suggestionIdx > -1 && suggestionIdx--;
+
+        suggestionIdx === -1 && this.cleanup();
           
         e.preventDefault();
         e.stopPropagation();
@@ -117,13 +127,18 @@ export const withTypeahead = (WrappedInput, data = isRequired('data is a require
       }
     }
 
-    cleanup = () => {
+    cleanup = (isCallback = false) => {
       this.setState({
         suggestions: [],
         suggestionIdx: -1,
         suggestionPrefix: '',
         typeaheadValue: '',
       })
+      if (isCallback) {
+        if (this.state.suggestionIdx !== -1) {
+          this.input.current.tabComplete(this.state.suggestions[this.state.suggestionIdx]);
+        }
+      }
     }
 
     getSuggestions = (realValue) => {
@@ -204,9 +219,15 @@ export const withTypeahead = (WrappedInput, data = isRequired('data is a require
             handleTypeaheadInput={this.handleTypeaheadInput}
             typeaheadValue={this.state.typeaheadValue}
             {...this.props}>
+            { this.state.typeaheadValue &&
             <StTypeaheadValue>
-              { this.state.typeaheadValue && this.state.typeaheadValue }
-            </StTypeaheadValue>
+                  <StTransparent>
+                    { this.state.suggestionPrefix }
+                  </StTransparent>
+                  <StColored>
+                    { this.state.typeaheadValue.substr(this.state.suggestionPrefix.length, this.state.typeaheadValue.length)}
+                  </StColored>
+            </StTypeaheadValue> }
           </WrappedInput>
             { this.state.suggestions.length > 0 &&
               <StSuggestionBox>
@@ -311,20 +332,18 @@ export const withValidation = (WrappedInput, schemaPackage = isRequired('schemaP
     constructor(props) {
       super(props);
       this.state = {
-        valid: null,
         inputIsEmpty: true,
-        errorMessage: '',
+        valid: true,
       }
     }
 
     validateInput = (inputReceived) => {
       let regex = new RegExp(schemaPackage.schema),
-          valid = regex.test(inputReceived);
+          valid = regex.test(inputReceived) || inputReceived.length === 0;
 
       this.setState({
         valid,
         inputIsEmpty: (inputReceived.length === 0),
-        errorMessage: (!valid ? schemaPackage.errorMessage : ''),
       });
 
       return inputReceived;
@@ -333,15 +352,16 @@ export const withValidation = (WrappedInput, schemaPackage = isRequired('schemaP
     render() {
       return (
         <WrappedInput
-          errorMessage={this.state.errorMessage}
+          valid={this.state.valid}
           validateInput={this.validateInput}
+          validationErrorMessage={schemaPackage.validationErrorMessage}
           {...this.props}>
           <StStatusBlock
             valid={this.state.valid}
             inputIsEmpty={this.state.inputIsEmpty}>
             <ValidationIcon
-              status={this.state.inputIsEmpty ? 'empty' : (this.state.errorMessage && this.state.errorMessage.length > 0 ?
-                      'hasError' : 'valid')}/>
+              status={this.state.inputIsEmpty ? 'empty' : (this.state.valid ?
+                      'valid' : 'hasError')}/>
           </StStatusBlock>
         </WrappedInput>
       );

@@ -39,7 +39,6 @@ const StBackdrop = styled.div`
   opacity: ${props => props.isVisible ? 1 : 0};
   pointer-events: ${props => props.isVisible ? 'initial' : 'none'};
   transition: opacity .2s linear;
-  
 `
 
 export default class Modal extends React.Component {
